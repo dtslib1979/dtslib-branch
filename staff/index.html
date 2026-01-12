@@ -312,6 +312,89 @@
       text-overflow: ellipsis;
     }
 
+    /* APK List */
+    .apk-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .apk-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      transition: all 0.2s;
+      color: var(--text);
+    }
+
+    .apk-item:hover {
+      background: var(--bg-card);
+      border-color: var(--gold);
+    }
+
+    .apk-icon {
+      font-size: 24px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gold-dim);
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+    }
+
+    .apk-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .apk-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .apk-desc {
+      font-size: 11px;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .apk-version {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--gold);
+      background: var(--gold-dim);
+      padding: 4px 8px;
+      border-radius: var(--radius-full);
+      flex-shrink: 0;
+    }
+
+    .apk-download {
+      font-size: 16px;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .apk-item:hover .apk-download {
+      color: var(--gold);
+    }
+
+    .apk-note {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 10px;
+      padding-left: 4px;
+    }
+
     /* Quick Links */
     .quick-links {
       display: grid;
@@ -506,6 +589,44 @@
           </div>
         </a>
       </div>
+    </section>
+
+    <!-- 생산성 도구 APK -->
+    <section class="section">
+      <div class="section-header">
+        <span class="section-badge">APK</span>
+        <h2 class="section-title">생산성 도구</h2>
+      </div>
+      <div class="apk-list">
+        <a href="https://nightly.link/dtslib1979/dtslib-apk-lab/workflows/build-parksy-axis/main/parksy-axis-debug.zip" class="apk-item" download>
+          <span class="apk-icon">📡</span>
+          <div class="apk-content">
+            <p class="apk-name">Parksy Axis</p>
+            <p class="apk-desc">방송용 사고 단계 오버레이</p>
+          </div>
+          <span class="apk-version">v5.2.0</span>
+          <span class="apk-download">⬇</span>
+        </a>
+        <a href="https://nightly.link/dtslib1979/dtslib-apk-lab/workflows/build-laser-pen/main/laser-pen-overlay-debug.zip" class="apk-item" download>
+          <span class="apk-icon">✏️</span>
+          <div class="apk-content">
+            <p class="apk-name">Parksy Pen</p>
+            <p class="apk-desc">S Pen 레이저펜 판서 오버레이</p>
+          </div>
+          <span class="apk-version">v1.0.31</span>
+          <span class="apk-download">⬇</span>
+        </a>
+        <a href="https://nightly.link/dtslib1979/dtslib-apk-lab/workflows/build-capture-pipeline/main/capture-pipeline-debug.zip" class="apk-item" download>
+          <span class="apk-icon">📸</span>
+          <div class="apk-content">
+            <p class="apk-name">Parksy Capture</p>
+            <p class="apk-desc">텍스트 캡처 → GitHub 아카이브</p>
+          </div>
+          <span class="apk-version">v10.0.8</span>
+          <span class="apk-download">⬇</span>
+        </a>
+      </div>
+      <p class="apk-note">* ZIP 다운로드 후 압축 해제하여 APK 설치</p>
     </section>
 
     <!-- 빠른 링크 -->
