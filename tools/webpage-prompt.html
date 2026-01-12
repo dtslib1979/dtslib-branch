@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0F1F15" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>웹페이지 프롬프트 생성기 | dtslib</title>
+  <style>
+    :root {
+      --bg: #0F1F15;
+      --bg-elevated: #1A2E22;
+      --bg-card: #243529;
+      --gold: #D4AF37;
+      --gold-dim: rgba(212,175,55,.15);
+      --text: #F5F5F0;
+      --text-secondary: rgba(245,245,240,.75);
+      --text-muted: rgba(245,245,240,.5);
+      --border: rgba(245,245,240,.12);
+      --border-gold: rgba(212,175,55,.4);
+      --success: #4CAF50;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 15px;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-full);
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .back-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .header-info h1 {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .header-info p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Form */
+    .form-section {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+      width: 100%;
+      padding: 14px 16px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      color: var(--text);
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: var(--text-muted);
+    }
+
+    .form-textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .form-select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23F5F5F0' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+    }
+
+    .form-select option {
+      background: var(--bg-elevated);
+      color: var(--text);
+    }
+
+    /* Checkbox Group */
+    .checkbox-group {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .checkbox-item:hover {
+      border-color: var(--border-gold);
+    }
+
+    .checkbox-item.selected {
+      border-color: var(--gold);
+      background: var(--gold-dim);
+    }
+
+    .checkbox-item input {
+      display: none;
+    }
+
+    .checkbox-icon {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      transition: all 0.2s;
+    }
+
+    .checkbox-item.selected .checkbox-icon {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--bg);
+    }
+
+    .checkbox-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .checkbox-item.selected .checkbox-label {
+      color: var(--text);
+    }
+
+    /* Generate Button */
+    .generate-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--gold), #C9A227);
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--bg);
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 8px;
+    }
+
+    .generate-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(212,175,55,.35);
+    }
+
+    .generate-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Output */
+    .output-section {
+      margin-top: 32px;
+      display: none;
+    }
+
+    .output-section.show {
+      display: block;
+    }
+
+    .output-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .output-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .copy-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: var(--gold-dim);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gold);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover {
+      background: var(--gold);
+      color: var(--bg);
+    }
+
+    .copy-btn.copied {
+      background: var(--success);
+      border-color: var(--success);
+      color: white;
+    }
+
+    .output-box {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    /* Templates */
+    .templates-section {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .templates-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+
+    .template-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .template-btn {
+      padding: 12px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+    }
+
+    .template-btn:hover {
+      border-color: var(--gold);
+      color: var(--text);
+    }
+
+    .template-btn .icon {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--bg-elevated);
+      border: 1px solid var(--gold);
+      padding: 12px 24px;
+      border-radius: var(--radius-full);
+      font-size: 14px;
+      color: var(--gold);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 480px) {
+      .checkbox-group {
+        grid-template-columns: 1fr;
+      }
+      .template-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header class="header">
+    <a href="../" class="back-btn">←</a>
+    <div class="header-info">
+      <h1>웹페이지 프롬프트</h1>
+      <p>AI에게 웹페이지 만들어달라고 할 때 쓰는 프롬프트</p>
+    </div>
+  </header>
+
+  <!-- Form -->
+  <div class="form-section">
+    <label class="form-label">페이지 이름</label>
+    <input type="text" class="form-input" id="pageName" placeholder="예: 회사 소개 페이지">
+  </div>
+
+  <div class="form-section">
+    <label class="form-label">페이지 목적</label>
+    <textarea class="form-textarea" id="pagePurpose" placeholder="예: 우리 회사가 뭐 하는 곳인지 소개하고 연락처 보여주기"></textarea>
+  </div>
+
+  <div class="form-section">
+    <label class="form-label">포함할 섹션</label>
+    <div class="checkbox-group" id="sections">
+      <label class="checkbox-item">
+        <input type="checkbox" value="header" checked>
+        <span class="checkbox-icon">✓</span>
+        <span class="checkbox-label">헤더/로고</span>
+      </label>
+      <label class="checkbox-item">
+        <input type="checkbox" value="hero">
+        <span class="checkbox-icon">✓</span>
+        <span class="checkbox-label">히어로 섹션</span>
+      </label>
+      <label class="checkbox-item">
+        <input type="checkbox" value="about">
+        <span class="checkbox-icon">✓</span>
+        <span class="checkbox-label">소개/설명</span>
+      </label>
+      <label class="checkbox-item">
+        <input type="checkbox" value="features">
+        <span class="checkbox-icon">✓</span>
+        <span class="checkbox-label">특징/장점</span>
+      </label>
+      <label class="checkbox-item">
+        <input type="checkbox" value="gallery">
+        <span class="checkbox-icon">✓</span>
+        <span class="checkbox-label">갤러리/이미지</span>
+      </label>
+      <label class="checkbox-item">
+        <input type="checkbox" value="contact">
+        <span class="checkbox-icon">✓</span>
+        <span class="checkbox-label">연락처/문의</span>
+      </label>
+      <label class="checkbox-item">
+        <input type="checkbox" value="footer">
+        <span class="checkbox-icon">✓</span>
+        <span class="checkbox-label">푸터</span>
+      </label>
+      <label class="checkbox-item">
+        <input type="checkbox" value="cta">
+        <span class="checkbox-icon">✓</span>
+        <span class="checkbox-label">CTA 버튼</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <label class="form-label">디자인 스타일</label>
+    <select class="form-select" id="designStyle">
+      <option value="minimal">미니멀 / 심플</option>
+      <option value="modern">모던 / 세련된</option>
+      <option value="dark" selected>다크 모드</option>
+      <option value="colorful">컬러풀 / 밝은</option>
+      <option value="professional">프로페셔널 / 비즈니스</option>
+      <option value="playful">캐주얼 / 친근한</option>
+    </select>
+  </div>
+
+  <div class="form-section">
+    <label class="form-label">추가 요청사항</label>
+    <textarea class="form-textarea" id="additional" placeholder="예: 모바일에서 잘 보이게, 한국어로, 이모지 넣어줘"></textarea>
+  </div>
+
+  <button class="generate-btn" id="generateBtn">프롬프트 생성하기</button>
+
+  <!-- Output -->
+  <div class="output-section" id="outputSection">
+    <div class="output-header">
+      <span class="output-title">생성된 프롬프트</span>
+      <button class="copy-btn" id="copyBtn">
+        <span>📋</span>
+        <span id="copyText">복사</span>
+      </button>
+    </div>
+    <div class="output-box" id="outputBox"></div>
+  </div>
+
+  <!-- Templates -->
+  <div class="templates-section">
+    <div class="templates-title">빠른 템플릿</div>
+    <div class="template-grid">
+      <button class="template-btn" data-template="landing">
+        <span class="icon">🚀</span>
+        <span>랜딩페이지</span>
+      </button>
+      <button class="template-btn" data-template="portfolio">
+        <span class="icon">💼</span>
+        <span>포트폴리오</span>
+      </button>
+      <button class="template-btn" data-template="business">
+        <span class="icon">🏢</span>
+        <span>회사 소개</span>
+      </button>
+      <button class="template-btn" data-template="profile">
+        <span class="icon">👤</span>
+        <span>프로필/명함</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// Checkbox toggle
+document.querySelectorAll('.checkbox-item').forEach(item => {
+  const checkbox = item.querySelector('input');
+  if (checkbox.checked) item.classList.add('selected');
+
+  item.addEventListener('click', () => {
+    checkbox.checked = !checkbox.checked;
+    item.classList.toggle('selected', checkbox.checked);
+  });
+});
+
+// Generate prompt
+const generateBtn = document.getElementById('generateBtn');
+const outputSection = document.getElementById('outputSection');
+const outputBox = document.getElementById('outputBox');
+const copyBtn = document.getElementById('copyBtn');
+const copyText = document.getElementById('copyText');
+const toast = document.getElementById('toast');
+
+const styleDescriptions = {
+  minimal: '미니멀하고 심플한 디자인, 여백을 충분히 활용',
+  modern: '모던하고 세련된 디자인, 부드러운 그림자와 둥근 모서리',
+  dark: '다크 모드 디자인, 어두운 배경에 밝은 텍스트, 골드 포인트 컬러',
+  colorful: '밝고 컬러풀한 디자인, 생동감 있는 색상 조합',
+  professional: '프로페셔널하고 신뢰감 있는 비즈니스 디자인',
+  playful: '캐주얼하고 친근한 디자인, 이모지 활용'
+};
+
+const sectionDescriptions = {
+  header: '상단 헤더 (로고, 네비게이션)',
+  hero: '히어로 섹션 (메인 타이틀, 서브타이틀, CTA)',
+  about: '소개/설명 섹션',
+  features: '특징/장점 나열 섹션',
+  gallery: '이미지 갤러리 또는 카드 그리드',
+  contact: '연락처/문의 섹션',
+  footer: '하단 푸터 (저작권, 링크)',
+  cta: '행동 유도 버튼 (문의하기, 구매하기 등)'
+};
+
+generateBtn.addEventListener('click', () => {
+  const pageName = document.getElementById('pageName').value || '웹페이지';
+  const pagePurpose = document.getElementById('pagePurpose').value || '정보 제공';
+  const designStyle = document.getElementById('designStyle').value;
+  const additional = document.getElementById('additional').value;
+
+  const selectedSections = [];
+  document.querySelectorAll('#sections input:checked').forEach(cb => {
+    selectedSections.push(sectionDescriptions[cb.value]);
+  });
+
+  const prompt = generatePrompt(pageName, pagePurpose, designStyle, selectedSections, additional);
+
+  outputBox.textContent = prompt;
+  outputSection.classList.add('show');
+  outputSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
+function generatePrompt(name, purpose, style, sections, additional) {
+  let prompt = `다음 조건에 맞는 HTML 웹페이지를 만들어줘.
+
+【 기본 정보 】
+• 페이지 이름: ${name}
+• 목적: ${purpose}
+
+【 디자인 스타일 】
+${styleDescriptions[style]}
+
+【 포함할 섹션 】
+${sections.length > 0 ? sections.map(s => `• ${s}`).join('\n') : '• 기본 구조'}
+
+【 기술 요구사항 】
+• 단일 HTML 파일 (CSS 인라인 또는 <style> 태그)
+• 외부 라이브러리 없이 순수 HTML/CSS/JS
+• 모바일 반응형 (max-width: 480px 기준)
+• 한국어 콘텐츠
+• 시맨틱 HTML 태그 사용`;
+
+  if (additional) {
+    prompt += `\n\n【 추가 요청 】\n${additional}`;
+  }
+
+  prompt += `\n\n---\n위 조건대로 완전한 HTML 코드를 작성해줘. 복사해서 바로 사용할 수 있게 해줘.`;
+
+  return prompt;
+}
+
+// Copy functionality
+copyBtn.addEventListener('click', () => {
+  const text = outputBox.textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    copyBtn.classList.add('copied');
+    copyText.textContent = '복사됨!';
+    showToast('클립보드에 복사되었습니다');
+
+    setTimeout(() => {
+      copyBtn.classList.remove('copied');
+      copyText.textContent = '복사';
+    }, 2000);
+  }).catch(() => {
+    // Fallback
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.cssText = 'position:fixed;opacity:0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    showToast('클립보드에 복사되었습니다');
+  });
+});
+
+// Templates
+const templates = {
+  landing: {
+    name: '서비스 랜딩페이지',
+    purpose: '서비스/제품을 소개하고 가입 또는 구매 유도',
+    sections: ['header', 'hero', 'features', 'cta', 'footer'],
+    style: 'modern',
+    additional: '스크롤 애니메이션 효과, 그라데이션 배경'
+  },
+  portfolio: {
+    name: '포트폴리오',
+    purpose: '작업물과 프로젝트 쇼케이스',
+    sections: ['header', 'hero', 'gallery', 'about', 'contact', 'footer'],
+    style: 'minimal',
+    additional: '이미지 호버 효과, 깔끔한 그리드 레이아웃'
+  },
+  business: {
+    name: '회사 소개 페이지',
+    purpose: '회사 정보, 서비스, 연락처 안내',
+    sections: ['header', 'hero', 'about', 'features', 'contact', 'footer'],
+    style: 'professional',
+    additional: '신뢰감 있는 톤, 명확한 정보 전달'
+  },
+  profile: {
+    name: '개인 프로필/명함',
+    purpose: '자기소개와 연락처 공유',
+    sections: ['header', 'about', 'contact'],
+    style: 'dark',
+    additional: '명함 스타일, 탭해서 연락처 복사 기능'
+  }
+};
+
+document.querySelectorAll('.template-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const templateKey = btn.dataset.template;
+    const template = templates[templateKey];
+
+    document.getElementById('pageName').value = template.name;
+    document.getElementById('pagePurpose').value = template.purpose;
+    document.getElementById('designStyle').value = template.style;
+    document.getElementById('additional').value = template.additional;
+
+    // Reset and set checkboxes
+    document.querySelectorAll('#sections .checkbox-item').forEach(item => {
+      const cb = item.querySelector('input');
+      const isSelected = template.sections.includes(cb.value);
+      cb.checked = isSelected;
+      item.classList.toggle('selected', isSelected);
+    });
+
+    showToast(`${template.name} 템플릿 적용됨`);
+  });
+});
+
+function showToast(msg) {
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2000);
+}
+</script>
+
+</body>
+</html>
