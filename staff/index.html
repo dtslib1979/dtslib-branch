@@ -20,6 +20,7 @@
       --radius-md: 12px;
       --radius-lg: 16px;
       --radius-full: 9999px;
+      --green: #4CAF50;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,20 +31,22 @@
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
       padding: 24px;
     }
 
     .container {
       width: 100%;
-      max-width: 400px;
+      max-width: 480px;
+      margin: 0 auto;
     }
 
     .login-gate {
       text-align: center;
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
     .login-title {
@@ -60,6 +63,7 @@
 
     .login-input {
       width: 100%;
+      max-width: 300px;
       padding: 16px;
       background: var(--bg-elevated);
       border: 1px solid var(--border);
@@ -83,6 +87,7 @@
 
     .login-btn {
       width: 100%;
+      max-width: 300px;
       padding: 16px;
       background: linear-gradient(135deg, var(--gold), #C9A227);
       border: none;
@@ -121,6 +126,7 @@
     .portal-header {
       text-align: center;
       margin-bottom: 32px;
+      padding-top: 16px;
     }
 
     .portal-title {
@@ -134,31 +140,128 @@
       color: var(--text-secondary);
     }
 
+    /* Section Styles */
+    .section {
+      margin-bottom: 32px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-badge {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--bg);
+      background: linear-gradient(135deg, var(--gold), #C9A227);
+      padding: 4px 8px;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Step List */
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .step-item:hover {
+      border-color: var(--gold);
+      transform: translateX(4px);
+    }
+
+    .step-number {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gold-dim);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .step-item.done .step-number {
+      background: rgba(76,175,80,.15);
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    .step-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .step-name {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .step-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .step-arrow {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* Tool Grid */
     .tool-grid {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 8px;
     }
 
     .tool-card {
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 20px;
+      gap: 12px;
+      padding: 16px;
       background: var(--bg-elevated);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius-md);
       text-decoration: none;
       transition: all 0.2s;
     }
 
     .tool-card:hover {
       border-color: var(--gold);
-      transform: translateY(-2px);
     }
 
     .tool-icon {
-      font-size: 28px;
+      font-size: 24px;
     }
 
     .tool-info {
@@ -166,41 +269,33 @@
     }
 
     .tool-name {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
       margin-bottom: 2px;
     }
 
     .tool-desc {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-secondary);
     }
 
+    /* Quick Links */
     .quick-links {
-      margin-top: 32px;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
-    }
-
-    .quick-links-title {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 12px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
     }
 
     .quick-link {
       display: block;
-      padding: 12px 16px;
+      padding: 12px;
       background: var(--bg-elevated);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-secondary);
       text-decoration: none;
-      margin-bottom: 8px;
+      text-align: center;
       transition: all 0.2s;
     }
 
@@ -209,11 +304,18 @@
       color: var(--text);
     }
 
-    .logout-btn {
-      display: block;
-      width: 100%;
-      padding: 12px;
+    /* Footer */
+    .portal-footer {
       margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 8px;
+    }
+
+    .logout-btn {
+      flex: 1;
+      padding: 12px;
       background: transparent;
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
@@ -226,6 +328,24 @@
     .logout-btn:hover {
       border-color: #E57373;
       color: #E57373;
+    }
+
+    .home-btn {
+      flex: 1;
+      padding: 12px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .home-btn:hover {
+      border-color: var(--gold);
+      color: var(--text);
     }
 
     .back-link {
@@ -245,6 +365,7 @@
 <body>
 
 <div class="container">
+  <!-- Login Gate -->
   <div class="login-gate" id="loginGate">
     <h1 class="login-title">Staff Portal</h1>
     <p class="login-subtitle">dtslib 내부 도구</p>
@@ -260,40 +381,117 @@
     <p class="login-error" id="loginError">암호가 올바르지 않습니다</p>
   </div>
 
+  <!-- Portal Content -->
   <div class="portal" id="portal">
     <header class="portal-header">
       <h1 class="portal-title">Staff Portal</h1>
       <p class="portal-subtitle">dtslib 내부 도구</p>
     </header>
 
-    <div class="tool-grid">
-      <a href="mailto:dimas@dtslib.com" class="tool-card">
-        <span class="tool-icon">✉️</span>
-        <div class="tool-info">
-          <p class="tool-name">이메일</p>
-          <p class="tool-desc">dimas@dtslib.com</p>
-        </div>
-      </a>
-      <a href="../" class="tool-card">
-        <span class="tool-icon">🌐</span>
-        <div class="tool-info">
-          <p class="tool-name">메인 사이트</p>
-          <p class="tool-desc">dtslib.com 홈페이지</p>
-        </div>
-      </a>
-    </div>
+    <!-- 홈페이지 구성하기 Section -->
+    <section class="section">
+      <div class="section-header">
+        <span class="section-badge">Setup</span>
+        <h2 class="section-title">홈페이지 구성하기</h2>
+      </div>
+      <div class="step-list">
+        <a href="https://www.canva.com/create/logos/" target="_blank" class="step-item">
+          <span class="step-number">1</span>
+          <div class="step-content">
+            <p class="step-name">로고 만들기</p>
+            <p class="step-desc">Canva에서 브랜드 로고 제작</p>
+          </div>
+          <span class="step-arrow">→</span>
+        </a>
+        <a href="https://workspace.google.com/" target="_blank" class="step-item">
+          <span class="step-number">2</span>
+          <div class="step-content">
+            <p class="step-name">회사 이메일 만들기</p>
+            <p class="step-desc">Google Workspace 또는 네이버웍스</p>
+          </div>
+          <span class="step-arrow">→</span>
+        </a>
+        <a href="https://github.com/signup" target="_blank" class="step-item">
+          <span class="step-number">3</span>
+          <div class="step-content">
+            <p class="step-name">GitHub 계정 만들기</p>
+            <p class="step-desc">코드 저장소 & 웹호스팅</p>
+          </div>
+          <span class="step-arrow">→</span>
+        </a>
+        <a href="https://www.youtube.com/create_channel" target="_blank" class="step-item">
+          <span class="step-number">4</span>
+          <div class="step-content">
+            <p class="step-name">YouTube 채널 만들기</p>
+            <p class="step-desc">영상 콘텐츠 채널</p>
+          </div>
+          <span class="step-arrow">→</span>
+        </a>
+        <a href="https://nid.naver.com/user2/join/agree" target="_blank" class="step-item">
+          <span class="step-number">5</span>
+          <div class="step-content">
+            <p class="step-name">네이버 계정 만들기</p>
+            <p class="step-desc">네이버 통합 계정</p>
+          </div>
+          <span class="step-arrow">→</span>
+        </a>
+        <a href="https://section.blog.naver.com/BlogHome.naver" target="_blank" class="step-item">
+          <span class="step-number">6</span>
+          <div class="step-content">
+            <p class="step-name">네이버 블로그 만들기</p>
+            <p class="step-desc">SEO & 콘텐츠 마케팅</p>
+          </div>
+          <span class="step-arrow">→</span>
+        </a>
+      </div>
+    </section>
 
-    <div class="quick-links">
-      <h2 class="quick-links-title">Quick Links</h2>
-      <a href="https://chat.openai.com" target="_blank" class="quick-link">ChatGPT →</a>
-      <a href="https://claude.ai" target="_blank" class="quick-link">Claude →</a>
-      <a href="https://github.com/dtslib1979" target="_blank" class="quick-link">GitHub →</a>
-    </div>
+    <!-- 도구 Section -->
+    <section class="section">
+      <div class="section-header">
+        <span class="section-badge">Tools</span>
+        <h2 class="section-title">내부 도구</h2>
+      </div>
+      <div class="tool-grid">
+        <a href="mailto:dimas@dtslib.com" class="tool-card">
+          <span class="tool-icon">✉️</span>
+          <div class="tool-info">
+            <p class="tool-name">이메일</p>
+            <p class="tool-desc">dimas@dtslib.com</p>
+          </div>
+        </a>
+        <a href="../" class="tool-card">
+          <span class="tool-icon">🌐</span>
+          <div class="tool-info">
+            <p class="tool-name">메인 사이트</p>
+            <p class="tool-desc">dtslib 홈페이지</p>
+          </div>
+        </a>
+      </div>
+    </section>
 
-    <button class="logout-btn" id="logoutBtn">로그아웃</button>
+    <!-- Quick Links Section -->
+    <section class="section">
+      <div class="section-header">
+        <span class="section-badge">Links</span>
+        <h2 class="section-title">빠른 링크</h2>
+      </div>
+      <div class="quick-links">
+        <a href="https://chat.openai.com" target="_blank" class="quick-link">ChatGPT</a>
+        <a href="https://claude.ai" target="_blank" class="quick-link">Claude</a>
+        <a href="https://github.com/dtslib1979" target="_blank" class="quick-link">GitHub</a>
+        <a href="https://analytics.google.com" target="_blank" class="quick-link">Analytics</a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div class="portal-footer">
+      <a href="../" class="home-btn">← 홈으로</a>
+      <button class="logout-btn" id="logoutBtn">로그아웃</button>
+    </div>
   </div>
 
-  <a href="../" class="back-link">← 메인으로 돌아가기</a>
+  <a href="../" class="back-link" id="backLink">← 메인으로 돌아가기</a>
 </div>
 
 <script>
@@ -306,6 +504,7 @@ const passwordInput = document.getElementById('passwordInput');
 const loginBtn = document.getElementById('loginBtn');
 const loginError = document.getElementById('loginError');
 const logoutBtn = document.getElementById('logoutBtn');
+const backLink = document.getElementById('backLink');
 
 if (sessionStorage.getItem(STORAGE_KEY) === 'true') {
   showPortal();
@@ -314,11 +513,13 @@ if (sessionStorage.getItem(STORAGE_KEY) === 'true') {
 function showPortal() {
   loginGate.style.display = 'none';
   portal.classList.add('active');
+  backLink.style.display = 'none';
 }
 
 function hidePortal() {
-  loginGate.style.display = 'block';
+  loginGate.style.display = 'flex';
   portal.classList.remove('active');
+  backLink.style.display = 'block';
   passwordInput.value = '';
   loginError.classList.remove('show');
 }
