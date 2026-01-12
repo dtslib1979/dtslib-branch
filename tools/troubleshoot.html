@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0f0c" />
+  <title>GitHub Pages 트러블슈팅</title>
+  <style>
+    :root {
+      --bg: #0a0f0c;
+      --bg-elevated: #141f18;
+      --gold: #f0c850;
+      --gold-dim: rgba(240,200,80,.2);
+      --text: #ffffff;
+      --text-secondary: rgba(255,255,255,.85);
+      --text-muted: rgba(255,255,255,.6);
+      --border: rgba(255,255,255,.15);
+      --success: #5fd068;
+      --error: #ff5555;
+      --warning: #ffaa00;
+      --radius-sm: 10px;
+      --radius-md: 14px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 15px;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 16px;
+      line-height: 1.5;
+    }
+
+    .container { max-width: 500px; margin: 0 auto; }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: var(--bg-elevated);
+      border: 2px solid var(--border);
+      border-radius: 999px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      margin-bottom: 20px;
+    }
+
+    .back-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    header {
+      text-align: center;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+
+    .page-icon { font-size: 48px; margin-bottom: 12px; }
+    .page-title { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+    .page-desc { font-size: 13px; color: var(--text-secondary); }
+
+    .checklist { display: flex; flex-direction: column; gap: 12px; }
+
+    .check-item {
+      background: var(--bg-elevated);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      transition: all 0.2s;
+    }
+
+    .check-item.checked { border-color: var(--success); }
+    .check-item.error { border-color: var(--error); }
+
+    .check-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .check-box {
+      width: 28px;
+      height: 28px;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+
+    .check-item.checked .check-box {
+      background: var(--success);
+      border-color: var(--success);
+    }
+
+    .check-item.error .check-box {
+      background: var(--error);
+      border-color: var(--error);
+    }
+
+    .check-info { flex: 1; }
+    .check-title { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+    .check-desc { font-size: 12px; color: var(--text-muted); }
+
+    .check-action {
+      display: none;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .check-item.error .check-action { display: block; }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      background: var(--gold);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--bg);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .action-btn:hover { opacity: 0.9; }
+
+    .action-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 24px 0 12px;
+    }
+
+    .status-bar {
+      background: var(--bg-elevated);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    .status-icon { font-size: 32px; margin-bottom: 8px; }
+    .status-text { font-size: 14px; font-weight: 600; }
+    .status-sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+    .reset-btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: transparent;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      margin-top: 16px;
+    }
+
+    .reset-btn:hover { border-color: var(--error); color: var(--error); }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <a href="../" class="back-btn">← 홈으로</a>
+
+  <header>
+    <div class="page-icon">🔧</div>
+    <h1 class="page-title">GitHub Pages 트러블슈팅</h1>
+    <p class="page-desc">페이지가 안 열리면 순서대로 체크하세요</p>
+  </header>
+
+  <p class="section-title">1. GitHub 설정</p>
+  <div class="checklist">
+    <div class="check-item" data-id="pages-enabled">
+      <div class="check-header" onclick="toggleCheck('pages-enabled')">
+        <div class="check-box"></div>
+        <div class="check-info">
+          <p class="check-title">GitHub Pages 활성화</p>
+          <p class="check-desc">Settings → Pages → Source 설정됨</p>
+        </div>
+      </div>
+      <div class="check-action">
+        <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site" target="_blank" class="action-btn">📖 설정 가이드 →</a>
+        <p class="action-note">Settings → Pages → Branch: main / root 선택</p>
+      </div>
+    </div>
+
+    <div class="check-item" data-id="branch-main">
+      <div class="check-header" onclick="toggleCheck('branch-main')">
+        <div class="check-box"></div>
+        <div class="check-info">
+          <p class="check-title">배포 브랜치 확인</p>
+          <p class="check-desc">main 브랜치에서 배포 설정됨</p>
+        </div>
+      </div>
+      <div class="check-action">
+        <a href="https://github.com/settings/repositories" target="_blank" class="action-btn">⚙️ 레포 설정 →</a>
+        <p class="action-note">기본 브랜치가 main인지 확인</p>
+      </div>
+    </div>
+
+    <div class="check-item" data-id="nojekyll">
+      <div class="check-header" onclick="toggleCheck('nojekyll')">
+        <div class="check-box"></div>
+        <div class="check-info">
+          <p class="check-title">.nojekyll 파일 존재</p>
+          <p class="check-desc">Jekyll 빌드 비활성화됨</p>
+        </div>
+      </div>
+      <div class="check-action">
+        <p class="action-note">레포 루트에 빈 .nojekyll 파일 생성 필요</p>
+      </div>
+    </div>
+
+    <div class="check-item" data-id="actions-enabled">
+      <div class="check-header" onclick="toggleCheck('actions-enabled')">
+        <div class="check-box"></div>
+        <div class="check-info">
+          <p class="check-title">GitHub Actions 활성화</p>
+          <p class="check-desc">워크플로우 실행 가능 상태</p>
+        </div>
+      </div>
+      <div class="check-action">
+        <a href="https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository" target="_blank" class="action-btn">📖 Actions 설정 →</a>
+        <p class="action-note">Settings → Actions → General → Allow all actions</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-title">2. 파일 구조</p>
+  <div class="checklist">
+    <div class="check-item" data-id="index-exists">
+      <div class="check-header" onclick="toggleCheck('index-exists')">
+        <div class="check-box"></div>
+        <div class="check-info">
+          <p class="check-title">index.html 존재</p>
+          <p class="check-desc">루트에 index.html 파일 있음</p>
+        </div>
+      </div>
+      <div class="check-action">
+        <p class="action-note">레포 루트에 index.html 파일이 있어야 함</p>
+      </div>
+    </div>
+
+    <div class="check-item" data-id="file-pushed">
+      <div class="check-header" onclick="toggleCheck('file-pushed')">
+        <div class="check-box"></div>
+        <div class="check-info">
+          <p class="check-title">파일 푸시 완료</p>
+          <p class="check-desc">최신 커밋이 GitHub에 반영됨</p>
+        </div>
+      </div>
+      <div class="check-action">
+        <p class="action-note">git push origin main 실행 확인</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-title">3. 도메인 설정 (선택)</p>
+  <div class="checklist">
+    <div class="check-item" data-id="cname-file">
+      <div class="check-header" onclick="toggleCheck('cname-file')">
+        <div class="check-box"></div>
+        <div class="check-info">
+          <p class="check-title">CNAME 파일 확인</p>
+          <p class="check-desc">커스텀 도메인 설정 파일</p>
+        </div>
+      </div>
+      <div class="check-action">
+        <p class="action-note">CNAME 파일에 도메인만 입력 (예: example.com)</p>
+      </div>
+    </div>
+
+    <div class="check-item" data-id="dns-cname">
+      <div class="check-header" onclick="toggleCheck('dns-cname')">
+        <div class="check-box"></div>
+        <div class="check-info">
+          <p class="check-title">DNS CNAME 레코드</p>
+          <p class="check-desc">호스팅 업체에서 설정 (카페24 등)</p>
+        </div>
+      </div>
+      <div class="check-action">
+        <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site" target="_blank" class="action-btn">📖 도메인 가이드 →</a>
+        <p class="action-note">CNAME: username.github.io 로 설정</p>
+      </div>
+    </div>
+
+    <div class="check-item" data-id="dns-propagation">
+      <div class="check-header" onclick="toggleCheck('dns-propagation')">
+        <div class="check-box"></div>
+        <div class="check-info">
+          <p class="check-title">DNS 전파 대기</p>
+          <p class="check-desc">변경 후 최대 48시간 소요</p>
+        </div>
+      </div>
+      <div class="check-action">
+        <a href="https://dnschecker.org/" target="_blank" class="action-btn">🔍 DNS 체크 →</a>
+        <p class="action-note">DNS 전파 상태 확인 도구</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-title">4. 배포 확인</p>
+  <div class="checklist">
+    <div class="check-item" data-id="deployment-status">
+      <div class="check-header" onclick="toggleCheck('deployment-status')">
+        <div class="check-box"></div>
+        <div class="check-info">
+          <p class="check-title">배포 상태 확인</p>
+          <p class="check-desc">Actions 탭에서 배포 성공 확인</p>
+        </div>
+      </div>
+      <div class="check-action">
+        <p class="action-note">레포 → Actions 탭 → 최근 워크플로우 확인</p>
+      </div>
+    </div>
+
+    <div class="check-item" data-id="cache-clear">
+      <div class="check-header" onclick="toggleCheck('cache-clear')">
+        <div class="check-box"></div>
+        <div class="check-info">
+          <p class="check-title">브라우저 캐시 삭제</p>
+          <p class="check-desc">하드 리프레시 또는 캐시 삭제</p>
+        </div>
+      </div>
+      <div class="check-action">
+        <p class="action-note">Ctrl+Shift+R (Windows) / Cmd+Shift+R (Mac)</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="status-bar" id="statusBar">
+    <div class="status-icon" id="statusIcon">📋</div>
+    <p class="status-text" id="statusText">체크리스트를 진행하세요</p>
+    <p class="status-sub" id="statusSub">0 / 10 완료</p>
+  </div>
+
+  <button class="reset-btn" onclick="resetAll()">🔄 전체 초기화</button>
+</div>
+
+<script>
+const STORAGE_KEY = 'troubleshoot_checks';
+const totalItems = document.querySelectorAll('.check-item').length;
+
+// 저장된 상태 불러오기
+function loadState() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) {
+    const state = JSON.parse(saved);
+    Object.keys(state).forEach(id => {
+      const item = document.querySelector(`[data-id="${id}"]`);
+      if (item) {
+        item.className = 'check-item ' + state[id];
+        updateCheckBox(item, state[id]);
+      }
+    });
+  }
+  updateStatus();
+}
+
+// 체크 토글
+function toggleCheck(id) {
+  const item = document.querySelector(`[data-id="${id}"]`);
+  const current = item.classList.contains('checked') ? 'checked' :
+                  item.classList.contains('error') ? 'error' : '';
+
+  let next = '';
+  if (current === '') next = 'checked';
+  else if (current === 'checked') next = 'error';
+  else next = '';
+
+  item.className = 'check-item ' + next;
+  updateCheckBox(item, next);
+  saveState();
+  updateStatus();
+}
+
+function updateCheckBox(item, state) {
+  const box = item.querySelector('.check-box');
+  if (state === 'checked') box.textContent = '✓';
+  else if (state === 'error') box.textContent = '✕';
+  else box.textContent = '';
+}
+
+// 상태 저장
+function saveState() {
+  const state = {};
+  document.querySelectorAll('.check-item').forEach(item => {
+    const id = item.dataset.id;
+    if (item.classList.contains('checked')) state[id] = 'checked';
+    else if (item.classList.contains('error')) state[id] = 'error';
+  });
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+// 상태 업데이트
+function updateStatus() {
+  const checked = document.querySelectorAll('.check-item.checked').length;
+  const errors = document.querySelectorAll('.check-item.error').length;
+
+  const icon = document.getElementById('statusIcon');
+  const text = document.getElementById('statusText');
+  const sub = document.getElementById('statusSub');
+
+  sub.textContent = `${checked} / ${totalItems} 완료`;
+
+  if (errors > 0) {
+    icon.textContent = '⚠️';
+    text.textContent = `${errors}개 항목 확인 필요`;
+    text.style.color = 'var(--error)';
+  } else if (checked === totalItems) {
+    icon.textContent = '✅';
+    text.textContent = '모든 설정 완료!';
+    text.style.color = 'var(--success)';
+  } else {
+    icon.textContent = '📋';
+    text.textContent = '체크리스트를 진행하세요';
+    text.style.color = 'var(--text)';
+  }
+}
+
+// 전체 초기화
+function resetAll() {
+  localStorage.removeItem(STORAGE_KEY);
+  document.querySelectorAll('.check-item').forEach(item => {
+    item.className = 'check-item';
+    item.querySelector('.check-box').textContent = '';
+  });
+  updateStatus();
+}
+
+// 초기화
+loadState();
+</script>
+
+</body>
+</html>
