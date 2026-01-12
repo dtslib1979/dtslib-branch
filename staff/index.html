@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0F1F15" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Staff Portal | dtslib</title>
+  <style>
+    :root {
+      --bg: #0F1F15;
+      --bg-elevated: #1A2E22;
+      --gold: #D4AF37;
+      --gold-dim: rgba(212,175,55,.12);
+      --text: #F5F5F0;
+      --text-secondary: rgba(245,245,240,.7);
+      --text-muted: rgba(245,245,240,.5);
+      --border: rgba(245,245,240,.1);
+      --border-gold: rgba(212,175,55,.3);
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 15px;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    /* Login Gate */
+    .login-gate {
+      text-align: center;
+    }
+
+    .login-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .login-subtitle {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+
+    .login-input {
+      width: 100%;
+      padding: 16px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: 18px;
+      color: var(--text);
+      text-align: center;
+      letter-spacing: 8px;
+      margin-bottom: 16px;
+    }
+
+    .login-input:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+
+    .login-input::placeholder {
+      letter-spacing: normal;
+      color: var(--text-muted);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--gold), #C9A227);
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--bg);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(212,175,55,.3);
+    }
+
+    .login-error {
+      color: #E57373;
+      font-size: 13px;
+      margin-top: 16px;
+      display: none;
+    }
+
+    .login-error.show {
+      display: block;
+    }
+
+    /* Portal Content */
+    .portal {
+      display: none;
+    }
+
+    .portal.active {
+      display: block;
+    }
+
+    .portal-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .portal-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .portal-subtitle {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .tool-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .tool-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .tool-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .tool-icon {
+      font-size: 28px;
+    }
+
+    .tool-info {
+      flex: 1;
+    }
+
+    .tool-name {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .tool-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .quick-links {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .quick-links-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+
+    .quick-link {
+      display: block;
+      padding: 12px 16px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      margin-bottom: 8px;
+      transition: all 0.2s;
+    }
+
+    .quick-link:hover {
+      border-color: var(--gold);
+      color: var(--text);
+    }
+
+    .logout-btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin-top: 32px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .logout-btn:hover {
+      border-color: #E57373;
+      color: #E57373;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      color: var(--gold);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Login Gate -->
+  <div class="login-gate" id="loginGate">
+    <h1 class="login-title">Staff Portal</h1>
+    <p class="login-subtitle">dtslib \ub0b4\ubd80 \ub3c4\uad6c</p>
+    <input
+      type="password"
+      class="login-input"
+      id="passwordInput"
+      placeholder="\uc554\ud638 \uc785\ub825"
+      maxlength="10"
+      autocomplete="off"
+    />
+    <button class="login-btn" id="loginBtn">\uc811\uc18d</button>
+    <p class="login-error" id="loginError">\uc554\ud638\uac00 \uc62c\ubc14\ub974\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4</p>
+  </div>
+
+  <!-- Portal Content -->
+  <div class="portal" id="portal">
+    <header class="portal-header">
+      <h1 class="portal-title">Staff Portal</h1>
+      <p class="portal-subtitle">dtslib \ub0b4\ubd80 \ub3c4\uad6c</p>
+    </header>
+
+    <div class="tool-grid">
+      <a href="mailto:dimas@dtslib.com" class="tool-card">
+        <span class="tool-icon">\u2709\ufe0f</span>
+        <div class="tool-info">
+          <p class="tool-name">\uc774\uba54\uc77c</p>
+          <p class="tool-desc">dimas@dtslib.com</p>
+        </div>
+      </a>
+      <a href="../" class="tool-card">
+        <span class="tool-icon">\ud83c\udf10</span>
+        <div class="tool-info">
+          <p class="tool-name">\uba54\uc778 \uc0ac\uc774\ud2b8</p>
+          <p class="tool-desc">dtslib.com \ud648\ud398\uc774\uc9c0</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="quick-links">
+      <h2 class="quick-links-title">Quick Links</h2>
+      <a href="https://chat.openai.com" target="_blank" class="quick-link">ChatGPT \u2192</a>
+      <a href="https://claude.ai" target="_blank" class="quick-link">Claude \u2192</a>
+      <a href="https://github.com/dtslib1979" target="_blank" class="quick-link">GitHub \u2192</a>
+    </div>
+
+    <button class="logout-btn" id="logoutBtn">\ub85c\uadf8\uc544\uc6c3</button>
+  </div>
+
+  <a href="../" class="back-link">\u2190 \uba54\uc778\uc73c\ub85c \ub3cc\uc544\uac00\uae30</a>
+</div>
+
+<script>
+const ACCESS_CODE = '1216';
+const STORAGE_KEY = 'dtslib_staff_auth';
+
+const loginGate = document.getElementById('loginGate');
+const portal = document.getElementById('portal');
+const passwordInput = document.getElementById('passwordInput');
+const loginBtn = document.getElementById('loginBtn');
+const loginError = document.getElementById('loginError');
+const logoutBtn = document.getElementById('logoutBtn');
+
+// Check if already authenticated
+if (sessionStorage.getItem(STORAGE_KEY) === 'true') {
+  showPortal();
+}
+
+function showPortal() {
+  loginGate.style.display = 'none';
+  portal.classList.add('active');
+}
+
+function hidePortal() {
+  loginGate.style.display = 'block';
+  portal.classList.remove('active');
+  passwordInput.value = '';
+  loginError.classList.remove('show');
+}
+
+function attemptLogin() {
+  if (passwordInput.value === ACCESS_CODE) {
+    sessionStorage.setItem(STORAGE_KEY, 'true');
+    showPortal();
+  } else {
+    loginError.classList.add('show');
+    passwordInput.value = '';
+    passwordInput.focus();
+  }
+}
+
+loginBtn.addEventListener('click', attemptLogin);
+passwordInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') attemptLogin();
+  loginError.classList.remove('show');
+});
+
+logoutBtn.addEventListener('click', () => {
+  sessionStorage.removeItem(STORAGE_KEY);
+  hidePortal();
+});
+</script>
+
+</body>
+</html>

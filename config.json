@@ -1,0 +1,40 @@
+{
+  "site": {
+    "name": "dtslib \ucee8\uc124\ud305",
+    "shortName": "dtslib",
+    "domain": "dtslib.com",
+    "url": "https://dtslib.com",
+    "description": "AI \uc5c5\ubb34 \uc790\ub3d9\ud654 \uc138\ud305 \uc11c\ube44\uc2a4",
+    "tagline": "AI \uc5c5\ubb34 \uc138\ud305",
+    "themeColor": "#0F1F15"
+  },
+  "owner": {
+    "name": "DIMAS",
+    "email": "dimas@dtslib.com",
+    "location": "\ub300\ud55c\ubbfc\uad6d"
+  },
+  "service": {
+    "title": "AI \uc5c5\ubb34 \uc790\ub3d9\ud654 \uc138\ud305",
+    "subtitle": "ChatGPT\ub97c \uc9c4\uc9dc \uc5c5\ubb34\uc5d0 \uc4f0\uac8c \ub9cc\ub4e4\uc5b4\ub4dc\ub9bd\ub2c8\ub2e4",
+    "price": "25\ub9cc\uc6d0 / 2\uc2dc\uac04",
+    "ctaText": "\ubb38\uc758\ud558\uae30",
+    "features": [
+      "\uc790\uc601\uc5c5\uc790 / \ub300\ud45c\ub2d8 \ub9de\ucda4",
+      "\ud63c\uc790\uc11c \uc774\uac83\uc800\uac83 \ub2e4 \ud558\ub294 \ubd84",
+      "AI \uc368\ubcf4\ub824\ub2e4 \ud3ec\uae30\ud55c \ubd84"
+    ]
+  },
+  "staff": {
+    "accessCode": "1216",
+    "storageKey": "dtslib_staff_auth"
+  },
+  "pwa": {
+    "enabled": true,
+    "cacheName": "dtslib-v1"
+  },
+  "meta": {
+    "version": "1.0.0",
+    "lastUpdated": "2026-01-12",
+    "template": "buddies.kr boilerplate"
+  }
+}

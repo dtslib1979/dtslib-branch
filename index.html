@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0F1F15" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>dtslib | AI \uc5c5\ubb34 \uc790\ub3d9\ud654 \uc138\ud305</title>
+  <meta name="description" content="ChatGPT\ub97c \uc9c4\uc9dc \uc5c5\ubb34\uc5d0 \uc4f0\uac8c \ub9cc\ub4e4\uc5b4\ub4dc\ub9bd\ub2c8\ub2e4. \ub300\ud45c\ub2d8\uc774 \uc9c0\uae08 \ud558\uace0 \uc788\ub294 \uc77c\uc744 AI\ub85c \ubc14\ub85c \ub3cc\uc544\uac00\uac8c \uc138\ud305\ud574\ub4dc\ub9bd\ub2c8\ub2e4." />
+  <meta property="og:title" content="dtslib | AI \uc5c5\ubb34 \uc790\ub3d9\ud654 \uc138\ud305" />
+  <meta property="og:description" content="ChatGPT\ub97c \uc9c4\uc9dc \uc5c5\ubb34\uc5d0 \uc4f0\uac8c \ub9cc\ub4e4\uc5b4\ub4dc\ub9bd\ub2c8\ub2e4" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://dtslib.com/" />
+  <meta property="og:locale" content="ko_KR" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="dtslib | AI \uc5c5\ubb34 \uc790\ub3d9\ud654 \uc138\ud305" />
+  <meta name="twitter:description" content="ChatGPT\ub97c \uc9c4\uc9dc \uc5c5\ubb34\uc5d0 \uc4f0\uac8c \ub9cc\ub4e4\uc5b4\ub4dc\ub9bd\ub2c8\ub2e4" />
+  <link rel="canonical" href="https://dtslib.com/" />
+  <link rel="icon" href="./assets/icons/logo.png" />
+  <link rel="apple-touch-icon" href="./assets/icons/logo.png" />
+  <link rel="manifest" href="./assets/manifest.json" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "dtslib \ucee8\uc124\ud305",
+    "url": "https://dtslib.com",
+    "description": "AI \uc5c5\ubb34 \uc790\ub3d9\ud654 \uc138\ud305 \uc11c\ube44\uc2a4",
+    "foundingDate": "2026",
+    "slogan": "AI \uc5c5\ubb34 \uc138\ud305",
+    "areaServed": "KR",
+    "knowsAbout": ["AI Automation", "ChatGPT", "Business Automation", "Workflow Optimization"],
+    "member": [
+      {"@type": "Person", "name": "DIMAS", "jobTitle": "AI Automation Consultant"}
+    ]
+  }
+  </script>
+  <style>
+    /* ==================== Design Tokens ==================== */
+    :root {
+      --bg: #0F1F15;
+      --bg-elevated: #1A2E22;
+      --accent: #2D8B57;
+      --gold: #D4AF37;
+      --gold-dim: rgba(212,175,55,.12);
+      --text: #F5F5F0;
+      --text-secondary: rgba(245,245,240,.7);
+      --text-muted: rgba(245,245,240,.5);
+      --border: rgba(245,245,240,.1);
+      --border-gold: rgba(212,175,55,.3);
+
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      --space-2xl: 48px;
+
+      --font-xs: 11px;
+      --font-sm: 13px;
+      --font-base: 15px;
+      --font-lg: 18px;
+      --font-xl: 22px;
+      --font-2xl: 28px;
+      --font-3xl: 36px;
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-full: 9999px;
+
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: var(--font-base);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: calc(var(--safe-top) + var(--space-md)) var(--space-md) calc(var(--safe-bottom) + var(--space-lg));
+    }
+
+    /* ==================== Header ==================== */
+    header {
+      text-align: center;
+      padding: var(--space-xl) 0;
+    }
+
+    .logo {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto var(--space-md);
+      border-radius: var(--radius-full);
+      border: 3px solid var(--gold);
+      box-shadow: 0 8px 32px rgba(212,175,55,.2);
+      overflow: hidden;
+      background: var(--bg-elevated);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+    }
+
+    .site-title {
+      font-size: var(--font-2xl);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-xs);
+    }
+
+    .site-tagline {
+      font-size: var(--font-sm);
+      color: var(--text-secondary);
+    }
+
+    /* ==================== Hero ==================== */
+    .hero {
+      padding: var(--space-xl) 0;
+      text-align: center;
+    }
+
+    .hero-title {
+      font-size: var(--font-xl);
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: var(--space-md);
+    }
+
+    .hero-title .highlight {
+      color: var(--gold);
+    }
+
+    .hero-desc {
+      font-size: var(--font-base);
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: var(--space-lg);
+    }
+
+    /* ==================== Service Card ==================== */
+    .service-card {
+      background: linear-gradient(145deg, var(--bg-elevated) 0%, rgba(26,46,34,.95) 100%);
+      border: 2px solid var(--border-gold);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      margin: var(--space-lg) 0;
+      position: relative;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), rgba(212,175,55,.3), var(--gold));
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    .service-title {
+      font-size: var(--font-lg);
+      font-weight: 600;
+      margin-bottom: var(--space-sm);
+    }
+
+    .service-subtitle {
+      font-size: var(--font-sm);
+      color: var(--text-secondary);
+      margin-bottom: var(--space-md);
+    }
+
+    .service-price {
+      display: inline-block;
+      background: var(--gold-dim);
+      border: 1px solid var(--border-gold);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-full);
+      font-size: var(--font-base);
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: var(--space-md);
+    }
+
+    /* ==================== Target List ==================== */
+    .target-section {
+      padding: var(--space-lg) 0;
+    }
+
+    .section-title {
+      font-size: var(--font-xs);
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-align: center;
+      margin-bottom: var(--space-md);
+    }
+
+    .target-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .target-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      font-size: var(--font-sm);
+    }
+
+    .target-item .icon {
+      font-size: 20px;
+    }
+
+    /* ==================== CTA Button ==================== */
+    .cta-section {
+      padding: var(--space-xl) 0;
+      text-align: center;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      min-width: 200px;
+      min-height: 56px;
+      padding: var(--space-md) var(--space-xl);
+      background: linear-gradient(135deg, var(--gold), #C9A227);
+      border: none;
+      border-radius: var(--radius-full);
+      font-size: var(--font-base);
+      font-weight: 600;
+      color: var(--bg);
+      text-decoration: none;
+      transition: all 0.2s;
+      box-shadow: 0 4px 16px rgba(212,175,55,.3);
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(212,175,55,.4);
+    }
+
+    .cta-btn:active {
+      transform: translateY(0);
+    }
+
+    /* ==================== Contact Card ==================== */
+    .contact-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
+      margin: var(--space-lg) 0;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .contact-card:hover {
+      border-color: var(--gold);
+    }
+
+    .contact-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: var(--font-sm);
+      color: var(--text-secondary);
+      padding: var(--space-xs) 0;
+    }
+
+    .contact-row .icon {
+      width: 20px;
+      text-align: center;
+    }
+
+    .contact-hint {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      font-size: var(--font-xs);
+      color: var(--text-muted);
+      margin-top: var(--space-md);
+      padding-top: var(--space-md);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ==================== Footer ==================== */
+    .footer {
+      padding: var(--space-lg) 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .footer-text {
+      font-size: var(--font-xs);
+      color: var(--text-muted);
+      margin-bottom: var(--space-sm);
+    }
+
+    .staff-link {
+      font-size: var(--font-xs);
+      color: var(--text-muted);
+      opacity: 0.5;
+      transition: opacity 0.2s;
+    }
+
+    .staff-link:hover {
+      opacity: 1;
+      color: var(--gold);
+    }
+
+    /* ==================== Toast ==================== */
+    .copy-toast {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--bg-elevated);
+      border: 1px solid var(--gold);
+      padding: var(--space-sm) var(--space-lg);
+      border-radius: var(--radius-full);
+      font-size: var(--font-sm);
+      color: var(--gold);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    .copy-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ==================== Tablet+ ==================== */
+    @media (min-width: 768px) {
+      .container {
+        max-width: 600px;
+      }
+
+      .logo {
+        width: 160px;
+        height: 160px;
+        font-size: 64px;
+      }
+
+      .site-title { font-size: var(--font-3xl); }
+      .hero-title { font-size: var(--font-2xl); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Header -->
+  <header>
+    <div class="logo" role="img" aria-label="dtslib \ub85c\uace0">
+      <span>AI</span>
+    </div>
+    <h1 class="site-title">dtslib</h1>
+    <p class="site-tagline">AI \uc5c5\ubb34 \uc790\ub3d9\ud654 \uc138\ud305</p>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h2 class="hero-title">
+      ChatGPT \uc368\ubcf4\uc168\ub294\ub370<br>
+      \ub9c9\uc0c1 \uc5c5\ubb34\uc5d0\ub294 <span class="highlight">\ubabb \uc4f0\uace0</span> \uacc4\uc2dc\uc8e0?
+    </h2>
+    <p class="hero-desc">
+      \ub300\ud45c\ub2d8\uc774 \uc9c0\uae08 \ud558\uace0 \uc788\ub294 \uc77c\uc744<br>
+      AI\ub85c \ubc14\ub85c \ub3cc\uc544\uac00\uac8c \uc138\ud305\ud574\ub4dc\ub9bd\ub2c8\ub2e4.
+    </p>
+  </section>
+
+  <!-- Service Card -->
+  <section class="service-card">
+    <h3 class="service-title">AI \uc5c5\ubb34 \uc790\ub3d9\ud654 \uc138\ud305</h3>
+    <p class="service-subtitle">2\uc2dc\uac04 \ub3d9\uc548 \ub300\ud45c\ub2d8 \uc5c5\ubb34\uc5d0 \ub9de\uac8c AI\ub97c \uc138\ud305\ud574\ub4dc\ub9bd\ub2c8\ub2e4</p>
+    <div class="service-price">25\ub9cc\uc6d0 / 2\uc2dc\uac04</div>
+  </section>
+
+  <!-- Target -->
+  <section class="target-section">
+    <h3 class="section-title">\uc774\ub7f0 \ubd84\uaed8 \ub9de\uc2b5\ub2c8\ub2e4</h3>
+    <ul class="target-list">
+      <li class="target-item">
+        <span class="icon">\ud83c\udfea</span>
+        <span>\uc790\uc601\uc5c5\uc790 / \ub300\ud45c\ub2d8</span>
+      </li>
+      <li class="target-item">
+        <span class="icon">\ud83d\udcbc</span>
+        <span>\ud63c\uc790\uc11c \uc774\uac83\uc800\uac83 \ub2e4 \ud558\ub294 \ubd84</span>
+      </li>
+      <li class="target-item">
+        <span class="icon">\ud83e\udd16</span>
+        <span>AI \uc368\ubcf4\ub824\ub2e4 \ud3ec\uae30\ud55c \ubd84</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <a href="mailto:dimas@dtslib.com" class="cta-btn">
+      \ubb38\uc758\ud558\uae30
+      <span>\u2192</span>
+    </a>
+  </section>
+
+  <!-- Contact Card -->
+  <div class="contact-card" id="contactCard" role="button" tabindex="0" aria-label="\uc5f0\ub77d\ucc98 \ubcf5\uc0ac">
+    <div class="contact-row">
+      <span class="icon">\ud83c\udf10</span>
+      <span>dtslib.com</span>
+    </div>
+    <div class="contact-row">
+      <span class="icon">\u2709\ufe0f</span>
+      <span>dimas@dtslib.com</span>
+    </div>
+    <div class="contact-row">
+      <span class="icon">\ud83d\udccd</span>
+      <span>\ub300\ud55c\ubbfc\uad6d</span>
+    </div>
+    <div class="contact-hint">
+      <span>\ud83d\udccb</span>
+      <span>\ud0ed\ud574\uc11c \ubcf5\uc0ac</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p class="footer-text">\u00a9 2026 dtslib. All rights reserved.</p>
+    <a href="./staff/" class="staff-link">Staff Portal</a>
+  </footer>
+</div>
+
+<!-- Toast -->
+<div class="copy-toast" id="copyToast">\ubcf5\uc0ac\ub418\uc5c8\uc2b5\ub2c8\ub2e4</div>
+
+<script>
+// PWA Service Worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
+
+// Contact Card Copy
+const contactCard = document.getElementById('contactCard');
+const copyToast = document.getElementById('copyToast');
+
+const contactText = `\u3010 dtslib \ucee8\uc124\ud305 \u3011
+AI \uc5c5\ubb34 \uc790\ub3d9\ud654 \uc138\ud305
+
+ChatGPT\ub97c \uc9c4\uc9dc \uc5c5\ubb34\uc5d0 \uc4f0\uac8c
+\uc138\ud305\ud574\ub4dc\ub9bd\ub2c8\ub2e4
+
+\ud83d\udcb0 25\ub9cc\uc6d0 / 2\uc2dc\uac04
+
+\ud83c\udf10 dtslib.com
+\u2709\ufe0f dimas@dtslib.com`;
+
+function copyContact() {
+  navigator.clipboard.writeText(contactText).then(() => {
+    copyToast.classList.add('show');
+    setTimeout(() => copyToast.classList.remove('show'), 2000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = contactText;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    copyToast.classList.add('show');
+    setTimeout(() => copyToast.classList.remove('show'), 2000);
+  });
+}
+
+contactCard.addEventListener('click', copyContact);
+contactCard.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    copyContact();
+  }
+});
+</script>
+
+</body>
+</html>
