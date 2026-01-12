@@ -340,15 +340,15 @@
         <span>GitHub 설정</span>
       </div>
       <div class="settings-row">
-        <input type="text" class="form-input" id="repoOwner" placeholder="GitHub 유저명" value="dtslib1979">
+        <input type="text" class="form-input" id="repoOwner" placeholder="GitHub 유저명">
       </div>
       <div class="settings-row">
-        <input type="text" class="form-input" id="repoName" placeholder="블로그 레포 이름" value="dtslib-posts">
+        <input type="text" class="form-input" id="repoName" placeholder="블로그 레포 이름">
       </div>
       <div class="settings-row">
         <input type="password" class="form-input" id="ghToken" placeholder="Personal Access Token">
       </div>
-      <p class="form-hint">* 토큰은 로컬에만 저장됩니다 (sessionStorage)</p>
+      <p class="form-hint">* Staff Portal 설정에서 자동으로 불러옵니다</p>
     </div>
 
     <!-- Post Form -->
@@ -529,13 +529,22 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
-// Load saved settings
-const savedOwner = sessionStorage.getItem('gh_owner');
-const savedRepo = sessionStorage.getItem('gh_repo');
-const savedToken = sessionStorage.getItem('gh_token');
-if (savedOwner) document.getElementById('repoOwner').value = savedOwner;
-if (savedRepo) document.getElementById('repoName').value = savedRepo;
-if (savedToken) document.getElementById('ghToken').value = savedToken;
+// Load saved settings (Staff Portal 설정 우선)
+const portalConfig = localStorage.getItem('dtslib_repo_config');
+if (portalConfig) {
+  const config = JSON.parse(portalConfig);
+  if (config.githubId) document.getElementById('repoOwner').value = config.githubId;
+  if (config.blogRepo) document.getElementById('repoName').value = config.blogRepo;
+  if (config.pat) document.getElementById('ghToken').value = config.pat;
+} else {
+  // fallback to sessionStorage
+  const savedOwner = sessionStorage.getItem('gh_owner');
+  const savedRepo = sessionStorage.getItem('gh_repo');
+  const savedToken = sessionStorage.getItem('gh_token');
+  if (savedOwner) document.getElementById('repoOwner').value = savedOwner;
+  if (savedRepo) document.getElementById('repoName').value = savedRepo;
+  if (savedToken) document.getElementById('ghToken').value = savedToken;
+}
 
 // Save settings on change
 ['repoOwner', 'repoName', 'ghToken'].forEach(id => {

@@ -522,7 +522,7 @@
         <span class="page-name">About</span>
         <span class="page-desc">소개 페이지</span>
       </a>
-      <a href="https://dtslib1979.github.io/dtslib-posts/" target="_blank" class="page-card">
+      <a href="#" id="blogLink" target="_blank" class="page-card">
         <span class="page-icon">📝</span>
         <span class="page-name">Blog</span>
         <span class="page-desc">HTML 포스트</span>
@@ -580,7 +580,7 @@
   <section class="linktree-section">
     <h2 class="section-title">Links</h2>
     <div class="linktree">
-      <a href="https://github.com/dtslib1979" target="_blank" class="link-item">
+      <a href="#" id="githubLink" target="_blank" class="link-item">
         <span class="link-icon">🐙</span>
         <div class="link-text">
           <div class="link-name">GitHub</div>
@@ -725,6 +725,29 @@ track.addEventListener('touchend', (e) => {
     else prevBtn.click();
   }
 });
+
+// =====================
+// 동적 링크 (Staff Portal 설정 연동)
+// =====================
+(function loadDynamicLinks() {
+  const saved = localStorage.getItem('dtslib_repo_config');
+  if (!saved) return;
+
+  const config = JSON.parse(saved);
+  const g = config.githubId || '';
+
+  // Blog 링크
+  const blogLink = document.getElementById('blogLink');
+  if (blogLink && g && config.blogRepo) {
+    blogLink.href = `https://${g}.github.io/${config.blogRepo}/`;
+  }
+
+  // GitHub 링크
+  const githubLink = document.getElementById('githubLink');
+  if (githubLink && g) {
+    githubLink.href = `https://github.com/${g}`;
+  }
+})();
 </script>
 
 </body>

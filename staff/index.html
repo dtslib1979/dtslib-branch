@@ -872,11 +872,11 @@
             </div>
             <span class="step-arrow">→</span>
           </a>
-          <a href="https://github.com/dtslib1979/dtslib-branch" target="_blank" class="step-item">
+          <a href="https://github.com/new/import" target="_blank" class="step-item">
             <span class="step-number">2</span>
             <div class="step-content">
-              <p class="step-name">dtslib-branch 복제</p>
-              <p class="step-desc">보일러플레이트 템플릿</p>
+              <p class="step-name">이 템플릿 Import</p>
+              <p class="step-desc">GitHub Import로 복제</p>
             </div>
             <span class="step-arrow">→</span>
           </a>
@@ -978,55 +978,26 @@ GitHub Pages 기반 랜딩페이지 + Staff Portal 레포지토리를 구축해�
       </div>
     </div>
 
-    <!-- 생산성 도구 APK -->
-    <section class="section">
+    <!-- 생산성 도구 APK (동적 렌더링) -->
+    <section class="section" id="apkSection">
       <div class="section-header">
         <span class="section-badge">APK</span>
         <h2 class="section-title">생산성 도구</h2>
       </div>
-      <div class="apk-list">
-        <a href="https://nightly.link/dtslib1979/dtslib-apk-lab/workflows/build-parksy-axis/main/parksy-axis-debug.zip" class="apk-item" download>
-          <span class="apk-icon">📡</span>
-          <div class="apk-content">
-            <p class="apk-name">Parksy Axis</p>
-            <p class="apk-desc">방송용 사고 단계 오버레이</p>
-          </div>
-          <span class="apk-version">v5.2.0</span>
-          <span class="apk-download">⬇</span>
-        </a>
-        <a href="https://nightly.link/dtslib1979/dtslib-apk-lab/workflows/build-laser-pen/main/laser-pen-overlay-debug.zip" class="apk-item" download>
-          <span class="apk-icon">✏️</span>
-          <div class="apk-content">
-            <p class="apk-name">Parksy Pen</p>
-            <p class="apk-desc">S Pen 레이저펜 판서 오버레이</p>
-          </div>
-          <span class="apk-version">v1.0.31</span>
-          <span class="apk-download">⬇</span>
-        </a>
-        <a href="https://nightly.link/dtslib1979/dtslib-apk-lab/workflows/build-capture-pipeline/main/capture-pipeline-debug.zip" class="apk-item" download>
-          <span class="apk-icon">📸</span>
-          <div class="apk-content">
-            <p class="apk-name">Parksy Capture</p>
-            <p class="apk-desc">텍스트 캡처 → GitHub 아카이브</p>
-          </div>
-          <span class="apk-version">v10.0.8</span>
-          <span class="apk-download">⬇</span>
-        </a>
+      <div class="apk-list" id="apkList">
+        <!-- 동적으로 렌더링됨 -->
       </div>
-      <p class="apk-note">* ZIP 다운로드 → 압축 해제 → APK 설치</p>
+      <p class="apk-note">* APK 레포 설정 시 다운로드 링크 활성화</p>
     </section>
 
-    <!-- 빠른 링크 -->
+    <!-- 빠른 링크 (동적 렌더링) -->
     <section class="section">
       <div class="section-header">
         <span class="section-badge">Links</span>
         <h2 class="section-title">빠른 링크</h2>
       </div>
-      <div class="quick-links">
-        <a href="https://chat.openai.com" target="_blank" class="quick-link">ChatGPT</a>
-        <a href="https://claude.ai" target="_blank" class="quick-link">Claude</a>
-        <a href="https://github.com/dtslib1979" target="_blank" class="quick-link">GitHub</a>
-        <a href="https://dtslib-apk-lab.vercel.app" target="_blank" class="quick-link">APK Lab</a>
+      <div class="quick-links" id="quickLinks">
+        <!-- 동적으로 렌더링됨 -->
       </div>
     </section>
 
@@ -1134,6 +1105,8 @@ const REPO_CONFIG_KEY = 'dtslib_repo_config';
 document.addEventListener('DOMContentLoaded', () => {
   loadRepoConfig();
   renderRepoGrid();
+  renderApkList();
+  renderQuickLinks();
 });
 
 function loadRepoConfig() {
@@ -1167,6 +1140,8 @@ function saveRepoConfig() {
   localStorage.setItem(REPO_CONFIG_KEY, JSON.stringify(config));
   updateStatusIcons(config);
   renderRepoGrid();
+  renderApkList();
+  renderQuickLinks();
   showToast('저장되었습니다');
 }
 
@@ -1246,6 +1221,84 @@ function renderRepoGrid() {
   });
 
   grid.innerHTML = html;
+}
+
+// =====================
+// APK List (동적)
+// =====================
+function renderApkList() {
+  const saved = localStorage.getItem(REPO_CONFIG_KEY);
+  const config = saved ? JSON.parse(saved) : {};
+  const list = document.getElementById('apkList');
+
+  const g = config.githubId || '';
+  const apkRepo = config.apkRepo || '';
+
+  // APK 앱 목록 (유저가 자기 워크플로우에 맞게 수정 가능)
+  const apps = [
+    { workflow: 'build-parksy-axis', artifact: 'parksy-axis-debug', icon: '📡', name: 'Parksy Axis', desc: '방송용 사고 단계 오버레이', version: 'v5.2.0' },
+    { workflow: 'build-laser-pen', artifact: 'laser-pen-overlay-debug', icon: '✏️', name: 'Parksy Pen', desc: 'S Pen 레이저펜 판서 오버레이', version: 'v1.0.31' },
+    { workflow: 'build-capture-pipeline', artifact: 'capture-pipeline-debug', icon: '📸', name: 'Parksy Capture', desc: '텍스트 캡처 → GitHub 아카이브', version: 'v10.0.8' }
+  ];
+
+  let html = '';
+
+  if (g && apkRepo) {
+    apps.forEach(app => {
+      const url = `https://nightly.link/${g}/${apkRepo}/workflows/${app.workflow}/main/${app.artifact}.zip`;
+      html += `
+        <a href="${url}" class="apk-item" download>
+          <span class="apk-icon">${app.icon}</span>
+          <div class="apk-content">
+            <p class="apk-name">${app.name}</p>
+            <p class="apk-desc">${app.desc}</p>
+          </div>
+          <span class="apk-version">${app.version}</span>
+          <span class="apk-download">⬇</span>
+        </a>`;
+    });
+  } else {
+    html = `
+      <div class="apk-item" style="opacity:0.5;cursor:default;">
+        <span class="apk-icon">🔒</span>
+        <div class="apk-content">
+          <p class="apk-name">APK 레포 미설정</p>
+          <p class="apk-desc">위에서 GitHub ID와 APK 레포를 설정하세요</p>
+        </div>
+      </div>`;
+  }
+
+  list.innerHTML = html;
+}
+
+// =====================
+// Quick Links (동적)
+// =====================
+function renderQuickLinks() {
+  const saved = localStorage.getItem(REPO_CONFIG_KEY);
+  const config = saved ? JSON.parse(saved) : {};
+  const container = document.getElementById('quickLinks');
+
+  const g = config.githubId || '';
+  const apkRepo = config.apkRepo || '';
+
+  let html = `
+    <a href="https://chat.openai.com" target="_blank" class="quick-link">ChatGPT</a>
+    <a href="https://claude.ai" target="_blank" class="quick-link">Claude</a>`;
+
+  if (g) {
+    html += `<a href="https://github.com/${g}" target="_blank" class="quick-link">GitHub</a>`;
+  } else {
+    html += `<a href="https://github.com" target="_blank" class="quick-link">GitHub</a>`;
+  }
+
+  if (g && apkRepo) {
+    html += `<a href="https://${apkRepo}.vercel.app" target="_blank" class="quick-link">APK Lab</a>`;
+  } else {
+    html += `<span class="quick-link" style="opacity:0.5;cursor:default;">APK Lab</span>`;
+  }
+
+  container.innerHTML = html;
 }
 
 // =====================
