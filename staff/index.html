@@ -642,7 +642,14 @@
       margin-left: auto;
     }
 
-    @media (max-width: 400px) {
+    .repo-badge.web { background: rgba(91,192,235,.25); color: var(--info); }
+    .repo-badge.apk { background: rgba(95,208,104,.25); color: var(--success); }
+
+    @media (max-width: 500px) {
+      .repo-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 360px) {
       .repo-grid { grid-template-columns: 1fr; }
       .connection-flow { flex-direction: column; }
       .portal-footer { flex-direction: column; }
@@ -675,7 +682,7 @@
 
       <!-- Repo Setup Form -->
       <div class="repo-setup">
-        <div class="repo-setup-title">⚙️ 내 레포지토리 설정</div>
+        <div class="repo-setup-title">⚙️ 내 레포지토리 네트워크 (6개)</div>
         <div class="repo-input-group">
           <div class="repo-input-row">
             <span class="repo-input-label">GitHub ID</span>
@@ -683,19 +690,34 @@
             <span class="repo-input-status" id="statusGithub">🔒</span>
           </div>
           <div class="repo-input-row">
-            <span class="repo-input-label">메인 레포</span>
-            <input type="text" class="repo-input" id="inputMainRepo" placeholder="my-site" />
+            <span class="repo-input-label">1. 메인</span>
+            <input type="text" class="repo-input" id="inputMainRepo" placeholder="my-branch (랜딩+포탈)" />
             <span class="repo-input-status" id="statusMain">🔒</span>
           </div>
           <div class="repo-input-row">
-            <span class="repo-input-label">블로그</span>
-            <input type="text" class="repo-input" id="inputBlogRepo" placeholder="my-posts (선택)" />
+            <span class="repo-input-label">2. 블로그</span>
+            <input type="text" class="repo-input" id="inputBlogRepo" placeholder="my-posts (HTML 포스팅)" />
             <span class="repo-input-status" id="statusBlog">🔒</span>
           </div>
           <div class="repo-input-row">
-            <span class="repo-input-label">APK Lab</span>
-            <input type="text" class="repo-input" id="inputApkRepo" placeholder="my-apk-lab (선택)" />
+            <span class="repo-input-label">3. 로그</span>
+            <input type="text" class="repo-input" id="inputLogsRepo" placeholder="my-logs (캡처 저장소)" />
+            <span class="repo-input-status" id="statusLogs">🔒</span>
+          </div>
+          <div class="repo-input-row">
+            <span class="repo-input-label">4. PWA</span>
+            <input type="text" class="repo-input" id="inputPwaRepo" placeholder="my-pwa (Vercel 앱)" />
+            <span class="repo-input-status" id="statusPwa">🔒</span>
+          </div>
+          <div class="repo-input-row">
+            <span class="repo-input-label">5. APK</span>
+            <input type="text" class="repo-input" id="inputApkRepo" placeholder="my-apk-lab (APK 스토어)" />
             <span class="repo-input-status" id="statusApk">🔒</span>
+          </div>
+          <div class="repo-input-row">
+            <span class="repo-input-label">6. 미디어</span>
+            <input type="text" class="repo-input" id="inputMediaRepo" placeholder="my-media (사진/음원)" />
+            <span class="repo-input-status" id="statusMedia">🔒</span>
           </div>
           <div class="repo-input-row">
             <span class="repo-input-label">PAT 토큰</span>
@@ -1091,7 +1113,10 @@ function loadRepoConfig() {
     document.getElementById('inputGithubId').value = config.githubId || '';
     document.getElementById('inputMainRepo').value = config.mainRepo || '';
     document.getElementById('inputBlogRepo').value = config.blogRepo || '';
+    document.getElementById('inputLogsRepo').value = config.logsRepo || '';
+    document.getElementById('inputPwaRepo').value = config.pwaRepo || '';
     document.getElementById('inputApkRepo').value = config.apkRepo || '';
+    document.getElementById('inputMediaRepo').value = config.mediaRepo || '';
     document.getElementById('inputPat').value = config.pat || '';
     updateStatusIcons(config);
   }
@@ -1102,7 +1127,10 @@ function saveRepoConfig() {
     githubId: document.getElementById('inputGithubId').value.trim(),
     mainRepo: document.getElementById('inputMainRepo').value.trim(),
     blogRepo: document.getElementById('inputBlogRepo').value.trim(),
+    logsRepo: document.getElementById('inputLogsRepo').value.trim(),
+    pwaRepo: document.getElementById('inputPwaRepo').value.trim(),
     apkRepo: document.getElementById('inputApkRepo').value.trim(),
+    mediaRepo: document.getElementById('inputMediaRepo').value.trim(),
     pat: document.getElementById('inputPat').value.trim()
   };
 
@@ -1116,7 +1144,10 @@ function updateStatusIcons(config) {
   document.getElementById('statusGithub').textContent = config.githubId ? '🔓' : '🔒';
   document.getElementById('statusMain').textContent = config.mainRepo ? '🔓' : '🔒';
   document.getElementById('statusBlog').textContent = config.blogRepo ? '🔓' : '🔒';
+  document.getElementById('statusLogs').textContent = config.logsRepo ? '🔓' : '🔒';
+  document.getElementById('statusPwa').textContent = config.pwaRepo ? '🔓' : '🔒';
   document.getElementById('statusApk').textContent = config.apkRepo ? '🔓' : '🔒';
+  document.getElementById('statusMedia').textContent = config.mediaRepo ? '🔓' : '🔒';
   document.getElementById('statusPat').textContent = config.pat ? '🔓' : '🔒';
 }
 
@@ -1126,113 +1157,63 @@ function renderRepoGrid() {
   const grid = document.getElementById('repoGrid');
   const flowBlog = document.getElementById('flowBlog');
 
-  const githubId = config.githubId || '';
-  const mainRepo = config.mainRepo || '';
-  const blogRepo = config.blogRepo || '';
-  const apkRepo = config.apkRepo || '';
+  const g = config.githubId || '';
 
   // 블로그 플로우 업데이트
-  flowBlog.textContent = blogRepo ? `📝 ${blogRepo}` : '📝 블로그 레포';
+  flowBlog.textContent = config.blogRepo ? `📝 ${config.blogRepo}` : '📝 블로그 레포';
+
+  // 6개 레포 정의
+  const repos = [
+    { key: 'mainRepo', icon: '🌐', name: '메인', badge: 'WEB', badgeClass: 'web', desc: '랜딩+포탈', hosting: 'pages' },
+    { key: 'blogRepo', icon: '📝', name: '블로그', badge: 'BLOG', badgeClass: 'web', desc: 'HTML 포스팅', hosting: 'pages' },
+    { key: 'logsRepo', icon: '📋', name: '로그', badge: 'LOG', badgeClass: 'web', desc: '캡처 저장소', hosting: 'api' },
+    { key: 'pwaRepo', icon: '⚡', name: 'PWA', badge: 'APP', badgeClass: 'web', desc: 'Vercel 앱', hosting: 'vercel' },
+    { key: 'apkRepo', icon: '📱', name: 'APK', badge: 'APK', badgeClass: 'apk', desc: 'APK 스토어', hosting: 'vercel' },
+    { key: 'mediaRepo', icon: '🖼️', name: '미디어', badge: 'CDN', badgeClass: 'web', desc: '사진/음원', hosting: 'cdn' }
+  ];
 
   let html = '';
 
-  // 메인 레포 카드
-  if (githubId && mainRepo) {
-    html += `
-      <a href="https://github.com/${githubId}/${mainRepo}" target="_blank" class="repo-card">
-        <div class="repo-header">
-          <span class="repo-icon">🌐</span>
-          <span class="repo-name">${mainRepo}</span>
-          <span class="repo-badge web">WEB</span>
-        </div>
-        <div class="repo-links">
-          <span class="repo-link">🔓 연결됨</span>
-          <span class="repo-link">📄 ${githubId}.github.io/${mainRepo}</span>
-        </div>
-      </a>`;
-  } else {
-    html += `
-      <div class="repo-card empty">
-        <div class="repo-header">
-          <span class="repo-icon">🌐</span>
-          <span class="repo-name">메인 레포</span>
-          <span class="repo-status">🔒</span>
-        </div>
-        <div class="repo-links">
-          <span class="repo-link">위에서 설정하세요</span>
-        </div>
-      </div>`;
-  }
+  repos.forEach(repo => {
+    const repoName = config[repo.key] || '';
+    if (g && repoName) {
+      let link = '';
+      if (repo.hosting === 'pages') {
+        link = `${g}.github.io/${repoName}`;
+      } else if (repo.hosting === 'vercel') {
+        link = `${repoName}.vercel.app`;
+      } else if (repo.hosting === 'cdn') {
+        link = `cdn.jsdelivr.net/gh/${g}/${repoName}`;
+      } else {
+        link = `GitHub API 연동`;
+      }
 
-  // 블로그 레포 카드
-  if (githubId && blogRepo) {
-    html += `
-      <a href="https://github.com/${githubId}/${blogRepo}" target="_blank" class="repo-card">
-        <div class="repo-header">
-          <span class="repo-icon">📝</span>
-          <span class="repo-name">${blogRepo}</span>
-          <span class="repo-badge web">BLOG</span>
-        </div>
-        <div class="repo-links">
-          <span class="repo-link">🔓 연결됨</span>
-          <span class="repo-link">📄 ${githubId}.github.io/${blogRepo}</span>
-        </div>
-      </a>`;
-  } else {
-    html += `
-      <div class="repo-card empty">
-        <div class="repo-header">
-          <span class="repo-icon">📝</span>
-          <span class="repo-name">블로그 레포</span>
-          <span class="repo-status">🔒</span>
-        </div>
-        <div class="repo-links">
-          <span class="repo-link">선택 사항</span>
-        </div>
-      </div>`;
-  }
-
-  // APK 레포 카드
-  if (githubId && apkRepo) {
-    html += `
-      <a href="https://github.com/${githubId}/${apkRepo}" target="_blank" class="repo-card">
-        <div class="repo-header">
-          <span class="repo-icon">📱</span>
-          <span class="repo-name">${apkRepo}</span>
-          <span class="repo-badge apk">APK</span>
-        </div>
-        <div class="repo-links">
-          <span class="repo-link">🔓 연결됨</span>
-          <span class="repo-link">🔧 APK 빌드 레포</span>
-        </div>
-      </a>`;
-  } else {
-    html += `
-      <div class="repo-card empty">
-        <div class="repo-header">
-          <span class="repo-icon">📱</span>
-          <span class="repo-name">APK Lab</span>
-          <span class="repo-status">🔒</span>
-        </div>
-        <div class="repo-links">
-          <span class="repo-link">선택 사항</span>
-        </div>
-      </div>`;
-  }
-
-  // HTML 포스터 도구 (항상 표시)
-  html += `
-    <a href="../tools/html-poster.html" class="repo-card">
-      <div class="repo-header">
-        <span class="repo-icon">✍️</span>
-        <span class="repo-name">HTML 포스터</span>
-        <span class="repo-badge web">TOOL</span>
-      </div>
-      <div class="repo-links">
-        <span class="repo-link">📤 GitHub API 배포</span>
-        <span class="repo-link">👁️ 미리보기</span>
-      </div>
-    </a>`;
+      html += `
+        <a href="https://github.com/${g}/${repoName}" target="_blank" class="repo-card">
+          <div class="repo-header">
+            <span class="repo-icon">${repo.icon}</span>
+            <span class="repo-name">${repoName}</span>
+            <span class="repo-badge ${repo.badgeClass}">${repo.badge}</span>
+          </div>
+          <div class="repo-links">
+            <span class="repo-link">🔓 연결됨</span>
+            <span class="repo-link">📄 ${link}</span>
+          </div>
+        </a>`;
+    } else {
+      html += `
+        <div class="repo-card empty">
+          <div class="repo-header">
+            <span class="repo-icon">${repo.icon}</span>
+            <span class="repo-name">${repo.name}</span>
+            <span class="repo-status">🔒</span>
+          </div>
+          <div class="repo-links">
+            <span class="repo-link">${repo.desc}</span>
+          </div>
+        </div>`;
+    }
+  });
 
   grid.innerHTML = html;
 }
