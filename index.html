@@ -6,40 +6,16 @@
   <meta name="theme-color" content="#0F1F15" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>dtslib | AI 업무 자동화 세팅</title>
-  <meta name="description" content="ChatGPT를 진짜 업무에 쓰게 만들어드립니다. 대표님이 지금 하고 있는 일을 AI로 바로 돌아가게 세팅해드립니다." />
-  <meta property="og:title" content="dtslib | AI 업무 자동화 세팅" />
-  <meta property="og:description" content="ChatGPT를 진짜 업무에 쓰게 만들어드립니다" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://dtslib1979.github.io/dtslib-branch/" />
-  <meta property="og:locale" content="ko_KR" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="dtslib | AI 업무 자동화 세팅" />
-  <meta name="twitter:description" content="ChatGPT를 진짜 업무에 쓰게 만들어드립니다" />
-  <link rel="canonical" href="https://dtslib1979.github.io/dtslib-branch/" />
+  <title>dtslib | 보일러플레이트</title>
+  <meta name="description" content="GitHub Pages 보일러플레이트 템플릿" />
   <link rel="icon" href="./assets/icons/logo.png" />
   <link rel="apple-touch-icon" href="./assets/icons/logo.png" />
   <link rel="manifest" href="./assets/manifest.json" />
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "dtslib 컨설팅",
-    "url": "https://dtslib1979.github.io/dtslib-branch/",
-    "description": "AI 업무 자동화 세팅 서비스",
-    "foundingDate": "2026",
-    "slogan": "AI 업무 세팅",
-    "areaServed": "KR",
-    "knowsAbout": ["AI Automation", "ChatGPT", "Business Automation", "Workflow Optimization"],
-    "member": [
-      {"@type": "Person", "name": "DIMAS", "jobTitle": "AI Automation Consultant"}
-    ]
-  }
-  </script>
   <style>
     :root {
       --bg: #0F1F15;
       --bg-elevated: #1A2E22;
+      --bg-card: #243529;
       --accent: #2D8B57;
       --gold: #D4AF37;
       --gold-dim: rgba(212,175,55,.12);
@@ -56,18 +32,9 @@
       --space-xl: 32px;
       --space-2xl: 48px;
 
-      --font-xs: 11px;
-      --font-sm: 13px;
-      --font-base: 15px;
-      --font-lg: 18px;
-      --font-xl: 22px;
-      --font-2xl: 28px;
-      --font-3xl: 36px;
-
       --radius-sm: 8px;
       --radius-md: 12px;
       --radius-lg: 16px;
-      --radius-xl: 20px;
       --radius-full: 9999px;
 
       --safe-top: env(safe-area-inset-top, 0px);
@@ -82,8 +49,8 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      font-size: var(--font-base);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 15px;
       background: var(--bg);
       color: var(--text);
       line-height: 1.5;
@@ -100,231 +67,372 @@
       padding: calc(var(--safe-top) + var(--space-md)) var(--space-md) calc(var(--safe-bottom) + var(--space-lg));
     }
 
+    /* Header */
     header {
       text-align: center;
-      padding: var(--space-xl) 0;
+      padding: var(--space-lg) 0;
     }
 
     .logo {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto var(--space-md);
+      width: 80px;
+      height: 80px;
+      margin: 0 auto var(--space-sm);
       border-radius: var(--radius-full);
-      border: 3px solid var(--gold);
-      box-shadow: 0 8px 32px rgba(212,175,55,.2);
+      border: 2px solid var(--gold);
+      box-shadow: 0 4px 20px rgba(212,175,55,.2);
       overflow: hidden;
       background: var(--bg-elevated);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 48px;
+      font-size: 32px;
     }
 
     .site-title {
-      font-size: var(--font-2xl);
+      font-size: 24px;
       font-weight: 700;
       letter-spacing: -0.02em;
-      margin-bottom: var(--space-xs);
     }
 
-    .site-tagline {
-      font-size: var(--font-sm);
-      color: var(--text-secondary);
-    }
-
-    .hero {
-      padding: var(--space-xl) 0;
-      text-align: center;
-    }
-
-    .hero-title {
-      font-size: var(--font-xl);
-      font-weight: 700;
-      line-height: 1.4;
-      margin-bottom: var(--space-md);
-    }
-
-    .hero-title .highlight {
-      color: var(--gold);
-    }
-
-    .hero-desc {
-      font-size: var(--font-base);
-      color: var(--text-secondary);
-      line-height: 1.8;
-      margin-bottom: var(--space-lg);
-    }
-
-    .service-card {
-      background: linear-gradient(145deg, var(--bg-elevated) 0%, rgba(26,46,34,.95) 100%);
+    /* 명함 카드 */
+    .business-card {
+      background: linear-gradient(145deg, var(--bg-elevated), var(--bg-card));
       border: 2px solid var(--border-gold);
       border-radius: var(--radius-lg);
       padding: var(--space-lg);
-      margin: var(--space-lg) 0;
+      margin: var(--space-md) 0 var(--space-xl);
       position: relative;
+      cursor: pointer;
+      transition: all 0.2s;
     }
 
-    .service-card::before {
+    .business-card::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       height: 3px;
       background: linear-gradient(90deg, var(--gold), rgba(212,175,55,.3), var(--gold));
       border-radius: var(--radius-lg) var(--radius-lg) 0 0;
     }
 
-    .service-title {
-      font-size: var(--font-lg);
-      font-weight: 600;
-      margin-bottom: var(--space-sm);
+    .business-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(212,175,55,.15);
     }
 
-    .service-subtitle {
-      font-size: var(--font-sm);
-      color: var(--text-secondary);
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
       margin-bottom: var(--space-md);
     }
 
-    .service-price {
-      display: inline-block;
+    .card-avatar {
+      width: 56px;
+      height: 56px;
       background: var(--gold-dim);
-      border: 1px solid var(--border-gold);
-      padding: var(--space-sm) var(--space-md);
+      border: 2px solid var(--gold);
       border-radius: var(--radius-full);
-      font-size: var(--font-base);
-      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .card-info h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .card-info p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .card-details {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      font-size: 13px;
+      color: var(--text-secondary);
+      padding-top: var(--space-md);
+      border-top: 1px solid var(--border);
+    }
+
+    .card-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .card-row .icon { width: 18px; text-align: center; }
+
+    .card-copy-hint {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      font-size: 11px;
       color: var(--gold);
-      margin-bottom: var(--space-md);
+      margin-top: var(--space-md);
+      padding-top: var(--space-sm);
+      border-top: 1px dashed var(--border-gold);
     }
 
-    .target-section {
-      padding: var(--space-lg) 0;
-    }
-
+    /* Section Title */
     .section-title {
-      font-size: var(--font-xs);
+      font-size: 11px;
       font-weight: 700;
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      text-align: center;
       margin-bottom: var(--space-md);
+      padding-left: var(--space-xs);
     }
 
-    .target-list {
-      list-style: none;
+    /* GitHub Pages Panel */
+    .pages-section {
+      margin-bottom: var(--space-xl);
+    }
+
+    .pages-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-sm);
+    }
+
+    .page-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .page-card:hover {
+      border-color: var(--gold);
+      background: var(--bg-card);
+    }
+
+    .page-icon {
+      font-size: 28px;
+      margin-bottom: var(--space-xs);
+    }
+
+    .page-name {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .page-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* YouTube Carousel */
+    .youtube-section {
+      margin-bottom: var(--space-xl);
+    }
+
+    .carousel-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.4s ease;
+    }
+
+    .carousel-slide {
+      flex: 0 0 100%;
+      aspect-ratio: 16/9;
+      background: var(--bg-elevated);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .carousel-slide iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .carousel-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .carousel-placeholder .icon {
+      font-size: 48px;
+      opacity: 0.5;
+    }
+
+    .carousel-nav {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+    }
+
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: var(--radius-full);
+      background: var(--border);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .carousel-dot.active {
+      background: var(--gold);
+      width: 24px;
+    }
+
+    .carousel-arrows {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      display: flex;
+      justify-content: space-between;
+      padding: 0 var(--space-sm);
+      pointer-events: none;
+    }
+
+    .carousel-arrow {
+      width: 36px;
+      height: 36px;
+      background: rgba(15,31,21,.8);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      font-size: 16px;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: all 0.2s;
+    }
+
+    .carousel-arrow:hover {
+      background: var(--bg-elevated);
+      border-color: var(--gold);
+    }
+
+    /* Link Tree */
+    .linktree-section {
+      margin-bottom: var(--space-xl);
+    }
+
+    .linktree {
       display: flex;
       flex-direction: column;
       gap: var(--space-sm);
     }
 
-    .target-item {
+    .link-item {
       display: flex;
       align-items: center;
-      gap: var(--space-sm);
+      gap: var(--space-md);
       background: var(--bg-elevated);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: var(--space-md);
-      font-size: var(--font-sm);
-    }
-
-    .target-item .icon {
-      font-size: 20px;
-    }
-
-    .cta-section {
-      padding: var(--space-xl) 0;
-      text-align: center;
-    }
-
-    .cta-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--space-sm);
-      min-width: 200px;
-      min-height: 56px;
-      padding: var(--space-md) var(--space-xl);
-      background: linear-gradient(135deg, var(--gold), #C9A227);
-      border: none;
-      border-radius: var(--radius-full);
-      font-size: var(--font-base);
-      font-weight: 600;
-      color: var(--bg);
-      text-decoration: none;
-      transition: all 0.2s;
-      box-shadow: 0 4px 16px rgba(212,175,55,.3);
-    }
-
-    .cta-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(212,175,55,.4);
-    }
-
-    .cta-btn:active {
-      transform: translateY(0);
-    }
-
-    .contact-card {
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: var(--space-lg);
-      margin: var(--space-lg) 0;
-      cursor: pointer;
+      padding: var(--space-md) var(--space-lg);
       transition: all 0.2s;
     }
 
-    .contact-card:hover {
+    .link-item:hover {
       border-color: var(--gold);
+      transform: translateX(4px);
     }
 
-    .contact-row {
-      display: flex;
-      align-items: center;
-      gap: var(--space-sm);
-      font-size: var(--font-sm);
-      color: var(--text-secondary);
-      padding: var(--space-xs) 0;
-    }
-
-    .contact-row .icon {
-      width: 20px;
+    .link-icon {
+      font-size: 24px;
+      width: 32px;
       text-align: center;
     }
 
-    .contact-hint {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--space-xs);
-      font-size: var(--font-xs);
-      color: var(--text-muted);
-      margin-top: var(--space-md);
-      padding-top: var(--space-md);
-      border-top: 1px solid var(--border);
+    .link-text {
+      flex: 1;
     }
 
-    .footer {
+    .link-name {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .link-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .link-arrow {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* Project Button */
+    .project-section {
       padding: var(--space-lg) 0;
       border-top: 1px solid var(--border);
+    }
+
+    .project-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      width: 100%;
+      padding: var(--space-lg);
+      background: var(--gold-dim);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-lg);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--gold);
+      transition: all 0.2s;
+    }
+
+    .project-btn:hover {
+      background: var(--gold);
+      color: var(--bg);
+    }
+
+    /* Footer */
+    footer {
       text-align: center;
+      padding: var(--space-lg) 0;
+      border-top: 1px solid var(--border);
     }
 
     .footer-text {
-      font-size: var(--font-xs);
+      font-size: 11px;
       color: var(--text-muted);
       margin-bottom: var(--space-sm);
     }
 
     .staff-link {
-      font-size: var(--font-xs);
+      font-size: 11px;
       color: var(--text-muted);
       opacity: 0.5;
-      transition: opacity 0.2s;
     }
 
     .staff-link:hover {
@@ -332,7 +440,8 @@
       color: var(--gold);
     }
 
-    .copy-toast {
+    /* Toast */
+    .toast {
       position: fixed;
       bottom: 100px;
       left: 50%;
@@ -341,7 +450,7 @@
       border: 1px solid var(--gold);
       padding: var(--space-sm) var(--space-lg);
       border-radius: var(--radius-full);
-      font-size: var(--font-sm);
+      font-size: 13px;
       color: var(--gold);
       opacity: 0;
       transition: all 0.3s ease;
@@ -349,24 +458,14 @@
       pointer-events: none;
     }
 
-    .copy-toast.show {
+    .toast.show {
       opacity: 1;
       transform: translateX(-50%) translateY(0);
     }
 
     @media (min-width: 768px) {
-      .container {
-        max-width: 600px;
-      }
-
-      .logo {
-        width: 160px;
-        height: 160px;
-        font-size: 64px;
-      }
-
-      .site-title { font-size: var(--font-3xl); }
-      .hero-title { font-size: var(--font-2xl); }
+      .container { max-width: 600px; }
+      .pages-grid { grid-template-columns: repeat(3, 1fr); }
     }
   </style>
 </head>
@@ -375,123 +474,250 @@
 <div class="container">
   <header>
     <div class="logo" role="img" aria-label="dtslib 로고">
-      <span>AI</span>
+      <span>🚀</span>
     </div>
     <h1 class="site-title">dtslib</h1>
-    <p class="site-tagline">AI 업무 자동화 세팅</p>
   </header>
 
-  <section class="hero">
-    <h2 class="hero-title">
-      ChatGPT 써보셨는데<br>
-      막상 업무에는 <span class="highlight">못 쓰고</span> 계시죠?
-    </h2>
-    <p class="hero-desc">
-      대표님이 지금 하고 있는 일을<br>
-      AI로 바로 돌아가게 세팅해드립니다.
-    </p>
+  <!-- 명함 카드 -->
+  <div class="business-card" id="businessCard" role="button" tabindex="0">
+    <div class="card-header">
+      <div class="card-avatar">👤</div>
+      <div class="card-info">
+        <h2>DIMAS</h2>
+        <p>AI Automation Consultant</p>
+      </div>
+    </div>
+    <div class="card-details">
+      <div class="card-row">
+        <span class="icon">🌐</span>
+        <span>dtslib.com</span>
+      </div>
+      <div class="card-row">
+        <span class="icon">✉️</span>
+        <span>dimas@dtslib.com</span>
+      </div>
+      <div class="card-row">
+        <span class="icon">📍</span>
+        <span>대한민국</span>
+      </div>
+    </div>
+    <div class="card-copy-hint">
+      <span>📋</span>
+      <span>탭해서 명함 복사 → 카카오톡 공유</span>
+    </div>
+  </div>
+
+  <!-- GitHub Pages -->
+  <section class="pages-section">
+    <h2 class="section-title">Pages</h2>
+    <div class="pages-grid">
+      <a href="./staff/" class="page-card">
+        <span class="page-icon">🔐</span>
+        <span class="page-name">Staff Portal</span>
+        <span class="page-desc">내부 관리 도구</span>
+      </a>
+      <a href="#" class="page-card">
+        <span class="page-icon">📄</span>
+        <span class="page-name">About</span>
+        <span class="page-desc">소개 페이지</span>
+      </a>
+      <a href="#" class="page-card">
+        <span class="page-icon">📝</span>
+        <span class="page-name">Blog</span>
+        <span class="page-desc">블로그</span>
+      </a>
+      <a href="#" class="page-card">
+        <span class="page-icon">💼</span>
+        <span class="page-name">Portfolio</span>
+        <span class="page-desc">포트폴리오</span>
+      </a>
+    </div>
   </section>
 
-  <section class="service-card">
-    <h3 class="service-title">AI 업무 자동화 세팅</h3>
-    <p class="service-subtitle">2시간 동안 대표님 업무에 맞게 AI를 세팅해드립니다</p>
-    <div class="service-price">25만원 / 2시간</div>
+  <!-- YouTube Showroom -->
+  <section class="youtube-section">
+    <h2 class="section-title">Showroom</h2>
+    <div class="carousel-container">
+      <div class="carousel-track" id="carouselTrack">
+        <div class="carousel-slide">
+          <div class="carousel-placeholder">
+            <span class="icon">🎬</span>
+            <span>YouTube 링크 추가</span>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <div class="carousel-placeholder">
+            <span class="icon">🎬</span>
+            <span>YouTube 링크 추가</span>
+          </div>
+        </div>
+        <div class="carousel-slide">
+          <div class="carousel-placeholder">
+            <span class="icon">🎬</span>
+            <span>YouTube 링크 추가</span>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-arrows">
+        <button class="carousel-arrow" id="prevBtn">←</button>
+        <button class="carousel-arrow" id="nextBtn">→</button>
+      </div>
+    </div>
+    <div class="carousel-nav" id="carouselNav">
+      <button class="carousel-dot active" data-index="0"></button>
+      <button class="carousel-dot" data-index="1"></button>
+      <button class="carousel-dot" data-index="2"></button>
+    </div>
   </section>
 
-  <section class="target-section">
-    <h3 class="section-title">이런 분께 맞습니다</h3>
-    <ul class="target-list">
-      <li class="target-item">
-        <span class="icon">🏪</span>
-        <span>자영업자 / 대표님</span>
-      </li>
-      <li class="target-item">
-        <span class="icon">💼</span>
-        <span>혼자서 이것저것 다 하는 분</span>
-      </li>
-      <li class="target-item">
-        <span class="icon">🤖</span>
-        <span>AI 써보려다 포기한 분</span>
-      </li>
-    </ul>
+  <!-- Link Tree -->
+  <section class="linktree-section">
+    <h2 class="section-title">Links</h2>
+    <div class="linktree">
+      <a href="https://github.com/dtslib1979" target="_blank" class="link-item">
+        <span class="link-icon">🐙</span>
+        <div class="link-text">
+          <div class="link-name">GitHub</div>
+          <div class="link-desc">오픈소스 프로젝트</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+      <a href="#" class="link-item">
+        <span class="link-icon">📺</span>
+        <div class="link-text">
+          <div class="link-name">YouTube</div>
+          <div class="link-desc">튜토리얼 & 데모</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+      <a href="#" class="link-item">
+        <span class="link-icon">📗</span>
+        <div class="link-text">
+          <div class="link-name">Naver Blog</div>
+          <div class="link-desc">블로그 포스트</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+      <a href="#" class="link-item">
+        <span class="link-icon">💬</span>
+        <div class="link-text">
+          <div class="link-name">KakaoTalk</div>
+          <div class="link-desc">오픈채팅</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+    </div>
   </section>
 
-  <section class="cta-section">
-    <a href="mailto:dimas@dtslib.com" class="cta-btn">
-      문의하기
+  <!-- Project Button -->
+  <section class="project-section">
+    <a href="./project/" class="project-btn">
+      <span>💡</span>
+      <span>dtslib 프로젝트 소개</span>
       <span>→</span>
     </a>
   </section>
 
-  <div class="contact-card" id="contactCard" role="button" tabindex="0" aria-label="연락처 복사">
-    <div class="contact-row">
-      <span class="icon">🌐</span>
-      <span>dtslib.com</span>
-    </div>
-    <div class="contact-row">
-      <span class="icon">✉️</span>
-      <span>dimas@dtslib.com</span>
-    </div>
-    <div class="contact-row">
-      <span class="icon">📍</span>
-      <span>대한민국</span>
-    </div>
-    <div class="contact-hint">
-      <span>📋</span>
-      <span>탭해서 복사</span>
-    </div>
-  </div>
-
-  <footer class="footer">
+  <footer>
     <p class="footer-text">© 2026 dtslib. All rights reserved.</p>
     <a href="./staff/" class="staff-link">Staff Portal</a>
   </footer>
 </div>
 
-<div class="copy-toast" id="copyToast">복사되었습니다</div>
+<div class="toast" id="toast">명함이 복사되었습니다</div>
 
 <script>
+// Service Worker
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js').catch(() => {});
 }
 
-const contactCard = document.getElementById('contactCard');
-const copyToast = document.getElementById('copyToast');
+// 명함 복사
+const businessCard = document.getElementById('businessCard');
+const toast = document.getElementById('toast');
 
-const contactText = `【 dtslib 컨설팅 】
-AI 업무 자동화 세팅
-
-ChatGPT를 진짜 업무에 쓰게
-세팅해드립니다
-
-💰 25만원 / 2시간
+const cardText = `━━━━━━━━━━━━━━━
+  🚀 DIMAS
+  AI Automation Consultant
+━━━━━━━━━━━━━━━
 
 🌐 dtslib.com
-✉️ dimas@dtslib.com`;
+✉️ dimas@dtslib.com
+📍 대한민국
 
-function copyContact() {
-  navigator.clipboard.writeText(contactText).then(() => {
-    copyToast.classList.add('show');
-    setTimeout(() => copyToast.classList.remove('show'), 2000);
+━━━━━━━━━━━━━━━`;
+
+function copyCard() {
+  navigator.clipboard.writeText(cardText).then(() => {
+    showToast('명함이 복사되었습니다');
   }).catch(() => {
     const textarea = document.createElement('textarea');
-    textarea.value = contactText;
-    textarea.style.position = 'fixed';
-    textarea.style.opacity = '0';
+    textarea.value = cardText;
+    textarea.style.cssText = 'position:fixed;opacity:0';
     document.body.appendChild(textarea);
     textarea.select();
     document.execCommand('copy');
     document.body.removeChild(textarea);
-    copyToast.classList.add('show');
-    setTimeout(() => copyToast.classList.remove('show'), 2000);
+    showToast('명함이 복사되었습니다');
   });
 }
 
-contactCard.addEventListener('click', copyContact);
-contactCard.addEventListener('keydown', (e) => {
+function showToast(msg) {
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+businessCard.addEventListener('click', copyCard);
+businessCard.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' || e.key === ' ') {
     e.preventDefault();
-    copyContact();
+    copyCard();
+  }
+});
+
+// Carousel
+const track = document.getElementById('carouselTrack');
+const dots = document.querySelectorAll('.carousel-dot');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+let currentSlide = 0;
+const totalSlides = 3;
+
+function goToSlide(index) {
+  currentSlide = index;
+  track.style.transform = `translateX(-${index * 100}%)`;
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === index);
+  });
+}
+
+prevBtn.addEventListener('click', () => {
+  goToSlide((currentSlide - 1 + totalSlides) % totalSlides);
+});
+
+nextBtn.addEventListener('click', () => {
+  goToSlide((currentSlide + 1) % totalSlides);
+});
+
+dots.forEach((dot) => {
+  dot.addEventListener('click', () => {
+    goToSlide(parseInt(dot.dataset.index));
+  });
+});
+
+// Touch swipe
+let touchStartX = 0;
+track.addEventListener('touchstart', (e) => {
+  touchStartX = e.touches[0].clientX;
+});
+
+track.addEventListener('touchend', (e) => {
+  const diff = touchStartX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 50) {
+    if (diff > 0) nextBtn.click();
+    else prevBtn.click();
   }
 });
 </script>
