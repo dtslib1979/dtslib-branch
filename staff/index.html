@@ -1000,11 +1000,11 @@ GitHub Pages 기반 랜딩페이지 + Staff Portal 레포지토리를 구축해�
       </div>
     </section>
 
-    <!-- 빠른 링크 (동적 렌더링) -->
+    <!-- AI 도구 + 갤러리 -->
     <section class="section">
       <div class="section-header">
-        <span class="section-badge">Links</span>
-        <h2 class="section-title">빠른 링크</h2>
+        <span class="section-badge">Tools</span>
+        <h2 class="section-title">AI 동영상 생성</h2>
       </div>
       <div class="quick-links" id="quickLinks">
         <!-- 동적으로 렌더링됨 -->
@@ -1295,31 +1295,16 @@ function renderStoreLinks() {
 }
 
 // =====================
-// Quick Links (동적)
+// Quick Links (AI 동영상 툴 + 갤러리)
 // =====================
 function renderQuickLinks() {
-  const saved = localStorage.getItem(REPO_CONFIG_KEY);
-  const config = saved ? JSON.parse(saved) : {};
   const container = document.getElementById('quickLinks');
 
-  const g = config.githubId || '';
-  const apkRepo = config.apkRepo || '';
-
   let html = `
-    <a href="https://chat.openai.com" target="_blank" class="quick-link">ChatGPT</a>
-    <a href="https://claude.ai" target="_blank" class="quick-link">Claude</a>`;
-
-  if (g) {
-    html += `<a href="https://github.com/${g}" target="_blank" class="quick-link">GitHub</a>`;
-  } else {
-    html += `<a href="https://github.com" target="_blank" class="quick-link">GitHub</a>`;
-  }
-
-  if (g && apkRepo) {
-    html += `<a href="https://${apkRepo}.vercel.app" target="_blank" class="quick-link">APK Lab</a>`;
-  } else {
-    html += `<span class="quick-link" style="opacity:0.5;cursor:default;">APK Lab</span>`;
-  }
+    <a href="https://sora.com" target="_blank" class="quick-link">🎬 Sora</a>
+    <a href="https://gemini.google.com" target="_blank" class="quick-link">✨ Gemini</a>
+    <a href="https://grok.x.ai" target="_blank" class="quick-link">🤖 Grok</a>
+    <a href="intent:#Intent;action=android.intent.action.VIEW;type=image/*;end" class="quick-link">📷 갤러리</a>`;
 
   container.innerHTML = html;
 }
