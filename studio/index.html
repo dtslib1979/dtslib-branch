@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+<meta name="theme-color" content="#0A1612">
+<title>Studio — DTSLIB</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0A1612;font-family:'Inter',sans-serif;color:#F5F5F0;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+:root{--bg:#0A1612;--bg-2:#0F1F15;--gold:#D4AF37;--text:#F5F5F0;--text-2:rgba(245,245,240,.7);--text-3:rgba(245,245,240,.4);--border:rgba(245,245,240,.08);--cyan:#00F5D4}
+
+#app{width:100%;max-width:480px;margin:0 auto;padding:40px 24px 80px;min-height:100vh}
+
+.back{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--text-3);text-decoration:none;margin-bottom:32px;transition:color .3s}
+.back:hover{color:var(--gold)}
+
+.header{text-align:center;margin-bottom:48px}
+.badge{display:inline-block;font-size:9px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--cyan);background:rgba(0,245,212,.08);padding:8px 16px;border-radius:100px;border:1px solid rgba(0,245,212,.25);margin-bottom:20px}
+h1{font-size:36px;font-weight:700;margin-bottom:8px}
+.sub{font-size:13px;color:var(--text-3)}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:40px}
+.stat{background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:20px 12px;text-align:center}
+.stat-num{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:700;color:var(--gold);margin-bottom:4px}
+.stat-label{font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.1em}
+
+.section-title{font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-3);margin:32px 0 16px;display:flex;align-items:center;gap:12px}
+.section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+
+.platform-grid{display:grid;gap:12px}
+.platform-card{background:var(--bg-2);border:1px solid var(--border);border-radius:16px;padding:20px;transition:all .3s}
+.platform-card:hover{border-color:rgba(212,175,55,.3);transform:translateX(8px)}
+.platform-header{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.platform-icon{font-size:28px}
+.platform-name{font-size:14px;font-weight:600}
+.platform-count{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);background:rgba(212,175,55,.1);padding:4px 10px;border-radius:20px;margin-left:auto}
+.platform-items{font-size:11px;color:var(--text-3);line-height:1.8}
+
+.footer{text-align:center;margin-top:60px;padding-top:24px;border-top:1px solid var(--border)}
+.footer-text{font-size:10px;color:var(--text-3)}
+
+@media(min-width:481px){
+body{display:flex;align-items:flex-start;justify-content:center;padding:40px 0;background:linear-gradient(135deg,#040806,#0A1612,#040806)}
+#app{background:var(--bg);border:1px solid var(--border);border-radius:32px;box-shadow:0 50px 100px rgba(0,0,0,.5);min-height:auto}
+}
+</style>
+</head>
+<body>
+<div id="app">
+<a href="/" class="back">← Back to Home</a>
+
+<header class="header">
+<span class="badge">Digital Infrastructure</span>
+<h1>Studio</h1>
+<p class="sub">41 platforms powering the content ecosystem</p>
+</header>
+
+<div class="stats">
+<div class="stat"><div class="stat-num">41</div><div class="stat-label">Platforms</div></div>
+<div class="stat"><div class="stat-num">24/7</div><div class="stat-label">Automated</div></div>
+<div class="stat"><div class="stat-num">100%</div><div class="stat-label">Mobile</div></div>
+</div>
+
+<h2 class="section-title">Platform Universe</h2>
+<div class="platform-grid">
+<div class="platform-card">
+<div class="platform-header">
+<span class="platform-icon">📺</span>
+<span class="platform-name">YouTube</span>
+<span class="platform-count">8 channels</span>
+</div>
+<div class="platform-items">@eduart-engineer, @webappsbook, @parksy-music, @parksy-dev, @parksy-ai, @parksy-life, @parksy-shorts, @parksy-clips</div>
+</div>
+
+<div class="platform-card">
+<div class="platform-header">
+<span class="platform-icon">💻</span>
+<span class="platform-name">GitHub</span>
+<span class="platform-count">12 repos</span>
+</div>
+<div class="platform-items">buddies.kr, dtslib.com, dtslib-papyrus, parksy-os, eduart-webtoon, ai-skillset, mobile-framework, pwa-templates, automation-hub, mcp-tools, prompt-engine, voice-to-text</div>
+</div>
+
+<div class="platform-card">
+<div class="platform-header">
+<span class="platform-icon">📝</span>
+<span class="platform-name">Tistory</span>
+<span class="platform-count">15 blogs</span>
+</div>
+<div class="platform-items">Tech articles, tutorials, dev logs, AI insights, music production, creative process, book reviews, life updates, travel notes, food reviews, photography, design thoughts, business ideas, learning notes, archive</div>
+</div>
+
+<div class="platform-card">
+<div class="platform-header">
+<span class="platform-icon">🌐</span>
+<span class="platform-name">Domains</span>
+<span class="platform-count">6 sites</span>
+</div>
+<div class="platform-items">dtslib.com, parksy.kr, eae.kr, buddies.kr, eduart.kr, webapps.kr</div>
+</div>
+</div>
+
+<h2 class="section-title">Automation Pipeline</h2>
+<div class="platform-card">
+<div class="platform-header">
+<span class="platform-icon">⚡</span>
+<span class="platform-name">GitHub Actions</span>
+<span class="platform-count">ACTIVE</span>
+</div>
+<div class="platform-items">Voice Input → Claude AI Processing → GitHub Actions → Multi-platform Deploy<br><br>100% mobile workflow. No desktop required.</div>
+</div>
+
+<footer class="footer">
+<p class="footer-text">© 2025 DTSLIB Studio</p>
+</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+<meta name="theme-color" content="#0A1612">
+<title>Philosophy — DTSLIB</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0A1612;font-family:'Inter',sans-serif;color:#F5F5F0;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+:root{--bg:#0A1612;--bg-2:#0F1F15;--gold:#D4AF37;--text:#F5F5F0;--text-2:rgba(245,245,240,.7);--text-3:rgba(245,245,240,.4);--border:rgba(245,245,240,.08);--parchment:rgba(244,228,166,.05)}
+
+#app{width:100%;max-width:480px;margin:0 auto;padding:40px 24px 80px;min-height:100vh}
+
+.back{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--text-3);text-decoration:none;margin-bottom:32px;transition:color .3s}
+.back:hover{color:var(--gold)}
+
+.header{text-align:center;margin-bottom:48px}
+.badge{display:inline-block;font-size:9px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);background:rgba(212,175,55,.08);padding:8px 16px;border-radius:100px;border:1px solid rgba(212,175,55,.25);margin-bottom:20px}
+h1{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:500;font-style:italic;margin-bottom:8px}
+.sub{font-size:13px;color:var(--text-3)}
+
+.quote-card{background:var(--parchment);border:1px solid rgba(212,175,55,.15);border-radius:20px;padding:32px 24px;margin-bottom:40px;text-align:center;position:relative}
+.quote-card::before{content:'"';position:absolute;top:-10px;left:24px;font-family:'Cormorant Garamond',serif;font-size:80px;color:var(--gold);opacity:0.15;line-height:1}
+.quote-text{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;line-height:1.8;color:var(--text)}
+
+.pillar{background:var(--bg-2);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:16px;transition:all .3s}
+.pillar:hover{border-color:rgba(212,175,55,.3)}
+.pillar-num{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--gold);margin-bottom:8px}
+.pillar-title{font-size:16px;font-weight:600;margin-bottom:8px}
+.pillar-desc{font-size:12px;color:var(--text-3);line-height:1.7}
+
+.seal{width:80px;height:80px;margin:48px auto;border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--gold);position:relative}
+.seal::before{content:'';position:absolute;inset:-8px;border:1px solid rgba(212,175,55,.3);border-radius:50%;animation:spin 20s linear infinite}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+.footer{text-align:center;margin-top:40px;padding-top:24px;border-top:1px solid var(--border)}
+.footer-text{font-size:10px;color:var(--text-3)}
+
+@media(min-width:481px){
+body{display:flex;align-items:flex-start;justify-content:center;padding:40px 0;background:linear-gradient(135deg,#040806,#0A1612,#040806)}
+#app{background:var(--bg);border:1px solid var(--border);border-radius:32px;box-shadow:0 50px 100px rgba(0,0,0,.5);min-height:auto}
+}
+</style>
+</head>
+<body>
+<div id="app">
+<a href="/" class="back">← Back to Home</a>
+
+<header class="header">
+<span class="badge">Core Principles</span>
+<h1>Philosophy</h1>
+<p class="sub">The foundation of DTSLIB thinking</p>
+</header>
+
+<div class="quote-card">
+<p class="quote-text">The moment you speak, the system has failed.<br>Build architectures that make words unnecessary.</p>
+</div>
+
+<div class="pillar">
+<div class="pillar-num">I</div>
+<h3 class="pillar-title">Reverse Orality</h3>
+<p class="pillar-desc">Speak first, structure later. Voice input as primary creative medium. Conversation logs become raw intelligence for systematic refinement.</p>
+</div>
+
+<div class="pillar">
+<div class="pillar-num">II</div>
+<h3 class="pillar-title">Protocol Thinking</h3>
+<p class="pillar-desc">Design systems, not solutions. Every action becomes a reusable protocol. Patterns over instances, frameworks over features.</p>
+</div>
+
+<div class="pillar">
+<div class="pillar-num">III</div>
+<h3 class="pillar-title">Mobile Sovereignty</h3>
+<p class="pillar-desc">The smartphone is the complete creative environment. No desktop dependency. PWA-first architecture enables true location independence.</p>
+</div>
+
+<div class="pillar">
+<div class="pillar-num">IV</div>
+<h3 class="pillar-title">Conversation as Source</h3>
+<p class="pillar-desc">AI dialogue generates intellectual capital. 8,760+ hours of conversation become searchable, refinable, publishable assets.</p>
+</div>
+
+<div class="seal">朴</div>
+
+<footer class="footer">
+<p class="footer-text">© 2025 DTSLIB Philosophy</p>
+</footer>
+</div>
+</body>
+</html>
