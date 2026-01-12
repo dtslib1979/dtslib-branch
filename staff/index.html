@@ -473,6 +473,88 @@
 
     .back-link:hover { color: var(--gold); }
 
+    /* Prompt Box */
+    .prompt-box {
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-top: 14px;
+      position: relative;
+    }
+
+    .prompt-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .prompt-content {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      font-family: monospace;
+      white-space: pre-wrap;
+      word-break: break-all;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .prompt-copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--gold);
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--bg);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .prompt-copy-btn:hover { transform: scale(1.05); }
+    .prompt-copy-btn:active { transform: scale(0.95); }
+
+    .copy-toast {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--bg-elevated);
+      border: 2px solid var(--gold);
+      padding: 14px 24px;
+      border-radius: var(--radius-full);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gold);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    .copy-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .network-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      padding: 14px;
+      background: var(--bg-elevated);
+      border-radius: var(--radius-sm);
+      border-left: 4px solid var(--gold);
+    }
+
     @media (max-width: 400px) {
       .repo-grid { grid-template-columns: 1fr; }
       .connection-flow { flex-direction: column; }
@@ -687,6 +769,86 @@
       </div>
     </div>
 
+    <!-- Step 3: 레포지토리 네트워크 구축 -->
+    <div class="accordion" id="accordion3">
+      <button class="accordion-header" onclick="toggleAccordion('accordion3')">
+        <span class="accordion-step">3</span>
+        <div class="accordion-info">
+          <div class="accordion-title">레포지토리 네트워크 구축</div>
+          <div class="accordion-desc">Claude Code용 구축 가이드</div>
+        </div>
+        <span class="accordion-toggle">▼</span>
+      </button>
+      <div class="accordion-content">
+        <p class="network-desc">아래 프롬프트를 복사해서 Claude Code나 콘솔에 붙여넣으면 자동으로 블로그 레포지토리 네트워크를 구축합니다.</p>
+
+        <div class="step-list">
+          <div class="step-item">
+            <span class="step-number">1</span>
+            <div class="step-content">
+              <p class="step-name">GitHub에서 새 레포 생성</p>
+              <p class="step-desc">[username]-posts 형태로 Public 레포 생성</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <span class="step-number">2</span>
+            <div class="step-content">
+              <p class="step-name">Settings → Pages 활성화</p>
+              <p class="step-desc">Deploy from branch: main / root</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <span class="step-number">3</span>
+            <div class="step-content">
+              <p class="step-name">Personal Access Token 생성</p>
+              <p class="step-desc">Settings → Developer → Tokens (repo 권한)</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <span class="step-number">4</span>
+            <div class="step-content">
+              <p class="step-name">아래 프롬프트로 Claude에 요청</p>
+              <p class="step-desc">자동으로 index.html과 구조 생성</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="prompt-box">
+          <div class="prompt-label">📋 Claude Code 구축 프롬프트</div>
+          <button class="prompt-copy-btn" onclick="copyPrompt()">복사</button>
+          <div class="prompt-content" id="promptContent">## 블로그 레포지토리 네트워크 구축 요청
+
+GitHub Pages 기반 블로그 레포지토리를 구축해주세요.
+
+### 1. 레포지토리 구조
+```
+[username]-posts/
+├── index.html      # 포스트 목록 페이지
+├── .nojekyll       # Jekyll 비활성화
+└── posts/          # HTML 포스트 폴더
+    └── sample.html # 샘플 포스트
+```
+
+### 2. index.html 요구사항
+- 다크 테마 (배경: #0a0f0c, 골드: #f0c850)
+- 모바일 퍼스트 반응형
+- posts/ 폴더의 HTML 파일 목록 표시
+- 각 포스트 카드: 제목, 날짜, 미리보기 링크
+
+### 3. 샘플 포스트 (posts/sample.html)
+- 독립 실행 가능한 완전한 HTML
+- 동일한 다크 테마 적용
+- 뒤로가기 버튼 (../ 링크)
+
+### 4. GitHub Pages 설정
+- main 브랜치에서 배포
+- .nojekyll 파일 필수
+
+이 구조로 레포지토리를 생성하고 GitHub에 푸시해주세요.</div>
+        </div>
+      </div>
+    </div>
+
     <!-- 생산성 도구 APK -->
     <section class="section">
       <div class="section-header">
@@ -751,6 +913,8 @@
   <a href="../" class="back-link" id="backLink">← 메인으로 돌아가기</a>
 </div>
 
+<div class="copy-toast" id="copyToast">복사되었습니다</div>
+
 <script>
 const ACCESS_CODE = '1126';
 const STORAGE_KEY = 'dtslib_staff_auth';
@@ -807,6 +971,28 @@ logoutBtn.addEventListener('click', () => {
 function toggleAccordion(id) {
   const accordion = document.getElementById(id);
   accordion.classList.toggle('open');
+}
+
+// Copy Prompt
+function copyPrompt() {
+  const content = document.getElementById('promptContent').textContent;
+  const toast = document.getElementById('copyToast');
+
+  navigator.clipboard.writeText(content).then(() => {
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = content;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+  });
 }
 </script>
 
