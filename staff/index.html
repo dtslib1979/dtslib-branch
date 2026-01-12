@@ -405,12 +405,15 @@
     <h1 class="login-title">Staff Portal</h1>
     <p class="login-subtitle">dtslib 내부 관리 도구</p>
     <input
-      type="password"
+      type="tel"
+      inputmode="numeric"
+      pattern="[0-9]*"
       class="login-input"
       id="passwordInput"
-      placeholder="암호 입력"
-      maxlength="10"
+      placeholder="암호 4자리"
+      maxlength="4"
       autocomplete="off"
+      autofocus
     />
     <button class="login-btn" id="loginBtn">접속</button>
     <p class="login-error" id="loginError">암호가 올바르지 않습니다</p>
