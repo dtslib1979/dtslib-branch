@@ -645,6 +645,43 @@
     .repo-badge.web { background: rgba(91,192,235,.25); color: var(--info); }
     .repo-badge.apk { background: rgba(95,208,104,.25); color: var(--success); }
 
+    /* Instruction Tabs */
+    .instruction-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .inst-tab {
+      padding: 10px 14px;
+      background: var(--bg-elevated);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .inst-tab:hover { border-color: var(--gold); color: var(--text); }
+    .inst-tab.active { background: var(--gold); border-color: var(--gold); color: var(--bg); }
+
+    /* Check Status */
+    .check-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .check-status.ok { background: rgba(95,208,104,.2); color: var(--success); }
+    .check-status.fail { background: rgba(255,85,85,.2); color: #ff5555; }
+    .check-status.checking { background: var(--gold-dim); color: var(--gold); }
+
     @media (max-width: 500px) {
       .repo-grid { grid-template-columns: 1fr 1fr; }
     }
@@ -725,7 +762,10 @@
             <span class="repo-input-status" id="statusPat">🔒</span>
           </div>
         </div>
-        <button class="repo-save-btn" onclick="saveRepoConfig()">💾 저장하기</button>
+        <div style="display:flex;gap:10px;">
+          <button class="repo-save-btn" onclick="saveRepoConfig()" style="flex:1;">💾 저장</button>
+          <button class="repo-save-btn" onclick="checkRepoConnections()" style="flex:1;background:var(--info);">🔍 연동 체크</button>
+        </div>
       </div>
 
       <!-- Dynamic Repo Grid -->
@@ -868,82 +908,72 @@
       </div>
     </div>
 
-    <!-- Step 3: 레포지토리 네트워크 구축 -->
+    <!-- Step 3: Claude Code 인스트럭션 -->
     <div class="accordion" id="accordion3">
       <button class="accordion-header" onclick="toggleAccordion('accordion3')">
         <span class="accordion-step">3</span>
         <div class="accordion-info">
-          <div class="accordion-title">레포지토리 네트워크 구축</div>
-          <div class="accordion-desc">Claude Code용 구축 가이드</div>
+          <div class="accordion-title">Claude Code 인스트럭션</div>
+          <div class="accordion-desc">6개 레포 자동 구축 프롬프트</div>
         </div>
         <span class="accordion-toggle">▼</span>
       </button>
       <div class="accordion-content">
-        <p class="network-desc">아래 프롬프트를 복사해서 Claude Code나 콘솔에 붙여넣으면 자동으로 블로그 레포지토리 네트워크를 구축합니다.</p>
+        <p class="network-desc">레포 선택 후 인스트럭션을 복사해서 Termux의 Claude Code에 붙여넣으면 자동 구축됩니다.</p>
 
-        <div class="step-list">
-          <div class="step-item">
-            <span class="step-number">1</span>
-            <div class="step-content">
-              <p class="step-name">GitHub에서 새 레포 생성</p>
-              <p class="step-desc">[username]-posts 형태로 Public 레포 생성</p>
-            </div>
-          </div>
-          <div class="step-item">
-            <span class="step-number">2</span>
-            <div class="step-content">
-              <p class="step-name">Settings → Pages 활성화</p>
-              <p class="step-desc">Deploy from branch: main / root</p>
-            </div>
-          </div>
-          <div class="step-item">
-            <span class="step-number">3</span>
-            <div class="step-content">
-              <p class="step-name">Personal Access Token 생성</p>
-              <p class="step-desc">Settings → Developer → Tokens (repo 권한)</p>
-            </div>
-          </div>
-          <div class="step-item">
-            <span class="step-number">4</span>
-            <div class="step-content">
-              <p class="step-name">아래 프롬프트로 Claude에 요청</p>
-              <p class="step-desc">자동으로 index.html과 구조 생성</p>
-            </div>
-          </div>
+        <!-- 레포 선택 탭 -->
+        <div class="instruction-tabs" id="instructionTabs">
+          <button class="inst-tab active" onclick="showInstruction('main')">🌐 메인</button>
+          <button class="inst-tab" onclick="showInstruction('blog')">📝 블로그</button>
+          <button class="inst-tab" onclick="showInstruction('logs')">📋 로그</button>
+          <button class="inst-tab" onclick="showInstruction('pwa')">⚡ PWA</button>
+          <button class="inst-tab" onclick="showInstruction('apk')">📱 APK</button>
+          <button class="inst-tab" onclick="showInstruction('media')">🖼️ 미디어</button>
         </div>
 
         <div class="prompt-box">
-          <div class="prompt-label">📋 Claude Code 구축 프롬프트</div>
-          <button class="prompt-copy-btn" onclick="copyPrompt()">복사</button>
-          <div class="prompt-content" id="promptContent">## 블로그 레포지토리 네트워크 구축 요청
+          <div class="prompt-label" id="promptLabel">📋 메인 레포 구축 인스트럭션</div>
+          <button class="prompt-copy-btn" onclick="copyCurrentInstruction()">복사</button>
+          <div class="prompt-content" id="promptContent">## 메인 레포지토리 (branch) 구축
 
-GitHub Pages 기반 블로그 레포지토리를 구축해주세요.
+GitHub Pages 기반 랜딩페이지 + Staff Portal 레포지토리를 구축해주세요.
 
-### 1. 레포지토리 구조
+### 구조
 ```
-[username]-posts/
-├── index.html      # 포스트 목록 페이지
-├── .nojekyll       # Jekyll 비활성화
-└── posts/          # HTML 포스트 폴더
-    └── sample.html # 샘플 포스트
+{username}-branch/
+├── index.html          # 랜딩페이지
+├── config.json         # 사이트 설정
+├── sw.js               # Service Worker (PWA)
+├── robots.txt          # SEO
+├── sitemap.xml         # 사이트맵
+├── .nojekyll           # Jekyll 비활성화
+├── CLAUDE.md           # Claude Code 가이드
+├── assets/
+│   ├── manifest.json   # PWA 매니페스트
+│   └── icons/
+│       └── logo.png    # 앱 아이콘
+├── staff/
+│   └── index.html      # Staff Portal (비밀번호: 1126)
+└── tools/
+    ├── html-poster.html    # HTML 포스팅 도구
+    └── webpage-prompt.html # 웹페이지 프롬프트 생성기
 ```
 
-### 2. index.html 요구사항
-- 다크 테마 (배경: #0a0f0c, 골드: #f0c850)
-- 모바일 퍼스트 반응형
-- posts/ 폴더의 HTML 파일 목록 표시
-- 각 포스트 카드: 제목, 날짜, 미리보기 링크
+### 디자인 시스템
+- 다크 테마: 배경 #0a0f0c, 골드 #f0c850
+- 모바일 퍼스트 (max-width: 500px)
+- PWA 지원 (오프라인 캐싱)
 
-### 3. 샘플 포스트 (posts/sample.html)
-- 독립 실행 가능한 완전한 HTML
-- 동일한 다크 테마 적용
-- 뒤로가기 버튼 (../ 링크)
+### 필수 기능
+1. 랜딩페이지: 명함 카드, GitHub Pages 패널, 링크트리
+2. Staff Portal: 비밀번호 게이트, 레포 네트워크 대시보드
+3. HTML 포스터: GitHub API로 블로그 레포에 HTML 배포
 
-### 4. GitHub Pages 설정
-- main 브랜치에서 배포
-- .nojekyll 파일 필수
+### GitHub Pages 설정
+- Settings → Pages → Deploy from main branch
+- .nojekyll 파일로 Jekyll 비활성화
 
-이 구조로 레포지토리를 생성하고 GitHub에 푸시해주세요.</div>
+이 구조로 레포지토리를 생성하고 커밋해주세요.</div>
         </div>
       </div>
     </div>
@@ -1216,6 +1246,351 @@ function renderRepoGrid() {
   });
 
   grid.innerHTML = html;
+}
+
+// =====================
+// Instructions
+// =====================
+const INSTRUCTIONS = {
+  main: {
+    label: '📋 메인 레포 구축 인스트럭션',
+    content: `## 메인 레포지토리 (branch) 구축
+
+GitHub Pages 기반 랜딩페이지 + Staff Portal 레포지토리를 구축해주세요.
+
+### 구조
+\`\`\`
+{username}-branch/
+├── index.html          # 랜딩페이지
+├── config.json         # 사이트 설정
+├── sw.js               # Service Worker (PWA)
+├── robots.txt          # SEO
+├── sitemap.xml         # 사이트맵
+├── .nojekyll           # Jekyll 비활성화
+├── CLAUDE.md           # Claude Code 가이드
+├── assets/
+│   ├── manifest.json   # PWA 매니페스트
+│   └── icons/logo.png  # 앱 아이콘
+├── staff/
+│   └── index.html      # Staff Portal (비밀번호 설정 필요)
+└── tools/
+    ├── html-poster.html    # HTML 포스팅 도구
+    └── webpage-prompt.html # 웹페이지 프롬프트 생성기
+\`\`\`
+
+### 디자인 시스템
+- 다크 테마: 배경 #0a0f0c, 골드 #f0c850
+- 모바일 퍼스트 (max-width: 500px)
+- PWA 지원 (오프라인 캐싱)
+
+### 필수 기능
+1. 랜딩페이지: 명함 카드, GitHub Pages 패널, 링크트리
+2. Staff Portal: 비밀번호 게이트, 레포 네트워크 대시보드, localStorage 설정 저장
+3. HTML 포스터: GitHub API로 블로그 레포에 HTML 배포
+
+### GitHub Pages 설정
+Settings → Pages → Deploy from main branch
+.nojekyll 파일로 Jekyll 비활성화
+
+이 구조로 레포지토리를 생성하고 커밋해주세요.`
+  },
+  blog: {
+    label: '📋 블로그 레포 구축 인스트럭션',
+    content: `## 블로그 레포지토리 (posts) 구축
+
+GitHub Pages 기반 HTML 블로그 레포지토리를 구축해주세요.
+
+### 구조
+\`\`\`
+{username}-posts/
+├── index.html      # 포스트 목록 페이지
+├── .nojekyll       # Jekyll 비활성화
+├── CLAUDE.md       # Claude Code 가이드
+└── posts/          # HTML 포스트 폴더
+    ├── sample.html # 샘플 포스트
+    └── ...
+\`\`\`
+
+### index.html 요구사항
+- 다크 테마 (배경: #0a0f0c, 골드: #f0c850)
+- 모바일 퍼스트 반응형
+- posts/ 폴더의 HTML 파일 목록을 카드로 표시
+- 각 카드: 제목, 날짜, 링크
+
+### 포스트 HTML 형식
+- 독립 실행 가능한 완전한 HTML
+- 동일한 다크 테마 적용
+- 뒤로가기 버튼 (../ 링크)
+- meta 태그로 제목, 날짜 정보 포함
+
+### GitHub Pages 설정
+Settings → Pages → main branch / root
+.nojekyll 파일 필수
+
+HTML 포스터 도구에서 GitHub API로 직접 배포됩니다.`
+  },
+  logs: {
+    label: '📋 로그 레포 구축 인스트럭션',
+    content: `## 로그 저장소 (logs) 구축
+
+Parksy Capture 앱에서 캡처한 텍스트/링크를 저장하는 레포지토리입니다.
+
+### 구조
+\`\`\`
+{username}-logs/
+├── index.html      # 로그 뷰어 페이지
+├── .nojekyll       # Jekyll 비활성화
+├── CLAUDE.md       # Claude Code 가이드
+└── captures/       # 캡처 데이터 폴더
+    ├── 2026-01-12.json  # 날짜별 JSON
+    └── ...
+\`\`\`
+
+### index.html 요구사항
+- 다크 테마 (배경: #0a0f0c, 골드: #f0c850)
+- captures/ 폴더의 JSON 파일 목록 표시
+- 각 캡처 항목: 타임스탬프, 텍스트 내용, 소스 앱
+- 검색/필터 기능
+
+### JSON 형식
+\`\`\`json
+{
+  "date": "2026-01-12",
+  "captures": [
+    {
+      "timestamp": "2026-01-12T14:30:00",
+      "text": "캡처된 텍스트 내용",
+      "source": "Chrome",
+      "url": "https://example.com"
+    }
+  ]
+}
+\`\`\`
+
+### GitHub API 연동
+Parksy Capture 앱이 PAT 토큰으로 직접 커밋합니다.
+Settings → Pages 활성화로 웹 뷰어 제공`
+  },
+  pwa: {
+    label: '📋 PWA 레포 구축 인스트럭션',
+    content: `## PWA 앱 레포지토리 (pwa) 구축
+
+Vercel 연동 PWA 앱 개발용 레포지토리입니다.
+
+### 구조
+\`\`\`
+{username}-pwa/
+├── index.html      # 앱 메인 페이지
+├── manifest.json   # PWA 매니페스트
+├── sw.js           # Service Worker
+├── vercel.json     # Vercel 설정
+├── CLAUDE.md       # Claude Code 가이드
+├── assets/
+│   └── icons/      # 앱 아이콘들
+└── src/
+    ├── app.js      # 앱 로직
+    └── styles.css  # 스타일
+\`\`\`
+
+### manifest.json
+\`\`\`json
+{
+  "name": "My PWA App",
+  "short_name": "MyApp",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0f0c",
+  "theme_color": "#f0c850",
+  "icons": [...]
+}
+\`\`\`
+
+### Vercel 연동
+1. vercel.com에서 GitHub 레포 연결
+2. 자동 배포 설정
+3. {repo-name}.vercel.app 도메인 제공
+
+### 온디바이스 스토어 연동
+PWA 설치 프롬프트 + 메인 레포 스토어 페이지에서 링크`
+  },
+  apk: {
+    label: '📋 APK 레포 구축 인스트럭션',
+    content: `## APK 스토어 레포지토리 (apk-lab) 구축
+
+Android APK 빌드 및 배포용 레포지토리입니다.
+
+### 구조
+\`\`\`
+{username}-apk-lab/
+├── .github/
+│   └── workflows/      # GitHub Actions
+│       ├── build-app1.yml
+│       └── build-app2.yml
+├── apps/
+│   ├── app1/           # 앱 1 소스
+│   └── app2/           # 앱 2 소스
+├── dashboard/
+│   └── index.html      # APK 다운로드 대시보드
+├── CLAUDE.md           # Claude Code 가이드
+└── vercel.json         # Vercel 설정
+\`\`\`
+
+### GitHub Actions 워크플로우
+- Android 빌드 환경 설정
+- Gradle 빌드 실행
+- APK 아티팩트 업로드
+- nightly.link로 다운로드 링크 생성
+
+### 다운로드 링크 형식
+nightly.link/{username}/{repo}/workflows/{workflow}/main/{artifact}.zip
+
+### Vercel 연동
+dashboard/ 폴더를 Vercel로 배포하여 APK 다운로드 페이지 제공
+
+### 온디바이스 스토어
+대시보드에서 APK 직접 다운로드 + 설치 가이드`
+  },
+  media: {
+    label: '📋 미디어 레포 구축 인스트럭션',
+    content: `## 미디어 저장소 (media) 구축
+
+사진, 음원 등 미디어 파일을 CDN으로 제공하는 레포지토리입니다.
+
+### 구조
+\`\`\`
+{username}-media/
+├── index.html      # 미디어 갤러리 페이지
+├── .nojekyll       # Jekyll 비활성화
+├── CLAUDE.md       # Claude Code 가이드
+├── images/         # 이미지 파일
+│   ├── photos/     # 사진
+│   ├── icons/      # 아이콘
+│   └── banners/    # 배너
+└── audio/          # 오디오 파일
+    └── ...
+\`\`\`
+
+### CDN URL 형식
+jsDelivr CDN 사용:
+https://cdn.jsdelivr.net/gh/{username}/{repo}@main/images/photo.jpg
+
+또는 GitHub Raw:
+https://raw.githubusercontent.com/{username}/{repo}/main/images/photo.jpg
+
+### index.html 요구사항
+- 다크 테마 (배경: #0a0f0c, 골드: #f0c850)
+- 이미지 갤러리 그리드
+- 클릭 시 CDN URL 복사
+- 폴더별 필터링
+
+### 용량 제한
+- GitHub 레포: 파일당 100MB, 레포당 권장 1GB 이하
+- 대용량은 GitHub LFS 또는 외부 CDN 사용`
+  }
+};
+
+let currentInstruction = 'main';
+
+function showInstruction(type) {
+  currentInstruction = type;
+  const inst = INSTRUCTIONS[type];
+
+  document.getElementById('promptLabel').textContent = inst.label;
+  document.getElementById('promptContent').textContent = inst.content;
+
+  // 탭 활성화
+  document.querySelectorAll('.inst-tab').forEach(tab => tab.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+function copyCurrentInstruction() {
+  const content = INSTRUCTIONS[currentInstruction].content;
+  showToast('인스트럭션 복사됨');
+  navigator.clipboard.writeText(content).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = content;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+  });
+}
+
+// =====================
+// Connection Check
+// =====================
+async function checkRepoConnections() {
+  const saved = localStorage.getItem(REPO_CONFIG_KEY);
+  if (!saved) {
+    showToast('먼저 설정을 저장하세요');
+    return;
+  }
+
+  const config = JSON.parse(saved);
+  const g = config.githubId;
+
+  if (!g) {
+    showToast('GitHub ID를 입력하세요');
+    return;
+  }
+
+  showToast('연동 체크 중...');
+
+  const repoKeys = ['mainRepo', 'blogRepo', 'logsRepo', 'pwaRepo', 'apkRepo', 'mediaRepo'];
+  const statusIds = ['statusMain', 'statusBlog', 'statusLogs', 'statusPwa', 'statusApk', 'statusMedia'];
+
+  for (let i = 0; i < repoKeys.length; i++) {
+    const repoName = config[repoKeys[i]];
+    const statusEl = document.getElementById(statusIds[i]);
+
+    if (!repoName) {
+      statusEl.textContent = '🔒';
+      continue;
+    }
+
+    statusEl.textContent = '⏳';
+
+    try {
+      const res = await fetch(`https://api.github.com/repos/${g}/${repoName}`, {
+        headers: config.pat ? { 'Authorization': `token ${config.pat}` } : {}
+      });
+
+      if (res.ok) {
+        statusEl.textContent = '✅';
+      } else if (res.status === 404) {
+        statusEl.textContent = '❌';
+      } else {
+        statusEl.textContent = '⚠️';
+      }
+    } catch (e) {
+      statusEl.textContent = '⚠️';
+    }
+  }
+
+  // GitHub ID 체크
+  try {
+    const res = await fetch(`https://api.github.com/users/${g}`);
+    document.getElementById('statusGithub').textContent = res.ok ? '✅' : '❌';
+  } catch (e) {
+    document.getElementById('statusGithub').textContent = '⚠️';
+  }
+
+  // PAT 체크 (인증 테스트)
+  if (config.pat) {
+    try {
+      const res = await fetch('https://api.github.com/user', {
+        headers: { 'Authorization': `token ${config.pat}` }
+      });
+      document.getElementById('statusPat').textContent = res.ok ? '✅' : '❌';
+    } catch (e) {
+      document.getElementById('statusPat').textContent = '⚠️';
+    }
+  }
+
+  showToast('체크 완료');
+  renderRepoGrid();
 }
 </script>
 
