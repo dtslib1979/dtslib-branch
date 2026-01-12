@@ -18,6 +18,8 @@
       --text-muted: rgba(245,245,240,.5);
       --border: rgba(245,245,240,.12);
       --border-gold: rgba(212,175,55,.4);
+      --success: #4CAF50;
+      --info: #2196F3;
       --radius-sm: 8px;
       --radius-md: 12px;
       --radius-lg: 16px;
@@ -36,14 +38,11 @@
       line-height: 1.5;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    a { color: inherit; text-decoration: none; }
 
     .container {
       width: 100%;
-      max-width: 500px;
+      max-width: 540px;
       margin: 0 auto;
     }
 
@@ -71,18 +70,8 @@
       box-shadow: 0 4px 20px rgba(212,175,55,.2);
     }
 
-    .login-title {
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 6px;
-      color: var(--text);
-    }
-
-    .login-subtitle {
-      font-size: 14px;
-      color: var(--text-secondary);
-      margin-bottom: 32px;
-    }
+    .login-title { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+    .login-subtitle { font-size: 14px; color: var(--text-secondary); margin-bottom: 32px; }
 
     .login-input {
       width: 100%;
@@ -99,16 +88,8 @@
       transition: border-color 0.2s;
     }
 
-    .login-input:focus {
-      outline: none;
-      border-color: var(--gold);
-    }
-
-    .login-input::placeholder {
-      letter-spacing: normal;
-      font-size: 14px;
-      color: var(--text-muted);
-    }
+    .login-input:focus { outline: none; border-color: var(--gold); }
+    .login-input::placeholder { letter-spacing: normal; font-size: 14px; color: var(--text-muted); }
 
     .login-btn {
       width: 100%;
@@ -124,154 +105,28 @@
       transition: all 0.2s;
     }
 
-    .login-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(212,175,55,.35);
-    }
-
-    .login-error {
-      color: #FF6B6B;
-      font-size: 13px;
-      margin-top: 16px;
-      display: none;
-    }
-
-    .login-error.show {
-      display: block;
-    }
+    .login-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212,175,55,.35); }
+    .login-error { color: #FF6B6B; font-size: 13px; margin-top: 16px; display: none; }
+    .login-error.show { display: block; }
 
     /* Portal */
-    .portal {
-      display: none;
-    }
-
-    .portal.active {
-      display: block;
-    }
+    .portal { display: none; }
+    .portal.active { display: block; }
 
     .portal-header {
       text-align: center;
-      margin-bottom: 28px;
-      padding: 20px 0;
+      margin-bottom: 24px;
+      padding: 16px 0;
       border-bottom: 1px solid var(--border);
     }
 
-    .portal-title {
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
+    .portal-title { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+    .portal-subtitle { font-size: 12px; color: var(--text-muted); }
 
-    .portal-subtitle {
-      font-size: 13px;
-      color: var(--text-muted);
-    }
+    /* Accordion */
+    .accordion { margin-bottom: 16px; }
 
-    /* Section */
-    .section {
-      margin-bottom: 28px;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    .section-badge {
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--bg);
-      background: var(--gold);
-      padding: 4px 10px;
-      border-radius: var(--radius-full);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .section-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--text);
-    }
-
-    /* Step List */
-    .step-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .step-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 14px 16px;
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      transition: all 0.2s;
-      color: var(--text);
-    }
-
-    .step-item:hover {
-      background: var(--bg-card);
-      border-color: var(--border-gold);
-      transform: translateX(4px);
-    }
-
-    .step-number {
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--gold-dim);
-      border: 2px solid var(--gold);
-      border-radius: var(--radius-full);
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--gold);
-      flex-shrink: 0;
-    }
-
-    .step-content {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .step-name {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 2px;
-    }
-
-    .step-desc {
-      font-size: 12px;
-      color: var(--text-secondary);
-    }
-
-    .step-arrow {
-      font-size: 16px;
-      color: var(--gold);
-      opacity: 0.7;
-    }
-
-    .step-item:hover .step-arrow {
-      opacity: 1;
-    }
-
-    /* Tool Grid */
-    .tool-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-    }
-
-    .tool-card {
+    .accordion-header {
       display: flex;
       align-items: center;
       gap: 12px;
@@ -279,51 +134,238 @@
       background: var(--bg-elevated);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+      text-align: left;
+    }
+
+    .accordion-header:hover { border-color: var(--border-gold); }
+    .accordion.open .accordion-header { border-color: var(--gold); border-radius: var(--radius-md) var(--radius-md) 0 0; }
+
+    .accordion-step {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gold);
+      border-radius: var(--radius-full);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--bg);
+      flex-shrink: 0;
+    }
+
+    .accordion-info { flex: 1; }
+    .accordion-title { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+    .accordion-desc { font-size: 11px; color: var(--text-muted); }
+
+    .accordion-toggle {
+      font-size: 18px;
+      color: var(--text-muted);
+      transition: transform 0.3s;
+    }
+
+    .accordion.open .accordion-toggle { transform: rotate(180deg); }
+
+    .accordion-content {
+      display: none;
+      background: var(--bg-card);
+      border: 1px solid var(--gold);
+      border-top: none;
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      padding: 16px;
+    }
+
+    .accordion.open .accordion-content { display: block; }
+
+    /* Step List */
+    .step-list { display: flex; flex-direction: column; gap: 8px; }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
       transition: all 0.2s;
       color: var(--text);
     }
 
-    .tool-card:hover {
-      background: var(--bg-card);
-      border-color: var(--border-gold);
-    }
+    .step-item:hover { border-color: var(--border-gold); transform: translateX(4px); }
 
-    .tool-icon {
-      font-size: 24px;
-    }
-
-    .tool-info {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .tool-name {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 2px;
-    }
-
-    .tool-desc {
+    .step-number {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gold-dim);
+      border: 1px solid var(--gold);
+      border-radius: var(--radius-full);
       font-size: 11px;
-      color: var(--text-secondary);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-weight: 700;
+      color: var(--gold);
+      flex-shrink: 0;
     }
 
-    /* APK List */
-    .apk-list {
+    .step-content { flex: 1; min-width: 0; }
+    .step-name { font-size: 13px; font-weight: 600; }
+    .step-desc { font-size: 10px; color: var(--text-secondary); }
+    .step-arrow { font-size: 14px; color: var(--gold); opacity: 0.6; }
+    .step-item:hover .step-arrow { opacity: 1; }
+
+    /* Dashboard */
+    .dashboard {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .dashboard-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dashboard-title::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+
+    .repo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .repo-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      transition: all 0.2s;
+    }
+
+    .repo-card:hover { border-color: var(--gold); }
+
+    .repo-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .repo-icon { font-size: 20px; }
+    .repo-name { font-size: 12px; font-weight: 600; }
+
+    .repo-badge {
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: var(--radius-full);
+      margin-left: auto;
+    }
+
+    .repo-badge.web { background: rgba(33,150,243,.2); color: var(--info); }
+    .repo-badge.apk { background: rgba(76,175,80,.2); color: var(--success); }
+
+    .repo-links {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 4px;
     }
+
+    .repo-link {
+      font-size: 10px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .repo-link:hover { color: var(--gold); }
+
+    /* Connection Map */
+    .connection-map {
+      background: var(--bg-card);
+      border: 1px dashed var(--border-gold);
+      border-radius: var(--radius-md);
+      padding: 14px;
+    }
+
+    .connection-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .connection-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .connection-node {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 8px 12px;
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    .connection-arrow { color: var(--gold); font-size: 14px; }
+
+    /* Section */
+    .section { margin-bottom: 20px; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .section-badge {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--bg);
+      background: var(--gold);
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-title { font-size: 14px; font-weight: 600; }
+
+    /* APK List */
+    .apk-list { display: flex; flex-direction: column; gap: 8px; }
 
     .apk-item {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 14px 16px;
+      gap: 10px;
+      padding: 12px 14px;
       background: var(--bg-elevated);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
@@ -331,15 +373,12 @@
       color: var(--text);
     }
 
-    .apk-item:hover {
-      background: var(--bg-card);
-      border-color: var(--gold);
-    }
+    .apk-item:hover { border-color: var(--gold); }
 
     .apk-icon {
-      font-size: 24px;
-      width: 40px;
-      height: 40px;
+      font-size: 20px;
+      width: 36px;
+      height: 36px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -348,96 +387,60 @@
       flex-shrink: 0;
     }
 
-    .apk-content {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .apk-name {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 2px;
-    }
-
-    .apk-desc {
-      font-size: 11px;
-      color: var(--text-secondary);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    .apk-content { flex: 1; min-width: 0; }
+    .apk-name { font-size: 13px; font-weight: 600; margin-bottom: 1px; }
+    .apk-desc { font-size: 10px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
     .apk-version {
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 600;
       color: var(--gold);
       background: var(--gold-dim);
-      padding: 4px 8px;
+      padding: 3px 6px;
       border-radius: var(--radius-full);
       flex-shrink: 0;
     }
 
-    .apk-download {
-      font-size: 16px;
-      color: var(--text-muted);
-      transition: color 0.2s;
-    }
+    .apk-download { font-size: 14px; color: var(--text-muted); transition: color 0.2s; }
+    .apk-item:hover .apk-download { color: var(--gold); }
 
-    .apk-item:hover .apk-download {
-      color: var(--gold);
-    }
-
-    .apk-note {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 10px;
-      padding-left: 4px;
-    }
+    .apk-note { font-size: 10px; color: var(--text-muted); margin-top: 8px; padding-left: 4px; }
 
     /* Quick Links */
-    .quick-links {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-    }
+    .quick-links { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
 
     .quick-link {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 12px 8px;
+      padding: 10px 6px;
       background: var(--bg-elevated);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 500;
       color: var(--text-secondary);
       transition: all 0.2s;
     }
 
-    .quick-link:hover {
-      background: var(--bg-card);
-      border-color: var(--border-gold);
-      color: var(--text);
-    }
+    .quick-link:hover { border-color: var(--border-gold); color: var(--text); }
 
     /* Footer */
     .portal-footer {
-      margin-top: 28px;
-      padding-top: 20px;
+      margin-top: 24px;
+      padding-top: 16px;
       border-top: 1px solid var(--border);
       display: flex;
-      gap: 10px;
+      gap: 8px;
     }
 
     .footer-btn {
       flex: 1;
-      padding: 14px;
+      padding: 12px;
       background: var(--bg-elevated);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
       color: var(--text-secondary);
       cursor: pointer;
@@ -445,37 +448,24 @@
       text-align: center;
     }
 
-    .footer-btn:hover {
-      background: var(--bg-card);
-      border-color: var(--border-gold);
-      color: var(--text);
-    }
-
-    .footer-btn.logout:hover {
-      border-color: #FF6B6B;
-      color: #FF6B6B;
-    }
+    .footer-btn:hover { border-color: var(--border-gold); color: var(--text); }
+    .footer-btn.logout:hover { border-color: #FF6B6B; color: #FF6B6B; }
 
     .back-link {
       display: block;
       text-align: center;
-      margin-top: 20px;
-      padding: 12px;
-      font-size: 13px;
+      margin-top: 16px;
+      padding: 10px;
+      font-size: 12px;
       color: var(--text-muted);
     }
 
-    .back-link:hover {
-      color: var(--gold);
-    }
+    .back-link:hover { color: var(--gold); }
 
     @media (max-width: 400px) {
-      .quick-links {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .tool-grid {
-        grid-template-columns: 1fr;
-      }
+      .quick-links { grid-template-columns: repeat(2, 1fr); }
+      .repo-grid { grid-template-columns: 1fr; }
+      .connection-flow { flex-direction: column; }
     }
   </style>
 </head>
@@ -487,17 +477,7 @@
     <div class="login-logo">🔐</div>
     <h1 class="login-title">Staff Portal</h1>
     <p class="login-subtitle">dtslib 내부 관리 도구</p>
-    <input
-      type="tel"
-      inputmode="numeric"
-      pattern="[0-9]*"
-      class="login-input"
-      id="passwordInput"
-      placeholder="암호 4자리"
-      maxlength="4"
-      autocomplete="off"
-      autofocus
-    />
+    <input type="tel" inputmode="numeric" pattern="[0-9]*" class="login-input" id="passwordInput" placeholder="암호 4자리" maxlength="4" autocomplete="off" autofocus />
     <button class="login-btn" id="loginBtn">접속</button>
     <p class="login-error" id="loginError">암호가 올바르지 않습니다</p>
   </div>
@@ -506,90 +486,171 @@
   <div class="portal" id="portal">
     <header class="portal-header">
       <h1 class="portal-title">Staff Portal</h1>
-      <p class="portal-subtitle">dtslib 내부 관리 도구</p>
+      <p class="portal-subtitle">dtslib 레포지토리 관리 대시보드</p>
     </header>
 
-    <!-- 홈페이지 구성하기 -->
-    <section class="section">
-      <div class="section-header">
-        <span class="section-badge">Setup</span>
-        <h2 class="section-title">홈페이지 구성하기</h2>
-      </div>
-      <div class="step-list">
-        <a href="https://www.canva.com/create/logos/" target="_blank" class="step-item">
-          <span class="step-number">1</span>
-          <div class="step-content">
-            <p class="step-name">로고 만들기</p>
-            <p class="step-desc">Canva에서 브랜드 로고 제작</p>
+    <!-- Dashboard -->
+    <div class="dashboard">
+      <div class="dashboard-title">Repository Network</div>
+      <div class="repo-grid">
+        <a href="https://github.com/dtslib1979/dtslib-branch" target="_blank" class="repo-card">
+          <div class="repo-header">
+            <span class="repo-icon">🌐</span>
+            <span class="repo-name">dtslib-branch</span>
+            <span class="repo-badge web">WEB</span>
           </div>
-          <span class="step-arrow">→</span>
+          <div class="repo-links">
+            <span class="repo-link">📄 랜딩페이지</span>
+            <span class="repo-link">🔐 Staff Portal</span>
+            <span class="repo-link">🚀 프롬프트 도구</span>
+          </div>
         </a>
-        <a href="https://workspace.google.com/" target="_blank" class="step-item">
-          <span class="step-number">2</span>
-          <div class="step-content">
-            <p class="step-name">회사 이메일 만들기</p>
-            <p class="step-desc">Google Workspace 또는 네이버웍스</p>
+        <a href="https://github.com/dtslib1979/dtslib-apk-lab" target="_blank" class="repo-card">
+          <div class="repo-header">
+            <span class="repo-icon">📱</span>
+            <span class="repo-name">dtslib-apk-lab</span>
+            <span class="repo-badge apk">APK</span>
           </div>
-          <span class="step-arrow">→</span>
-        </a>
-        <a href="https://github.com/signup" target="_blank" class="step-item">
-          <span class="step-number">3</span>
-          <div class="step-content">
-            <p class="step-name">GitHub 계정 만들기</p>
-            <p class="step-desc">코드 저장소 & 웹호스팅</p>
+          <div class="repo-links">
+            <span class="repo-link">📡 Parksy Axis</span>
+            <span class="repo-link">✏️ Parksy Pen</span>
+            <span class="repo-link">📸 Parksy Capture</span>
           </div>
-          <span class="step-arrow">→</span>
-        </a>
-        <a href="https://www.youtube.com/create_channel" target="_blank" class="step-item">
-          <span class="step-number">4</span>
-          <div class="step-content">
-            <p class="step-name">YouTube 채널 만들기</p>
-            <p class="step-desc">영상 콘텐츠 채널</p>
-          </div>
-          <span class="step-arrow">→</span>
-        </a>
-        <a href="https://nid.naver.com/user2/join/agree" target="_blank" class="step-item">
-          <span class="step-number">5</span>
-          <div class="step-content">
-            <p class="step-name">네이버 계정 만들기</p>
-            <p class="step-desc">네이버 통합 계정</p>
-          </div>
-          <span class="step-arrow">→</span>
-        </a>
-        <a href="https://section.blog.naver.com/BlogHome.naver" target="_blank" class="step-item">
-          <span class="step-number">6</span>
-          <div class="step-content">
-            <p class="step-name">네이버 블로그 만들기</p>
-            <p class="step-desc">SEO & 콘텐츠 마케팅</p>
-          </div>
-          <span class="step-arrow">→</span>
         </a>
       </div>
-    </section>
+      <div class="connection-map">
+        <div class="connection-title">데이터 흐름</div>
+        <div class="connection-flow">
+          <span class="connection-node">📱 APK Lab</span>
+          <span class="connection-arrow">→</span>
+          <span class="connection-node">⚙️ GitHub Actions</span>
+          <span class="connection-arrow">→</span>
+          <span class="connection-node">🔗 nightly.link</span>
+          <span class="connection-arrow">→</span>
+          <span class="connection-node">🌐 Staff Portal</span>
+        </div>
+      </div>
+    </div>
 
-    <!-- 내부 도구 -->
-    <section class="section">
-      <div class="section-header">
-        <span class="section-badge">Tools</span>
-        <h2 class="section-title">내부 도구</h2>
+    <!-- Step 1: 홈페이지 구성하기 -->
+    <div class="accordion" id="accordion1">
+      <button class="accordion-header" onclick="toggleAccordion('accordion1')">
+        <span class="accordion-step">1</span>
+        <div class="accordion-info">
+          <div class="accordion-title">홈페이지 구성하기</div>
+          <div class="accordion-desc">브랜드 기초 세팅 6단계</div>
+        </div>
+        <span class="accordion-toggle">▼</span>
+      </button>
+      <div class="accordion-content">
+        <div class="step-list">
+          <a href="https://www.canva.com/create/logos/" target="_blank" class="step-item">
+            <span class="step-number">1</span>
+            <div class="step-content">
+              <p class="step-name">로고 만들기</p>
+              <p class="step-desc">Canva에서 브랜드 로고 제작</p>
+            </div>
+            <span class="step-arrow">→</span>
+          </a>
+          <a href="https://workspace.google.com/" target="_blank" class="step-item">
+            <span class="step-number">2</span>
+            <div class="step-content">
+              <p class="step-name">회사 이메일 만들기</p>
+              <p class="step-desc">Google Workspace</p>
+            </div>
+            <span class="step-arrow">→</span>
+          </a>
+          <a href="https://github.com/signup" target="_blank" class="step-item">
+            <span class="step-number">3</span>
+            <div class="step-content">
+              <p class="step-name">GitHub 계정 만들기</p>
+              <p class="step-desc">코드 저장소 & 웹호스팅</p>
+            </div>
+            <span class="step-arrow">→</span>
+          </a>
+          <a href="https://www.youtube.com/create_channel" target="_blank" class="step-item">
+            <span class="step-number">4</span>
+            <div class="step-content">
+              <p class="step-name">YouTube 채널 만들기</p>
+              <p class="step-desc">영상 콘텐츠 채널</p>
+            </div>
+            <span class="step-arrow">→</span>
+          </a>
+          <a href="https://nid.naver.com/user2/join/agree" target="_blank" class="step-item">
+            <span class="step-number">5</span>
+            <div class="step-content">
+              <p class="step-name">네이버 계정 만들기</p>
+              <p class="step-desc">네이버 통합 계정</p>
+            </div>
+            <span class="step-arrow">→</span>
+          </a>
+          <a href="https://section.blog.naver.com/BlogHome.naver" target="_blank" class="step-item">
+            <span class="step-number">6</span>
+            <div class="step-content">
+              <p class="step-name">네이버 블로그 만들기</p>
+              <p class="step-desc">SEO & 콘텐츠 마케팅</p>
+            </div>
+            <span class="step-arrow">→</span>
+          </a>
+        </div>
       </div>
-      <div class="tool-grid">
-        <a href="mailto:dimas@dtslib.com" class="tool-card">
-          <span class="tool-icon">✉️</span>
-          <div class="tool-info">
-            <p class="tool-name">이메일</p>
-            <p class="tool-desc">dimas@dtslib.com</p>
-          </div>
-        </a>
-        <a href="../" class="tool-card">
-          <span class="tool-icon">🌐</span>
-          <div class="tool-info">
-            <p class="tool-name">메인 사이트</p>
-            <p class="tool-desc">홈페이지</p>
-          </div>
-        </a>
+    </div>
+
+    <!-- Step 2: 레포지토리 만들기 -->
+    <div class="accordion" id="accordion2">
+      <button class="accordion-header" onclick="toggleAccordion('accordion2')">
+        <span class="accordion-step">2</span>
+        <div class="accordion-info">
+          <div class="accordion-title">레포지토리 만들기</div>
+          <div class="accordion-desc">프로젝트별 저장소 구축</div>
+        </div>
+        <span class="accordion-toggle">▼</span>
+      </button>
+      <div class="accordion-content">
+        <div class="step-list">
+          <a href="https://github.com/new" target="_blank" class="step-item">
+            <span class="step-number">1</span>
+            <div class="step-content">
+              <p class="step-name">메인 레포 만들기</p>
+              <p class="step-desc">username.github.io/project-name</p>
+            </div>
+            <span class="step-arrow">→</span>
+          </a>
+          <a href="https://github.com/dtslib1979/dtslib-branch" target="_blank" class="step-item">
+            <span class="step-number">2</span>
+            <div class="step-content">
+              <p class="step-name">dtslib-branch 복제</p>
+              <p class="step-desc">보일러플레이트 템플릿</p>
+            </div>
+            <span class="step-arrow">→</span>
+          </a>
+          <a href="https://docs.github.com/en/pages" target="_blank" class="step-item">
+            <span class="step-number">3</span>
+            <div class="step-content">
+              <p class="step-name">GitHub Pages 활성화</p>
+              <p class="step-desc">Settings → Pages → Deploy</p>
+            </div>
+            <span class="step-arrow">→</span>
+          </a>
+          <a href="https://github.com/settings/tokens" target="_blank" class="step-item">
+            <span class="step-number">4</span>
+            <div class="step-content">
+              <p class="step-name">Personal Access Token</p>
+              <p class="step-desc">API 연동용 토큰 생성</p>
+            </div>
+            <span class="step-arrow">→</span>
+          </a>
+          <a href="https://vercel.com/new" target="_blank" class="step-item">
+            <span class="step-number">5</span>
+            <div class="step-content">
+              <p class="step-name">Vercel 연결 (선택)</p>
+              <p class="step-desc">고급 배포 & 대시보드</p>
+            </div>
+            <span class="step-arrow">→</span>
+          </a>
+        </div>
       </div>
-    </section>
+    </div>
 
     <!-- 생산성 도구 APK -->
     <section class="section">
@@ -626,7 +687,7 @@
           <span class="apk-download">⬇</span>
         </a>
       </div>
-      <p class="apk-note">* ZIP 다운로드 후 압축 해제하여 APK 설치</p>
+      <p class="apk-note">* ZIP 다운로드 → 압축 해제 → APK 설치</p>
     </section>
 
     <!-- 빠른 링크 -->
@@ -639,13 +700,14 @@
         <a href="https://chat.openai.com" target="_blank" class="quick-link">ChatGPT</a>
         <a href="https://claude.ai" target="_blank" class="quick-link">Claude</a>
         <a href="https://github.com/dtslib1979" target="_blank" class="quick-link">GitHub</a>
-        <a href="https://analytics.google.com" target="_blank" class="quick-link">Analytics</a>
+        <a href="https://dtslib-apk-lab.vercel.app" target="_blank" class="quick-link">APK Lab</a>
       </div>
     </section>
 
     <!-- Footer -->
     <div class="portal-footer">
       <a href="../" class="footer-btn">← 홈으로</a>
+      <a href="../tools/webpage-prompt.html" class="footer-btn">🚀 프롬프트</a>
       <button class="footer-btn logout" id="logoutBtn">로그아웃</button>
     </div>
   </div>
@@ -704,6 +766,12 @@ logoutBtn.addEventListener('click', () => {
   sessionStorage.removeItem(STORAGE_KEY);
   hidePortal();
 });
+
+// Accordion
+function toggleAccordion(id) {
+  const accordion = document.getElementById(id);
+  accordion.classList.toggle('open');
+}
 </script>
 
 </body>
