@@ -42,7 +42,6 @@
       max-width: 400px;
     }
 
-    /* Login Gate */
     .login-gate {
       text-align: center;
     }
@@ -111,7 +110,6 @@
       display: block;
     }
 
-    /* Portal Content */
     .portal {
       display: none;
     }
@@ -247,61 +245,59 @@
 <body>
 
 <div class="container">
-  <!-- Login Gate -->
   <div class="login-gate" id="loginGate">
     <h1 class="login-title">Staff Portal</h1>
-    <p class="login-subtitle">dtslib \ub0b4\ubd80 \ub3c4\uad6c</p>
+    <p class="login-subtitle">dtslib 내부 도구</p>
     <input
       type="password"
       class="login-input"
       id="passwordInput"
-      placeholder="\uc554\ud638 \uc785\ub825"
+      placeholder="암호 입력"
       maxlength="10"
       autocomplete="off"
     />
-    <button class="login-btn" id="loginBtn">\uc811\uc18d</button>
-    <p class="login-error" id="loginError">\uc554\ud638\uac00 \uc62c\ubc14\ub974\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4</p>
+    <button class="login-btn" id="loginBtn">접속</button>
+    <p class="login-error" id="loginError">암호가 올바르지 않습니다</p>
   </div>
 
-  <!-- Portal Content -->
   <div class="portal" id="portal">
     <header class="portal-header">
       <h1 class="portal-title">Staff Portal</h1>
-      <p class="portal-subtitle">dtslib \ub0b4\ubd80 \ub3c4\uad6c</p>
+      <p class="portal-subtitle">dtslib 내부 도구</p>
     </header>
 
     <div class="tool-grid">
       <a href="mailto:dimas@dtslib.com" class="tool-card">
-        <span class="tool-icon">\u2709\ufe0f</span>
+        <span class="tool-icon">✉️</span>
         <div class="tool-info">
-          <p class="tool-name">\uc774\uba54\uc77c</p>
+          <p class="tool-name">이메일</p>
           <p class="tool-desc">dimas@dtslib.com</p>
         </div>
       </a>
       <a href="../" class="tool-card">
-        <span class="tool-icon">\ud83c\udf10</span>
+        <span class="tool-icon">🌐</span>
         <div class="tool-info">
-          <p class="tool-name">\uba54\uc778 \uc0ac\uc774\ud2b8</p>
-          <p class="tool-desc">dtslib.com \ud648\ud398\uc774\uc9c0</p>
+          <p class="tool-name">메인 사이트</p>
+          <p class="tool-desc">dtslib.com 홈페이지</p>
         </div>
       </a>
     </div>
 
     <div class="quick-links">
       <h2 class="quick-links-title">Quick Links</h2>
-      <a href="https://chat.openai.com" target="_blank" class="quick-link">ChatGPT \u2192</a>
-      <a href="https://claude.ai" target="_blank" class="quick-link">Claude \u2192</a>
-      <a href="https://github.com/dtslib1979" target="_blank" class="quick-link">GitHub \u2192</a>
+      <a href="https://chat.openai.com" target="_blank" class="quick-link">ChatGPT →</a>
+      <a href="https://claude.ai" target="_blank" class="quick-link">Claude →</a>
+      <a href="https://github.com/dtslib1979" target="_blank" class="quick-link">GitHub →</a>
     </div>
 
-    <button class="logout-btn" id="logoutBtn">\ub85c\uadf8\uc544\uc6c3</button>
+    <button class="logout-btn" id="logoutBtn">로그아웃</button>
   </div>
 
-  <a href="../" class="back-link">\u2190 \uba54\uc778\uc73c\ub85c \ub3cc\uc544\uac00\uae30</a>
+  <a href="../" class="back-link">← 메인으로 돌아가기</a>
 </div>
 
 <script>
-const ACCESS_CODE = '1216';
+const ACCESS_CODE = '1126';
 const STORAGE_KEY = 'dtslib_staff_auth';
 
 const loginGate = document.getElementById('loginGate');
@@ -311,7 +307,6 @@ const loginBtn = document.getElementById('loginBtn');
 const loginError = document.getElementById('loginError');
 const logoutBtn = document.getElementById('logoutBtn');
 
-// Check if already authenticated
 if (sessionStorage.getItem(STORAGE_KEY) === 'true') {
   showPortal();
 }

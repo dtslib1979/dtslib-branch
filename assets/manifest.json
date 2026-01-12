@@ -1,9 +1,9 @@
 {
-  "name": "dtslib \ucee8\uc124\ud305",
+  "name": "dtslib 컨설팅",
   "short_name": "dtslib",
-  "description": "AI \uc5c5\ubb34 \uc790\ub3d9\ud654 \uc138\ud305 \uc11c\ube44\uc2a4",
-  "start_url": "/",
-  "id": "/",
+  "description": "AI 업무 자동화 세팅 서비스",
+  "start_url": "/dtslib-branch/",
+  "id": "/dtslib-branch/",
   "display": "standalone",
   "display_override": ["window-controls-overlay", "standalone"],
   "background_color": "#0F1F15",
@@ -12,19 +12,19 @@
   "categories": ["business", "productivity"],
   "icons": [
     {
-      "src": "/assets/icons/logo.png",
+      "src": "/dtslib-branch/assets/icons/logo.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/assets/icons/logo.png",
+      "src": "/dtslib-branch/assets/icons/logo.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/assets/icons/logo.png",
+      "src": "/dtslib-branch/assets/icons/logo.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
@@ -34,9 +34,9 @@
     {
       "name": "Staff Portal",
       "short_name": "Staff",
-      "description": "\ub0b4\ubd80 \ub3c4\uad6c \uc811\uadfc",
-      "url": "/staff/",
-      "icons": [{"src": "/assets/icons/logo.png", "sizes": "192x192"}]
+      "description": "내부 도구 접근",
+      "url": "/dtslib-branch/staff/",
+      "icons": [{"src": "/dtslib-branch/assets/icons/logo.png", "sizes": "192x192"}]
     }
   ]
 }
