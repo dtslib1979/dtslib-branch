@@ -10,17 +10,18 @@
     :root {
       --bg: #0F1F15;
       --bg-elevated: #1A2E22;
+      --bg-card: #243529;
       --gold: #D4AF37;
-      --gold-dim: rgba(212,175,55,.12);
+      --gold-dim: rgba(212,175,55,.15);
       --text: #F5F5F0;
-      --text-secondary: rgba(245,245,240,.7);
+      --text-secondary: rgba(245,245,240,.75);
       --text-muted: rgba(245,245,240,.5);
-      --border: rgba(245,245,240,.1);
-      --border-gold: rgba(212,175,55,.3);
+      --border: rgba(245,245,240,.12);
+      --border-gold: rgba(212,175,55,.4);
+      --radius-sm: 8px;
       --radius-md: 12px;
       --radius-lg: 16px;
       --radius-full: 9999px;
-      --green: #4CAF50;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -31,15 +32,22 @@
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      padding: 24px;
+      padding: 20px;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
     .container {
       width: 100%;
-      max-width: 480px;
+      max-width: 500px;
       margin: 0 auto;
     }
 
+    /* Login Gate */
     .login-gate {
       text-align: center;
       min-height: 80vh;
@@ -49,30 +57,46 @@
       justify-content: center;
     }
 
+    .login-logo {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 20px;
+      background: var(--bg-elevated);
+      border: 2px solid var(--gold);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      box-shadow: 0 4px 20px rgba(212,175,55,.2);
+    }
+
     .login-title {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 700;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
+      color: var(--text);
     }
 
     .login-subtitle {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--text-secondary);
       margin-bottom: 32px;
     }
 
     .login-input {
       width: 100%;
-      max-width: 300px;
-      padding: 16px;
+      max-width: 280px;
+      padding: 16px 20px;
       background: var(--bg-elevated);
-      border: 1px solid var(--border);
+      border: 2px solid var(--border);
       border-radius: var(--radius-md);
-      font-size: 18px;
+      font-size: 20px;
       color: var(--text);
       text-align: center;
       letter-spacing: 8px;
       margin-bottom: 16px;
+      transition: border-color 0.2s;
     }
 
     .login-input:focus {
@@ -82,12 +106,13 @@
 
     .login-input::placeholder {
       letter-spacing: normal;
+      font-size: 14px;
       color: var(--text-muted);
     }
 
     .login-btn {
       width: 100%;
-      max-width: 300px;
+      max-width: 280px;
       padding: 16px;
       background: linear-gradient(135deg, var(--gold), #C9A227);
       border: none;
@@ -101,11 +126,11 @@
 
     .login-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(212,175,55,.3);
+      box-shadow: 0 6px 20px rgba(212,175,55,.35);
     }
 
     .login-error {
-      color: #E57373;
+      color: #FF6B6B;
       font-size: 13px;
       margin-top: 16px;
       display: none;
@@ -115,6 +140,7 @@
       display: block;
     }
 
+    /* Portal */
     .portal {
       display: none;
     }
@@ -125,48 +151,48 @@
 
     .portal-header {
       text-align: center;
-      margin-bottom: 32px;
-      padding-top: 16px;
+      margin-bottom: 28px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
     }
 
     .portal-title {
       font-size: 24px;
       font-weight: 700;
+      color: var(--text);
       margin-bottom: 4px;
     }
 
     .portal-subtitle {
       font-size: 13px;
-      color: var(--text-secondary);
+      color: var(--text-muted);
     }
 
-    /* Section Styles */
+    /* Section */
     .section {
-      margin-bottom: 32px;
+      margin-bottom: 28px;
     }
 
     .section-header {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 16px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--border);
+      gap: 10px;
+      margin-bottom: 14px;
     }
 
     .section-badge {
       font-size: 10px;
       font-weight: 700;
       color: var(--bg);
-      background: linear-gradient(135deg, var(--gold), #C9A227);
-      padding: 4px 8px;
+      background: var(--gold);
+      padding: 4px 10px;
       border-radius: var(--radius-full);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
     }
 
     .section-title {
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 600;
       color: var(--text);
     }
@@ -175,45 +201,40 @@
     .step-list {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
     }
 
     .step-item {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 16px;
+      gap: 14px;
+      padding: 14px 16px;
       background: var(--bg-elevated);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      text-decoration: none;
       transition: all 0.2s;
+      color: var(--text);
     }
 
     .step-item:hover {
-      border-color: var(--gold);
+      background: var(--bg-card);
+      border-color: var(--border-gold);
       transform: translateX(4px);
     }
 
     .step-number {
-      width: 28px;
-      height: 28px;
+      width: 32px;
+      height: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
       background: var(--gold-dim);
-      border: 1px solid var(--border-gold);
+      border: 2px solid var(--gold);
       border-radius: var(--radius-full);
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 700;
       color: var(--gold);
       flex-shrink: 0;
-    }
-
-    .step-item.done .step-number {
-      background: rgba(76,175,80,.15);
-      border-color: var(--green);
-      color: var(--green);
     }
 
     .step-content {
@@ -222,26 +243,32 @@
     }
 
     .step-name {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 600;
+      color: var(--text);
       margin-bottom: 2px;
     }
 
     .step-desc {
-      font-size: 11px;
-      color: var(--text-muted);
+      font-size: 12px;
+      color: var(--text-secondary);
     }
 
     .step-arrow {
-      font-size: 14px;
-      color: var(--text-muted);
+      font-size: 16px;
+      color: var(--gold);
+      opacity: 0.7;
+    }
+
+    .step-item:hover .step-arrow {
+      opacity: 1;
     }
 
     /* Tool Grid */
     .tool-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
     }
 
     .tool-card {
@@ -252,12 +279,13 @@
       background: var(--bg-elevated);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      text-decoration: none;
       transition: all 0.2s;
+      color: var(--text);
     }
 
     .tool-card:hover {
-      border-color: var(--gold);
+      background: var(--bg-card);
+      border-color: var(--border-gold);
     }
 
     .tool-icon {
@@ -266,99 +294,105 @@
 
     .tool-info {
       flex: 1;
+      min-width: 0;
     }
 
     .tool-name {
       font-size: 14px;
       font-weight: 600;
+      color: var(--text);
       margin-bottom: 2px;
     }
 
     .tool-desc {
       font-size: 11px;
       color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     /* Quick Links */
     .quick-links {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 8px;
     }
 
     .quick-link {
-      display: block;
-      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 8px;
       background: var(--bg-elevated);
       border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      font-size: 12px;
+      border-radius: var(--radius-sm);
+      font-size: 11px;
+      font-weight: 500;
       color: var(--text-secondary);
-      text-decoration: none;
-      text-align: center;
       transition: all 0.2s;
     }
 
     .quick-link:hover {
-      border-color: var(--gold);
+      background: var(--bg-card);
+      border-color: var(--border-gold);
       color: var(--text);
     }
 
     /* Footer */
     .portal-footer {
-      margin-top: 32px;
-      padding-top: 24px;
+      margin-top: 28px;
+      padding-top: 20px;
       border-top: 1px solid var(--border);
       display: flex;
-      gap: 8px;
+      gap: 10px;
     }
 
-    .logout-btn {
+    .footer-btn {
       flex: 1;
-      padding: 12px;
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      font-size: 13px;
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .logout-btn:hover {
-      border-color: #E57373;
-      color: #E57373;
-    }
-
-    .home-btn {
-      flex: 1;
-      padding: 12px;
+      padding: 14px;
       background: var(--bg-elevated);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
       font-size: 13px;
+      font-weight: 500;
       color: var(--text-secondary);
-      text-decoration: none;
-      text-align: center;
+      cursor: pointer;
       transition: all 0.2s;
+      text-align: center;
     }
 
-    .home-btn:hover {
-      border-color: var(--gold);
+    .footer-btn:hover {
+      background: var(--bg-card);
+      border-color: var(--border-gold);
       color: var(--text);
+    }
+
+    .footer-btn.logout:hover {
+      border-color: #FF6B6B;
+      color: #FF6B6B;
     }
 
     .back-link {
       display: block;
       text-align: center;
-      margin-top: 24px;
+      margin-top: 20px;
+      padding: 12px;
       font-size: 13px;
       color: var(--text-muted);
-      text-decoration: none;
     }
 
     .back-link:hover {
       color: var(--gold);
+    }
+
+    @media (max-width: 400px) {
+      .quick-links {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .tool-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -367,8 +401,9 @@
 <div class="container">
   <!-- Login Gate -->
   <div class="login-gate" id="loginGate">
+    <div class="login-logo">🔐</div>
     <h1 class="login-title">Staff Portal</h1>
-    <p class="login-subtitle">dtslib 내부 도구</p>
+    <p class="login-subtitle">dtslib 내부 관리 도구</p>
     <input
       type="password"
       class="login-input"
@@ -385,10 +420,10 @@
   <div class="portal" id="portal">
     <header class="portal-header">
       <h1 class="portal-title">Staff Portal</h1>
-      <p class="portal-subtitle">dtslib 내부 도구</p>
+      <p class="portal-subtitle">dtslib 내부 관리 도구</p>
     </header>
 
-    <!-- 홈페이지 구성하기 Section -->
+    <!-- 홈페이지 구성하기 -->
     <section class="section">
       <div class="section-header">
         <span class="section-badge">Setup</span>
@@ -446,7 +481,7 @@
       </div>
     </section>
 
-    <!-- 도구 Section -->
+    <!-- 내부 도구 -->
     <section class="section">
       <div class="section-header">
         <span class="section-badge">Tools</span>
@@ -464,13 +499,13 @@
           <span class="tool-icon">🌐</span>
           <div class="tool-info">
             <p class="tool-name">메인 사이트</p>
-            <p class="tool-desc">dtslib 홈페이지</p>
+            <p class="tool-desc">홈페이지</p>
           </div>
         </a>
       </div>
     </section>
 
-    <!-- Quick Links Section -->
+    <!-- 빠른 링크 -->
     <section class="section">
       <div class="section-header">
         <span class="section-badge">Links</span>
@@ -486,8 +521,8 @@
 
     <!-- Footer -->
     <div class="portal-footer">
-      <a href="../" class="home-btn">← 홈으로</a>
-      <button class="logout-btn" id="logoutBtn">로그아웃</button>
+      <a href="../" class="footer-btn">← 홈으로</a>
+      <button class="footer-btn logout" id="logoutBtn">로그아웃</button>
     </div>
   </div>
 
