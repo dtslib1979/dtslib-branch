@@ -224,41 +224,7 @@
     .step-arrow { font-size: 18px; color: var(--gold); }
     .step-item:hover .step-arrow { transform: translateX(4px); }
 
-    /* Dashboard */
-    .dashboard {
-      background: var(--bg-elevated);
-      border: 2px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-
-    .dashboard-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--gold);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .dashboard-title::before {
-      content: '';
-      width: 10px;
-      height: 10px;
-      background: var(--gold);
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-
+    /* Repo Grid */
     .repo-grid {
       display: flex;
       flex-direction: column;
@@ -556,51 +522,35 @@
     }
 
     /* Repo Setup Form */
-    .repo-setup {
-      background: var(--bg-card);
-      border: 2px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 16px;
-      margin-bottom: 16px;
-    }
-
-    .repo-setup-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--gold);
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
     .repo-input-group {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      margin-bottom: 14px;
+      gap: 8px;
+      margin-bottom: 12px;
     }
 
     .repo-input-row {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .repo-input-label {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       color: var(--text-secondary);
-      min-width: 70px;
+      min-width: 50px;
+      flex-shrink: 0;
     }
 
     .repo-input {
       flex: 1;
-      padding: 12px 14px;
+      min-width: 0;
+      padding: 10px 12px;
       background: var(--bg-elevated);
       border: 2px solid var(--border);
       border-radius: var(--radius-sm);
-      font-size: 14px;
+      font-size: 13px;
       color: var(--text);
       transition: border-color 0.2s;
     }
@@ -710,81 +660,6 @@
       <h1 class="portal-title">Staff Portal</h1>
       <p class="portal-subtitle">dtslib 레포지토리 관리 대시보드</p>
     </header>
-
-    <!-- Dashboard -->
-    <div class="dashboard">
-      <div class="dashboard-title">Repository Network</div>
-
-      <!-- Repo Setup Form -->
-      <div class="repo-setup">
-        <div class="repo-setup-title">⚙️ 내 레포지토리 네트워크 (6개)</div>
-        <div class="repo-input-group">
-          <div class="repo-input-row">
-            <span class="repo-input-label">GitHub ID</span>
-            <input type="text" class="repo-input" id="inputGithubId" placeholder="username" />
-            <span class="repo-input-status" id="statusGithub">🔒</span>
-          </div>
-          <div class="repo-input-row">
-            <span class="repo-input-label">1. 메인</span>
-            <input type="text" class="repo-input" id="inputMainRepo" placeholder="my-branch (랜딩+포탈)" />
-            <span class="repo-input-status" id="statusMain">🔒</span>
-          </div>
-          <div class="repo-input-row">
-            <span class="repo-input-label">2. 블로그</span>
-            <input type="text" class="repo-input" id="inputBlogRepo" placeholder="my-posts (HTML 포스팅)" />
-            <span class="repo-input-status" id="statusBlog">🔒</span>
-          </div>
-          <div class="repo-input-row">
-            <span class="repo-input-label">3. 로그</span>
-            <input type="text" class="repo-input" id="inputLogsRepo" placeholder="my-logs (캡처 저장소)" />
-            <span class="repo-input-status" id="statusLogs">🔒</span>
-          </div>
-          <div class="repo-input-row">
-            <span class="repo-input-label">4. PWA</span>
-            <input type="text" class="repo-input" id="inputPwaRepo" placeholder="my-pwa (Vercel 앱)" />
-            <span class="repo-input-status" id="statusPwa">🔒</span>
-          </div>
-          <div class="repo-input-row">
-            <span class="repo-input-label">5. APK</span>
-            <input type="text" class="repo-input" id="inputApkRepo" placeholder="my-apk-lab (APK 스토어)" />
-            <span class="repo-input-status" id="statusApk">🔒</span>
-          </div>
-          <div class="repo-input-row">
-            <span class="repo-input-label">6. 미디어</span>
-            <input type="text" class="repo-input" id="inputMediaRepo" placeholder="my-media (사진/음원)" />
-            <span class="repo-input-status" id="statusMedia">🔒</span>
-          </div>
-          <div class="repo-input-row">
-            <span class="repo-input-label">PAT 토큰</span>
-            <input type="password" class="repo-input" id="inputPat" placeholder="ghp_xxxx (HTML 포스터용)" />
-            <span class="repo-input-status" id="statusPat">🔒</span>
-          </div>
-        </div>
-        <div style="display:flex;gap:10px;">
-          <button class="repo-save-btn" onclick="saveRepoConfig()" style="flex:1;">💾 저장</button>
-          <button class="repo-save-btn" onclick="checkRepoConnections()" style="flex:1;background:var(--info);">🔍 연동 체크</button>
-        </div>
-      </div>
-
-      <!-- Dynamic Repo Grid -->
-      <div class="repo-grid" id="repoGrid">
-        <!-- 동적으로 렌더링됨 -->
-      </div>
-
-      <!-- Connection Map -->
-      <div class="connection-map">
-        <div class="connection-title">블로그 데이터 흐름</div>
-        <div class="connection-flow" id="connectionFlow">
-          <span class="connection-node">✍️ HTML 포스터</span>
-          <span class="connection-arrow">→</span>
-          <span class="connection-node" id="flowBlog">📝 블로그 레포</span>
-          <span class="connection-arrow">→</span>
-          <span class="connection-node">⚡ GitHub Pages</span>
-          <span class="connection-arrow">→</span>
-          <span class="connection-node">🌐 Blog 메뉴</span>
-        </div>
-      </div>
-    </div>
 
     <!-- Step 1: 홈페이지 구성하기 -->
     <div class="accordion" id="accordion1">
@@ -972,6 +847,82 @@ GitHub Pages 기반 랜딩페이지 + Staff Portal 레포지토리를 구축해�
 - .nojekyll 파일로 Jekyll 비활성화
 
 이 구조로 레포지토리를 생성하고 커밋해주세요.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4: 레포지토리 네트워크 -->
+    <div class="accordion" id="accordion4">
+      <button class="accordion-header" onclick="toggleAccordion('accordion4')">
+        <span class="accordion-step">4</span>
+        <div class="accordion-info">
+          <div class="accordion-title">레포지토리 네트워크</div>
+          <div class="accordion-desc">6개 레포 설정 및 연동 확인</div>
+        </div>
+        <span class="accordion-toggle">▼</span>
+      </button>
+      <div class="accordion-content">
+        <!-- Repo Setup Form -->
+        <div class="repo-input-group">
+          <div class="repo-input-row">
+            <span class="repo-input-label">GitHub</span>
+            <input type="text" class="repo-input" id="inputGithubId" placeholder="username" />
+            <span class="repo-input-status" id="statusGithub">🔒</span>
+          </div>
+          <div class="repo-input-row">
+            <span class="repo-input-label">메인</span>
+            <input type="text" class="repo-input" id="inputMainRepo" placeholder="my-branch" />
+            <span class="repo-input-status" id="statusMain">🔒</span>
+          </div>
+          <div class="repo-input-row">
+            <span class="repo-input-label">블로그</span>
+            <input type="text" class="repo-input" id="inputBlogRepo" placeholder="my-posts" />
+            <span class="repo-input-status" id="statusBlog">🔒</span>
+          </div>
+          <div class="repo-input-row">
+            <span class="repo-input-label">로그</span>
+            <input type="text" class="repo-input" id="inputLogsRepo" placeholder="my-logs" />
+            <span class="repo-input-status" id="statusLogs">🔒</span>
+          </div>
+          <div class="repo-input-row">
+            <span class="repo-input-label">PWA</span>
+            <input type="text" class="repo-input" id="inputPwaRepo" placeholder="my-pwa" />
+            <span class="repo-input-status" id="statusPwa">🔒</span>
+          </div>
+          <div class="repo-input-row">
+            <span class="repo-input-label">APK</span>
+            <input type="text" class="repo-input" id="inputApkRepo" placeholder="my-apk-lab" />
+            <span class="repo-input-status" id="statusApk">🔒</span>
+          </div>
+          <div class="repo-input-row">
+            <span class="repo-input-label">미디어</span>
+            <input type="text" class="repo-input" id="inputMediaRepo" placeholder="my-media" />
+            <span class="repo-input-status" id="statusMedia">🔒</span>
+          </div>
+          <div class="repo-input-row">
+            <span class="repo-input-label">PAT</span>
+            <input type="password" class="repo-input" id="inputPat" placeholder="ghp_xxxx" />
+            <span class="repo-input-status" id="statusPat">🔒</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:14px;">
+          <button class="repo-save-btn" onclick="saveRepoConfig()" style="flex:1;">💾 저장</button>
+          <button class="repo-save-btn" onclick="checkRepoConnections()" style="flex:1;background:var(--info);">🔍 체크</button>
+        </div>
+
+        <!-- Dynamic Repo Grid -->
+        <div class="repo-grid" id="repoGrid"></div>
+
+        <!-- Connection Map -->
+        <div class="connection-map">
+          <div class="connection-title">데이터 흐름</div>
+          <div class="connection-flow" id="connectionFlow">
+            <span class="connection-node">✍️ 포스터</span>
+            <span class="connection-arrow">→</span>
+            <span class="connection-node" id="flowBlog">📝 블로그</span>
+            <span class="connection-arrow">→</span>
+            <span class="connection-node">⚡ Pages</span>
+          </div>
         </div>
       </div>
     </div>
