@@ -4,36 +4,27 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0A0A0A">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-  <!--
-    ⚠️ OG 태그 수정 필요 (카카오톡/슬랙 미리보기)
-    아래 값들을 직접 수정하세요:
-    - og:title: 브랜드명
-    - og:description: 태그라인
-    - og:image: OG 이미지 URL (1200x630px 권장)
-    - og:url: 카드 페이지 URL
-  -->
-  <title>DIMAS | Digital Card</title>
-  <meta name="description" content="AI 업무 자동화 전문가">
+  <!-- SEO & Open Graph for KakaoTalk Preview -->
+  <title>DIMAS</title>
+  <meta name="description" content="AI Automation Consultant — AI 업무 자동화 전문가">
 
-  <!-- Open Graph (카카오톡, 슬랙 등) -->
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dtslib1979.github.io/dtslib-branch/card/">
   <meta property="og:title" content="DIMAS">
-  <meta property="og:description" content="AI 업무 자동화 전문가">
+  <meta property="og:description" content="AI Automation Consultant">
   <meta property="og:image" content="https://dtslib.com/assets/og/card-preview.png">
-  <meta property="og:url" content="https://dtslib.com/card/">
-  <meta property="og:site_name" content="dtslib">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="ko_KR">
 
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="DIMAS">
-  <meta name="twitter:description" content="AI 업무 자동화 전문가">
+  <meta name="twitter:description" content="AI Automation Consultant">
   <meta name="twitter:image" content="https://dtslib.com/assets/og/card-preview.png">
 
   <link rel="icon" href="../assets/icons/1768298038450.png">
-  <link rel="apple-touch-icon" href="../assets/icons/1768298038450.png">
+  <link rel="canonical" href="https://dtslib1979.github.io/dtslib-branch/card/">
 
   <style>
     :root {
@@ -45,34 +36,26 @@
       --gold-shine: linear-gradient(135deg, #D4AF37 0%, #F4E4A6 25%, #D4AF37 50%, #B8962E 75%, #D4AF37 100%);
       --text: #F5F5F0;
       --text-muted: rgba(245,245,240,.5);
-      --border-gold: rgba(212,175,55,.5);
-      --safe-top: env(safe-area-inset-top, 0px);
-      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --border-gold: rgba(212,175,55,.4);
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html, body {
-      height: 100%;
-      overflow-x: hidden;
-    }
+    html, body { height: 100%; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      font-size: 15px;
+      font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      padding: calc(var(--safe-top) + 24px) 16px calc(var(--safe-bottom) + 24px);
+      padding: 24px;
+      overflow-x: hidden;
     }
 
-    /* Animations */
+    /* Entry Animation */
     @keyframes cardEntry {
       0% { opacity: 0; transform: translateY(30px) scale(0.95); }
       100% { opacity: 1; transform: translateY(0) scale(1); }
@@ -84,33 +67,51 @@
     }
 
     @keyframes logoPulse {
-      0%, 100% { box-shadow: 0 4px 20px rgba(212,175,55,.3); }
-      50% { box-shadow: 0 4px 35px rgba(212,175,55,.5), 0 0 50px rgba(212,175,55,.25); }
+      0%, 100% { box-shadow: 0 4px 20px rgba(212,175,55,.25); }
+      50% { box-shadow: 0 4px 30px rgba(212,175,55,.45), 0 0 40px rgba(212,175,55,.2); }
     }
 
-    @keyframes borderGlow {
-      0%, 100% { box-shadow: 0 0 20px rgba(212,175,55,.15), inset 0 0 20px rgba(212,175,55,.03); }
-      50% { box-shadow: 0 0 30px rgba(212,175,55,.25), inset 0 0 30px rgba(212,175,55,.05); }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
     }
 
-    /* Card Wrapper */
+    /* Card Container */
     .card-wrapper {
       width: 100%;
-      max-width: 400px;
+      max-width: 380px;
       animation: cardEntry 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    /* Business Card */
+    /* The Business Card */
     .business-card {
       background: var(--card-bg);
       border: 1px solid var(--border-gold);
-      border-radius: 20px;
-      padding: 40px 28px 36px;
+      border-radius: 16px;
+      padding: 40px 28px;
       position: relative;
       overflow: hidden;
-      animation: borderGlow 4s ease-in-out infinite;
+      box-shadow:
+        0 4px 24px rgba(0,0,0,.5),
+        0 0 80px rgba(212,175,55,.08),
+        inset 0 1px 0 rgba(255,255,255,.03);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
+    .business-card:hover {
+      transform: translateY(-4px);
+      box-shadow:
+        0 12px 40px rgba(0,0,0,.6),
+        0 0 100px rgba(212,175,55,.12),
+        inset 0 1px 0 rgba(255,255,255,.05);
+    }
+
+    .business-card:active {
+      transform: translateY(-2px);
+    }
+
+    /* Gold edge effect */
     .business-card::before {
       content: '';
       position: absolute;
@@ -118,25 +119,36 @@
       left: 0;
       right: 0;
       height: 2px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      background: var(--gold-shine);
+      background-size: 200% 100%;
+      animation: shimmer 3s ease-in-out infinite;
     }
 
-    /* Logo Section */
+    /* Subtle pattern overlay */
+    .business-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4AF37' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    /* Logo */
     .logo-section {
       text-align: center;
       margin-bottom: 24px;
+      position: relative;
+      z-index: 1;
     }
 
     .logo {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto 20px;
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 16px;
       border-radius: 50%;
-      border: 3px solid var(--gold);
+      border: 2px solid var(--gold);
       overflow: hidden;
       animation: logoPulse 3s ease-in-out infinite;
-      background: linear-gradient(145deg, #2a2a2a 0%, #1a1a1a 100%);
-      position: relative;
     }
 
     .logo img {
@@ -146,9 +158,9 @@
     }
 
     .brand-name {
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: 0.15em;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
       background: var(--gold-shine);
       background-size: 200% 100%;
@@ -156,64 +168,64 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       animation: shimmer 3s ease-in-out infinite;
+      margin-bottom: 6px;
     }
 
     .tagline {
-      font-size: 12px;
+      font-size: 10px;
+      letter-spacing: 0.15em;
       color: var(--text-muted);
-      margin-top: 8px;
-      letter-spacing: 0.2em;
       text-transform: uppercase;
-      font-weight: 400;
     }
 
     /* Divider */
     .divider {
       height: 1px;
       background: linear-gradient(90deg, transparent, var(--border-gold), transparent);
-      margin: 28px 0;
+      margin: 20px 0;
+      position: relative;
+      z-index: 1;
     }
 
     /* Quote Section */
     .quote-section {
       text-align: center;
-      padding: 8px 0;
+      position: relative;
+      z-index: 1;
     }
 
     .quote {
-      font-size: 16px;
+      font-size: 14px;
+      font-weight: 300;
       font-style: italic;
-      color: var(--text-muted);
+      color: var(--text);
       line-height: 1.6;
+      letter-spacing: 0.02em;
     }
 
-    .quote .highlight {
+    .quote span {
       color: var(--gold);
       font-weight: 500;
-      text-decoration: underline;
-      text-decoration-color: var(--gold);
-      text-underline-offset: 3px;
     }
 
-    /* Contact Section */
+    /* Contact Info */
     .contact-section {
       text-align: center;
-      margin: 24px 0;
+      position: relative;
+      z-index: 1;
     }
 
     .contact-item {
-      margin: 12px 0;
+      font-size: 13px;
+      color: var(--text);
+      margin-bottom: 6px;
+      letter-spacing: 0.05em;
     }
 
     .contact-item a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
       color: var(--text);
       text-decoration: none;
-      font-size: 15px;
-      transition: all 0.2s ease;
+      transition: color 0.2s;
     }
 
     .contact-item a:hover {
@@ -221,79 +233,85 @@
     }
 
     .contact-icon {
-      font-size: 18px;
+      display: inline-block;
+      width: 18px;
+      font-size: 12px;
+      text-align: center;
+      margin-right: 4px;
     }
 
-    /* Action Section */
+    /* Action Buttons */
     .action-section {
-      display: flex;
-      gap: 14px;
-      margin-top: 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 20px;
+      position: relative;
+      z-index: 1;
     }
 
     .action-btn {
-      flex: 1;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 4px;
-      padding: 18px 16px;
-      border-radius: 12px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      gap: 6px;
+      padding: 12px 16px;
+      background: transparent;
       border: 1px solid var(--border-gold);
-      background: rgba(0,0,0,.3);
+      border-radius: 8px;
       color: var(--gold);
-      cursor: pointer;
-      transition: all 0.25s ease;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: inherit;
     }
 
     .action-btn:hover {
       background: rgba(212,175,55,.1);
-      transform: translateY(-2px);
+      border-color: var(--gold);
+    }
+
+    .action-btn:active {
+      transform: scale(0.97);
     }
 
     .action-btn.primary {
       background: var(--gold);
-      color: #0A0A0A;
+      color: var(--bg);
       border-color: var(--gold);
     }
 
     .action-btn.primary:hover {
       background: var(--gold-light);
-      box-shadow: 0 4px 20px rgba(212,175,55,.4);
+      box-shadow: 0 4px 20px rgba(212,175,55,.3);
     }
 
     .action-icon {
-      font-size: 24px;
-      margin-bottom: 4px;
+      font-size: 14px;
     }
 
-    .action-label {
-      line-height: 1.3;
-    }
-
-    /* QR Section */
+    /* QR Code Section */
     .qr-section {
-      margin-top: 24px;
+      margin-top: 20px;
       text-align: center;
+      position: relative;
+      z-index: 1;
     }
 
     .qr-toggle {
-      background: none;
-      border: none;
+      font-size: 10px;
       color: var(--text-muted);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       cursor: pointer;
-      padding: 12px 24px;
-      transition: all 0.2s ease;
+      transition: color 0.2s;
+      background: none;
+      border: none;
+      font-family: inherit;
     }
 
     .qr-toggle:hover {
@@ -303,289 +321,298 @@
     .qr-container {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.3s ease;
+      transition: max-height 0.4s ease, margin 0.4s ease, opacity 0.3s ease;
       opacity: 0;
     }
 
     .qr-container.show {
-      max-height: 220px;
+      max-height: 200px;
+      margin-top: 16px;
       opacity: 1;
-      margin-top: 20px;
     }
 
     .qr-code {
-      display: inline-block;
-      padding: 14px;
-      background: white;
-      border-radius: 12px;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto;
+      padding: 8px;
+      background: #fff;
+      border-radius: 8px;
+      animation: float 4s ease-in-out infinite;
     }
 
-    .qr-code img {
-      display: block;
-      width: 130px;
-      height: 130px;
+    .qr-code svg {
+      width: 100%;
+      height: 100%;
     }
 
     .qr-hint {
-      font-size: 10px;
+      font-size: 9px;
       color: var(--text-muted);
-      margin-top: 12px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      margin-top: 8px;
+      letter-spacing: 0.05em;
     }
 
-    /* Footer Note */
+    /* Footer */
     .footer-note {
       text-align: center;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
+      margin-top: 20px;
+      font-size: 10px;
       color: var(--text-muted);
-      margin-top: 24px;
-      opacity: 0.6;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.7;
     }
 
     /* Toast */
     .toast {
       position: fixed;
-      bottom: 50px;
+      bottom: 32px;
       left: 50%;
       transform: translateX(-50%) translateY(20px);
       background: var(--gold);
-      color: #0A0A0A;
-      padding: 14px 28px;
-      border-radius: 30px;
-      font-size: 13px;
-      font-weight: 700;
+      color: var(--bg);
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
       letter-spacing: 0.05em;
-      text-transform: uppercase;
       opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      z-index: 1000;
+      transition: all 0.3s ease;
+      pointer-events: none;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(212,175,55,.4);
     }
 
     .toast.show {
       opacity: 1;
-      visibility: visible;
       transform: translateX(-50%) translateY(0);
+    }
+
+    /* Responsive */
+    @media (min-width: 768px) {
+      .business-card {
+        padding: 48px 40px;
+      }
+
+      .logo {
+        width: 80px;
+        height: 80px;
+      }
+
+      .brand-name {
+        font-size: 13px;
+      }
+
+      .quote {
+        font-size: 15px;
+      }
+
+      .qr-code {
+        width: 140px;
+        height: 140px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="card-wrapper">
     <article class="business-card" id="card">
-
-      <!-- Logo Section -->
+      <!-- Logo -->
       <section class="logo-section">
         <div class="logo">
-          <img src="../assets/icons/1768298038450.png" alt="Logo" id="logoImg">
+          <img src="../assets/icons/1768298038450.png" alt="BUDDIES" loading="eager">
         </div>
-        <h1 class="brand-name" id="brandName">LOADING</h1>
-        <p class="tagline" id="tagline"></p>
+        <h1 class="brand-name">DIMAS</h1>
+        <p class="tagline">AI Automation Consultant</p>
       </section>
 
       <div class="divider"></div>
 
-      <!-- Quote Section -->
-      <section class="quote-section" id="quoteSection">
-        <p class="quote" id="quote"></p>
+      <!-- Quote -->
+      <section class="quote-section">
+        <p class="quote">"<span>AI</span>로 당신의 업무를 자동화합니다."</p>
       </section>
 
-      <div class="divider" id="quoteDivider"></div>
+      <div class="divider"></div>
 
-      <!-- Contact Section -->
-      <section class="contact-section" id="contactSection">
-        <!-- Populated by JS -->
+      <!-- Contact -->
+      <section class="contact-section">
+        <p class="contact-item">
+          <a href="https://dtslib.com" target="_blank" rel="noopener">
+            <span class="contact-icon">🌐</span>dtslib.com
+          </a>
+        </p>
+        <p class="contact-item">
+          <a href="mailto:pro@dtslib.com">
+            <span class="contact-icon">✉️</span>pro@dtslib.com
+          </a>
+        </p>
       </section>
 
-      <!-- Action Section -->
+      <!-- Action Buttons -->
       <section class="action-section">
-        <button class="action-btn" onclick="saveContact()">
-          <span class="action-icon" id="saveIcon">+</span>
-          <span class="action-label">SAVE<br>CONTACT</span>
+        <button class="action-btn" id="saveContactBtn" onclick="saveContact()">
+          <span class="action-icon">📇</span>
+          Save Contact
         </button>
-        <a href="#" class="action-btn primary" id="emailBtn">
-          <span class="action-icon" id="contactIcon">@</span>
-          <span class="action-label" id="contactLabel">CONTACT</span>
+        <a href="mailto:pro@dtslib.com?subject=Proposal%20Inquiry&body=안녕하세요%2C%20BUDDIES%20STRATEGY에%20문의드립니다." class="action-btn primary">
+          <span class="action-icon">✉️</span>
+          Proposal
         </a>
       </section>
 
-      <!-- QR Section -->
+      <!-- QR Code -->
       <section class="qr-section">
-        <button class="qr-toggle" onclick="toggleQR()">SHOW QR CODE</button>
+        <button class="qr-toggle" id="qrToggle" onclick="toggleQR()">Show QR Code</button>
         <div class="qr-container" id="qrContainer">
           <div class="qr-code">
-            <img id="qrImg" src="" alt="QR Code">
+            <!-- QR Code for dtslib1979.github.io/dtslib-branch/card/ -->
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <rect width="100" height="100" fill="#fff"/>
+              <!-- Position Detection Patterns -->
+              <rect x="4" y="4" width="21" height="21" fill="#000"/>
+              <rect x="7" y="7" width="15" height="15" fill="#fff"/>
+              <rect x="10" y="10" width="9" height="9" fill="#000"/>
+              <rect x="75" y="4" width="21" height="21" fill="#000"/>
+              <rect x="78" y="7" width="15" height="15" fill="#fff"/>
+              <rect x="81" y="10" width="9" height="9" fill="#000"/>
+              <rect x="4" y="75" width="21" height="21" fill="#000"/>
+              <rect x="7" y="78" width="15" height="15" fill="#fff"/>
+              <rect x="10" y="81" width="9" height="9" fill="#000"/>
+              <!-- Timing Patterns -->
+              <rect x="28" y="10" width="3" height="3" fill="#000"/>
+              <rect x="34" y="10" width="3" height="3" fill="#000"/>
+              <rect x="40" y="10" width="3" height="3" fill="#000"/>
+              <rect x="46" y="10" width="3" height="3" fill="#000"/>
+              <rect x="52" y="10" width="3" height="3" fill="#000"/>
+              <rect x="58" y="10" width="3" height="3" fill="#000"/>
+              <rect x="64" y="10" width="3" height="3" fill="#000"/>
+              <rect x="10" y="28" width="3" height="3" fill="#000"/>
+              <rect x="10" y="34" width="3" height="3" fill="#000"/>
+              <rect x="10" y="40" width="3" height="3" fill="#000"/>
+              <rect x="10" y="46" width="3" height="3" fill="#000"/>
+              <rect x="10" y="52" width="3" height="3" fill="#000"/>
+              <rect x="10" y="58" width="3" height="3" fill="#000"/>
+              <rect x="10" y="64" width="3" height="3" fill="#000"/>
+              <!-- Data modules (simplified representation) -->
+              <rect x="28" y="28" width="3" height="3" fill="#000"/>
+              <rect x="34" y="28" width="3" height="3" fill="#000"/>
+              <rect x="40" y="28" width="3" height="3" fill="#000"/>
+              <rect x="46" y="28" width="3" height="3" fill="#000"/>
+              <rect x="52" y="34" width="3" height="3" fill="#000"/>
+              <rect x="58" y="28" width="3" height="3" fill="#000"/>
+              <rect x="64" y="34" width="3" height="3" fill="#000"/>
+              <rect x="28" y="34" width="3" height="3" fill="#000"/>
+              <rect x="40" y="34" width="3" height="3" fill="#000"/>
+              <rect x="46" y="40" width="3" height="3" fill="#000"/>
+              <rect x="34" y="46" width="3" height="3" fill="#000"/>
+              <rect x="52" y="46" width="3" height="3" fill="#000"/>
+              <rect x="64" y="46" width="3" height="3" fill="#000"/>
+              <rect x="28" y="52" width="3" height="3" fill="#000"/>
+              <rect x="40" y="52" width="3" height="3" fill="#000"/>
+              <rect x="58" y="52" width="3" height="3" fill="#000"/>
+              <rect x="34" y="58" width="3" height="3" fill="#000"/>
+              <rect x="46" y="58" width="3" height="3" fill="#000"/>
+              <rect x="64" y="58" width="3" height="3" fill="#000"/>
+              <rect x="28" y="64" width="3" height="3" fill="#000"/>
+              <rect x="52" y="64" width="3" height="3" fill="#000"/>
+              <rect x="58" y="64" width="3" height="3" fill="#000"/>
+              <rect x="34" y="70" width="3" height="3" fill="#000"/>
+              <rect x="46" y="70" width="3" height="3" fill="#000"/>
+              <rect x="64" y="70" width="3" height="3" fill="#000"/>
+              <rect x="28" y="76" width="3" height="3" fill="#000"/>
+              <rect x="40" y="76" width="3" height="3" fill="#000"/>
+              <rect x="52" y="76" width="3" height="3" fill="#000"/>
+              <rect x="58" y="82" width="3" height="3" fill="#000"/>
+              <rect x="64" y="76" width="3" height="3" fill="#000"/>
+              <rect x="70" y="28" width="3" height="3" fill="#000"/>
+              <rect x="76" y="34" width="3" height="3" fill="#000"/>
+              <rect x="82" y="28" width="3" height="3" fill="#000"/>
+              <rect x="88" y="34" width="3" height="3" fill="#000"/>
+              <rect x="70" y="40" width="3" height="3" fill="#000"/>
+              <rect x="82" y="46" width="3" height="3" fill="#000"/>
+              <rect x="76" y="52" width="3" height="3" fill="#000"/>
+              <rect x="88" y="52" width="3" height="3" fill="#000"/>
+              <rect x="70" y="58" width="3" height="3" fill="#000"/>
+              <rect x="82" y="64" width="3" height="3" fill="#000"/>
+              <rect x="76" y="70" width="3" height="3" fill="#000"/>
+              <rect x="88" y="70" width="3" height="3" fill="#000"/>
+              <rect x="70" y="76" width="3" height="3" fill="#000"/>
+              <rect x="82" y="82" width="3" height="3" fill="#000"/>
+              <rect x="88" y="88" width="3" height="3" fill="#000"/>
+              <!-- Alignment pattern -->
+              <rect x="66" y="66" width="9" height="9" fill="#000"/>
+              <rect x="69" y="69" width="3" height="3" fill="#fff"/>
+            </svg>
           </div>
           <p class="qr-hint">Scan to open this card</p>
         </div>
       </section>
-
     </article>
-    <p class="footer-note">TAP CARD TO COPY LINK</p>
+
+    <p class="footer-note">Tap card to copy link</p>
   </div>
 
-  <div class="toast" id="toast">LINK COPIED</div>
+  <!-- Toast -->
+  <div class="toast" id="toast">Link copied</div>
 
   <script>
-    let CONFIG = {};
+    const card = document.getElementById('card');
+    const toast = document.getElementById('toast');
 
-    async function loadConfig() {
-      try {
-        const res = await fetch('../config.json');
-        const data = await res.json();
-        CONFIG = data;
-        applyConfig();
-      } catch (e) {
-        console.error('Config load failed:', e);
-        document.getElementById('brandName').textContent = 'ERROR';
-      }
-    }
-
-    function applyConfig() {
-      const card = CONFIG.card || {};
-      const site = CONFIG.site || {};
-      const owner = CONFIG.owner || {};
-
-      const name = card.name || owner.name || 'Card';
-      const tagline = card.tagline || card.title || '';
-      const cardUrl = card.cardUrl || `${site.url || ''}card/`;
-
-      // Page Title (브라우저 탭용)
-      document.title = `${name} | Digital Card`;
-
-      // Brand name & tagline
-      document.getElementById('brandName').textContent = name.toUpperCase();
-      document.getElementById('tagline').textContent = tagline.toUpperCase();
-
-      // Quote
-      const quoteSection = document.getElementById('quoteSection');
-      const quoteDivider = document.getElementById('quoteDivider');
-      if (card.quote) {
-        let quoteText = card.quote;
-        quoteText = quoteText.replace(/\*\*(.+?)\*\*/g, '<span class="highlight">$1</span>');
-        document.getElementById('quote').innerHTML = `"${quoteText}"`;
-      } else {
-        quoteSection.style.display = 'none';
-        quoteDivider.style.display = 'none';
-      }
-
-      // Contact section
-      const contactSection = document.getElementById('contactSection');
-      let contactHTML = '';
-
-      if (card.website || site.url) {
-        const url = card.website || site.url;
-        const displayUrl = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
-        contactHTML += `
-          <p class="contact-item">
-            <a href="${url}" target="_blank"><span class="contact-icon">W</span> ${displayUrl}</a>
-          </p>`;
-      }
-
-      if (card.email || owner.email) {
-        const email = card.email || owner.email;
-        contactHTML += `
-          <p class="contact-item">
-            <a href="mailto:${email}"><span class="contact-icon">@</span> ${email}</a>
-          </p>`;
-      }
-
-      if (card.phone) {
-        contactHTML += `
-          <p class="contact-item">
-            <a href="tel:${card.phone}"><span class="contact-icon">#</span> ${card.phone}</a>
-          </p>`;
-      }
-
-      contactSection.innerHTML = contactHTML;
-
-      // Email button
-      const emailBtn = document.getElementById('emailBtn');
-      const email = card.email || owner.email;
-      if (email) {
-        emailBtn.href = `mailto:${email}?subject=Inquiry`;
-      }
-
-      // Contact button label (커스텀 가능)
-      if (card.contactButtonLabel) {
-        document.getElementById('contactLabel').textContent = card.contactButtonLabel.toUpperCase();
-      }
-
-      // QR Code
-      document.getElementById('qrImg').src =
-        `https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=${encodeURIComponent(cardUrl)}`;
-    }
-
-    function saveContact() {
-      const card = CONFIG.card || {};
-      const owner = CONFIG.owner || {};
-
-      const name = card.name || owner.name || 'Contact';
-      const org = card.organization || CONFIG.site?.shortName || '';
-      const title = card.title || '';
-      const email = card.email || owner.email || '';
-      const phone = card.phone || '';
-      const url = card.website || CONFIG.site?.url || '';
-
-      let vCardLines = [
-        'BEGIN:VCARD',
-        'VERSION:3.0',
-        `FN:${name}`,
-        `ORG:${org}`,
-        `TITLE:${title}`,
-        `EMAIL;TYPE=WORK:${email}`
-      ];
-
-      if (phone) {
-        vCardLines.push(`TEL;TYPE=CELL:${phone}`);
-      }
-
-      vCardLines.push(`URL:${url}`);
-      vCardLines.push('END:VCARD');
-
-      const vCard = vCardLines.join('\n');
-      const blob = new Blob([vCard], { type: 'text/vcard;charset=utf-8' });
-      const blobUrl = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = `${name.replace(/\s+/g, '_')}.vcf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(blobUrl);
-
-      showToast('CONTACT SAVED');
-      if (navigator.vibrate) navigator.vibrate(50);
-    }
-
-    document.getElementById('card').addEventListener('click', (e) => {
+    // Copy link on card tap
+    card.addEventListener('click', (e) => {
+      // Don't copy if clicking buttons or links
       if (e.target.closest('button') || e.target.closest('a')) return;
 
-      const cardUrl = CONFIG.card?.cardUrl || `${CONFIG.site?.url || ''}card/`;
-      navigator.clipboard.writeText(cardUrl).then(() => {
-        showToast('LINK COPIED');
+      navigator.clipboard.writeText('https://dtslib1979.github.io/dtslib-branch/card/').then(() => {
+        showToast('Link copied');
+        // Haptic feedback if supported
         if (navigator.vibrate) navigator.vibrate(50);
       });
     });
 
-    function toggleQR() {
-      const container = document.getElementById('qrContainer');
-      const toggle = document.querySelector('.qr-toggle');
-      container.classList.toggle('show');
-      toggle.textContent = container.classList.contains('show') ? 'HIDE QR CODE' : 'SHOW QR CODE';
-    }
-
     function showToast(message) {
-      const toast = document.getElementById('toast');
       toast.textContent = message;
       toast.classList.add('show');
       setTimeout(() => toast.classList.remove('show'), 2000);
     }
 
-    loadConfig();
+    // Save Contact (vCard)
+    function saveContact() {
+      const vCard = `BEGIN:VCARD
+VERSION:3.0
+FN:DIMAS
+ORG:DIMAS
+TITLE:AI Automation Consultant
+EMAIL;TYPE=WORK:pro@dtslib.com
+URL:https://dtslib.com
+NOTE:AI 업무 자동화 전문가
+END:VCARD`;
+
+      const blob = new Blob([vCard], { type: 'text/vcard;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'DIMAS.vcf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      showToast('Contact saved');
+      if (navigator.vibrate) navigator.vibrate(50);
+    }
+
+    // Toggle QR Code
+    function toggleQR() {
+      const container = document.getElementById('qrContainer');
+      const toggle = document.getElementById('qrToggle');
+
+      container.classList.toggle('show');
+      toggle.textContent = container.classList.contains('show') ? 'Hide QR Code' : 'Show QR Code';
+    }
   </script>
 </body>
 </html>
