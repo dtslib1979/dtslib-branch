@@ -7,8 +7,30 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-  <title>Digital Card</title>
-  <meta name="description" content="Digital Business Card">
+  <!--
+    ⚠️ OG 태그 수정 필요 (카카오톡/슬랙 미리보기)
+    아래 값들을 직접 수정하세요:
+    - og:title: 브랜드명
+    - og:description: 태그라인
+    - og:image: OG 이미지 URL (1200x630px 권장)
+    - og:url: 카드 페이지 URL
+  -->
+  <title>DIMAS | Digital Card</title>
+  <meta name="description" content="AI 업무 자동화 전문가">
+
+  <!-- Open Graph (카카오톡, 슬랙 등) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="DIMAS">
+  <meta property="og:description" content="AI 업무 자동화 전문가">
+  <meta property="og:image" content="https://dtslib.com/assets/og/card-preview.png">
+  <meta property="og:url" content="https://dtslib.com/card/">
+  <meta property="og:site_name" content="dtslib">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DIMAS">
+  <meta name="twitter:description" content="AI 업무 자동화 전문가">
+  <meta name="twitter:image" content="https://dtslib.com/assets/og/card-preview.png">
 
   <link rel="icon" href="../assets/icons/logo.png">
   <link rel="apple-touch-icon" href="../assets/icons/logo.png">
@@ -23,7 +45,7 @@
       --gold-shine: linear-gradient(135deg, #D4AF37 0%, #F4E4A6 25%, #D4AF37 50%, #B8962E 75%, #D4AF37 100%);
       --text: #F5F5F0;
       --text-muted: rgba(245,245,240,.5);
-      --border-gold: rgba(212,175,55,.4);
+      --border-gold: rgba(212,175,55,.5);
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
@@ -47,7 +69,7 @@
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      padding: calc(var(--safe-top) + 20px) 16px calc(var(--safe-bottom) + 20px);
+      padding: calc(var(--safe-top) + 24px) 16px calc(var(--safe-bottom) + 24px);
     }
 
     /* Animations */
@@ -62,14 +84,19 @@
     }
 
     @keyframes logoPulse {
-      0%, 100% { box-shadow: 0 4px 20px rgba(212,175,55,.25); }
-      50% { box-shadow: 0 4px 30px rgba(212,175,55,.45), 0 0 40px rgba(212,175,55,.2); }
+      0%, 100% { box-shadow: 0 4px 20px rgba(212,175,55,.3); }
+      50% { box-shadow: 0 4px 35px rgba(212,175,55,.5), 0 0 50px rgba(212,175,55,.25); }
+    }
+
+    @keyframes borderGlow {
+      0%, 100% { box-shadow: 0 0 20px rgba(212,175,55,.15), inset 0 0 20px rgba(212,175,55,.03); }
+      50% { box-shadow: 0 0 30px rgba(212,175,55,.25), inset 0 0 30px rgba(212,175,55,.05); }
     }
 
     /* Card Wrapper */
     .card-wrapper {
       width: 100%;
-      max-width: 380px;
+      max-width: 400px;
       animation: cardEntry 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
@@ -78,9 +105,10 @@
       background: var(--card-bg);
       border: 1px solid var(--border-gold);
       border-radius: 20px;
-      padding: 32px 24px;
+      padding: 40px 28px 36px;
       position: relative;
       overflow: hidden;
+      animation: borderGlow 4s ease-in-out infinite;
     }
 
     .business-card::before {
@@ -89,7 +117,7 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 1px;
+      height: 2px;
       background: linear-gradient(90deg, transparent, var(--gold), transparent);
     }
 
@@ -100,14 +128,15 @@
     }
 
     .logo {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto 16px;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 20px;
       border-radius: 50%;
-      border: 2px solid var(--gold);
+      border: 3px solid var(--gold);
       overflow: hidden;
       animation: logoPulse 3s ease-in-out infinite;
-      background: #1a1a1a;
+      background: linear-gradient(145deg, #2a2a2a 0%, #1a1a1a 100%);
+      position: relative;
     }
 
     .logo img {
@@ -117,9 +146,10 @@
     }
 
     .brand-name {
-      font-size: 28px;
+      font-size: 22px;
       font-weight: 700;
-      letter-spacing: -0.02em;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
       background: var(--gold-shine);
       background-size: 200% 100%;
       -webkit-background-clip: text;
@@ -129,17 +159,19 @@
     }
 
     .tagline {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-muted);
-      margin-top: 4px;
-      letter-spacing: 0.05em;
+      margin-top: 8px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 400;
     }
 
     /* Divider */
     .divider {
       height: 1px;
       background: linear-gradient(90deg, transparent, var(--border-gold), transparent);
-      margin: 20px 0;
+      margin: 28px 0;
     }
 
     /* Quote Section */
@@ -149,39 +181,39 @@
     }
 
     .quote {
-      font-size: 14px;
+      font-size: 16px;
       font-style: italic;
       color: var(--text-muted);
+      line-height: 1.6;
     }
 
-    .quote span {
+    .quote .highlight {
       color: var(--gold);
-      font-weight: 600;
+      font-weight: 500;
+      text-decoration: underline;
+      text-decoration-color: var(--gold);
+      text-underline-offset: 3px;
     }
 
     /* Contact Section */
     .contact-section {
-      margin: 16px 0;
+      text-align: center;
+      margin: 24px 0;
     }
 
     .contact-item {
-      display: flex;
-      align-items: center;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(255,255,255,.05);
-    }
-
-    .contact-item:last-child {
-      border-bottom: none;
+      margin: 12px 0;
     }
 
     .contact-item a {
-      display: flex;
+      display: inline-flex;
       align-items: center;
+      justify-content: center;
+      gap: 10px;
       color: var(--text);
       text-decoration: none;
-      font-size: 14px;
-      transition: color 0.2s;
+      font-size: 15px;
+      transition: all 0.2s ease;
     }
 
     .contact-item a:hover {
@@ -189,39 +221,40 @@
     }
 
     .contact-icon {
-      width: 24px;
-      margin-right: 12px;
-      text-align: center;
+      font-size: 18px;
     }
 
     /* Action Section */
     .action-section {
       display: flex;
-      gap: 12px;
-      margin-top: 24px;
+      gap: 14px;
+      margin-top: 28px;
     }
 
     .action-btn {
       flex: 1;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      padding: 14px 16px;
+      gap: 4px;
+      padding: 18px 16px;
       border-radius: 12px;
-      font-size: 14px;
-      font-weight: 600;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
       border: 1px solid var(--border-gold);
-      background: transparent;
-      color: var(--text);
+      background: rgba(0,0,0,.3);
+      color: var(--gold);
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.25s ease;
       text-decoration: none;
     }
 
     .action-btn:hover {
       background: rgba(212,175,55,.1);
-      border-color: var(--gold);
+      transform: translateY(-2px);
     }
 
     .action-btn.primary {
@@ -232,10 +265,16 @@
 
     .action-btn.primary:hover {
       background: var(--gold-light);
+      box-shadow: 0 4px 20px rgba(212,175,55,.4);
     }
 
     .action-icon {
-      font-size: 16px;
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+
+    .action-label {
+      line-height: 1.3;
     }
 
     /* QR Section */
@@ -248,10 +287,13 @@
       background: none;
       border: none;
       color: var(--text-muted);
-      font-size: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
       cursor: pointer;
-      padding: 8px 16px;
-      transition: color 0.2s;
+      padding: 12px 24px;
+      transition: all 0.2s ease;
     }
 
     .qr-toggle:hover {
@@ -261,59 +303,66 @@
     .qr-container {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.3s ease, opacity 0.3s ease;
+      transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.3s ease;
       opacity: 0;
     }
 
     .qr-container.show {
-      max-height: 200px;
+      max-height: 220px;
       opacity: 1;
-      margin-top: 16px;
+      margin-top: 20px;
     }
 
     .qr-code {
       display: inline-block;
-      padding: 12px;
+      padding: 14px;
       background: white;
       border-radius: 12px;
     }
 
     .qr-code img {
       display: block;
-      width: 120px;
-      height: 120px;
+      width: 130px;
+      height: 130px;
     }
 
     .qr-hint {
-      font-size: 11px;
+      font-size: 10px;
       color: var(--text-muted);
-      margin-top: 8px;
+      margin-top: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
     }
 
     /* Footer Note */
     .footer-note {
       text-align: center;
       font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
       color: var(--text-muted);
-      margin-top: 16px;
-      opacity: 0.7;
+      margin-top: 24px;
+      opacity: 0.6;
     }
 
     /* Toast */
     .toast {
       position: fixed;
-      bottom: 40px;
+      bottom: 50px;
       left: 50%;
       transform: translateX(-50%) translateY(20px);
       background: var(--gold);
       color: #0A0A0A;
-      padding: 12px 24px;
+      padding: 14px 28px;
       border-radius: 30px;
-      font-size: 14px;
-      font-weight: 600;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
       opacity: 0;
       visibility: hidden;
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 1000;
     }
 
@@ -321,12 +370,6 @@
       opacity: 1;
       visibility: visible;
       transform: translateX(-50%) translateY(0);
-    }
-
-    /* Loading */
-    .loading {
-      text-align: center;
-      color: var(--text-muted);
     }
   </style>
 </head>
@@ -339,18 +382,18 @@
         <div class="logo">
           <img src="../assets/icons/logo.png" alt="Logo" id="logoImg">
         </div>
-        <h1 class="brand-name" id="brandName">Loading...</h1>
+        <h1 class="brand-name" id="brandName">LOADING</h1>
         <p class="tagline" id="tagline"></p>
       </section>
 
       <div class="divider"></div>
 
       <!-- Quote Section -->
-      <section class="quote-section">
+      <section class="quote-section" id="quoteSection">
         <p class="quote" id="quote"></p>
       </section>
 
-      <div class="divider"></div>
+      <div class="divider" id="quoteDivider"></div>
 
       <!-- Contact Section -->
       <section class="contact-section" id="contactSection">
@@ -360,16 +403,18 @@
       <!-- Action Section -->
       <section class="action-section">
         <button class="action-btn" onclick="saveContact()">
-          <span class="action-icon">+</span>Save Contact
+          <span class="action-icon" id="saveIcon">+</span>
+          <span class="action-label">SAVE<br>CONTACT</span>
         </button>
         <a href="#" class="action-btn primary" id="emailBtn">
-          <span class="action-icon">@</span>Contact
+          <span class="action-icon" id="contactIcon">@</span>
+          <span class="action-label" id="contactLabel">CONTACT</span>
         </a>
       </section>
 
       <!-- QR Section -->
       <section class="qr-section">
-        <button class="qr-toggle" onclick="toggleQR()">Show QR Code</button>
+        <button class="qr-toggle" onclick="toggleQR()">SHOW QR CODE</button>
         <div class="qr-container" id="qrContainer">
           <div class="qr-code">
             <img id="qrImg" src="" alt="QR Code">
@@ -379,16 +424,14 @@
       </section>
 
     </article>
-    <p class="footer-note">Tap card to copy link</p>
+    <p class="footer-note">TAP CARD TO COPY LINK</p>
   </div>
 
-  <div class="toast" id="toast">Link copied</div>
+  <div class="toast" id="toast">LINK COPIED</div>
 
   <script>
-    // Config data
     let CONFIG = {};
 
-    // Load config from ../config.json
     async function loadConfig() {
       try {
         const res = await fetch('../config.json');
@@ -397,27 +440,36 @@
         applyConfig();
       } catch (e) {
         console.error('Config load failed:', e);
-        document.getElementById('brandName').textContent = 'Config Error';
+        document.getElementById('brandName').textContent = 'ERROR';
       }
     }
 
-    // Apply config to DOM
     function applyConfig() {
       const card = CONFIG.card || {};
       const site = CONFIG.site || {};
       const owner = CONFIG.owner || {};
 
-      // Title
-      document.title = `${card.name || owner.name || 'Card'} | Digital Card`;
+      const name = card.name || owner.name || 'Card';
+      const tagline = card.tagline || card.title || '';
+      const cardUrl = card.cardUrl || `${site.url || ''}card/`;
+
+      // Page Title (브라우저 탭용)
+      document.title = `${name} | Digital Card`;
 
       // Brand name & tagline
-      document.getElementById('brandName').textContent = card.name || owner.name || 'Name';
-      document.getElementById('tagline').textContent = card.title || card.tagline || '';
+      document.getElementById('brandName').textContent = name.toUpperCase();
+      document.getElementById('tagline').textContent = tagline.toUpperCase();
 
       // Quote
-      const quoteEl = document.getElementById('quote');
+      const quoteSection = document.getElementById('quoteSection');
+      const quoteDivider = document.getElementById('quoteDivider');
       if (card.quote) {
-        quoteEl.innerHTML = `"${card.quote}"`;
+        let quoteText = card.quote;
+        quoteText = quoteText.replace(/\*\*(.+?)\*\*/g, '<span class="highlight">$1</span>');
+        document.getElementById('quote').innerHTML = `"${quoteText}"`;
+      } else {
+        quoteSection.style.display = 'none';
+        quoteDivider.style.display = 'none';
       }
 
       // Contact section
@@ -429,7 +481,7 @@
         const displayUrl = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
         contactHTML += `
           <p class="contact-item">
-            <a href="${url}" target="_blank"><span class="contact-icon">W</span>${displayUrl}</a>
+            <a href="${url}" target="_blank"><span class="contact-icon">W</span> ${displayUrl}</a>
           </p>`;
       }
 
@@ -437,14 +489,14 @@
         const email = card.email || owner.email;
         contactHTML += `
           <p class="contact-item">
-            <a href="mailto:${email}"><span class="contact-icon">@</span>${email}</a>
+            <a href="mailto:${email}"><span class="contact-icon">@</span> ${email}</a>
           </p>`;
       }
 
       if (card.phone) {
         contactHTML += `
           <p class="contact-item">
-            <a href="tel:${card.phone}"><span class="contact-icon">#</span>${card.phone}</a>
+            <a href="tel:${card.phone}"><span class="contact-icon">#</span> ${card.phone}</a>
           </p>`;
       }
 
@@ -457,13 +509,16 @@
         emailBtn.href = `mailto:${email}?subject=Inquiry`;
       }
 
+      // Contact button label (커스텀 가능)
+      if (card.contactButtonLabel) {
+        document.getElementById('contactLabel').textContent = card.contactButtonLabel.toUpperCase();
+      }
+
       // QR Code
-      const cardUrl = card.cardUrl || `${site.url}card/`;
       document.getElementById('qrImg').src =
-        `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(cardUrl)}`;
+        `https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=${encodeURIComponent(cardUrl)}`;
     }
 
-    // Save contact as vCard
     function saveContact() {
       const card = CONFIG.card || {};
       const owner = CONFIG.owner || {};
@@ -475,50 +530,54 @@
       const phone = card.phone || '';
       const url = card.website || CONFIG.site?.url || '';
 
-      const vCard = `BEGIN:VCARD
-VERSION:3.0
-FN:${name}
-ORG:${org}
-TITLE:${title}
-EMAIL;TYPE=WORK:${email}
-${phone ? `TEL;TYPE=CELL:${phone}` : ''}
-URL:${url}
-END:VCARD`;
+      let vCardLines = [
+        'BEGIN:VCARD',
+        'VERSION:3.0',
+        `FN:${name}`,
+        `ORG:${org}`,
+        `TITLE:${title}`,
+        `EMAIL;TYPE=WORK:${email}`
+      ];
 
+      if (phone) {
+        vCardLines.push(`TEL;TYPE=CELL:${phone}`);
+      }
+
+      vCardLines.push(`URL:${url}`);
+      vCardLines.push('END:VCARD');
+
+      const vCard = vCardLines.join('\n');
       const blob = new Blob([vCard], { type: 'text/vcard;charset=utf-8' });
-      const url2 = URL.createObjectURL(blob);
+      const blobUrl = URL.createObjectURL(blob);
       const link = document.createElement('a');
-      link.href = url2;
+      link.href = blobUrl;
       link.download = `${name.replace(/\s+/g, '_')}.vcf`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      URL.revokeObjectURL(url2);
+      URL.revokeObjectURL(blobUrl);
 
-      showToast('Contact saved');
+      showToast('CONTACT SAVED');
       if (navigator.vibrate) navigator.vibrate(50);
     }
 
-    // Copy link on card tap
     document.getElementById('card').addEventListener('click', (e) => {
       if (e.target.closest('button') || e.target.closest('a')) return;
 
-      const cardUrl = CONFIG.card?.cardUrl || `${CONFIG.site?.url}card/`;
+      const cardUrl = CONFIG.card?.cardUrl || `${CONFIG.site?.url || ''}card/`;
       navigator.clipboard.writeText(cardUrl).then(() => {
-        showToast('Link copied');
+        showToast('LINK COPIED');
         if (navigator.vibrate) navigator.vibrate(50);
       });
     });
 
-    // Toggle QR
     function toggleQR() {
       const container = document.getElementById('qrContainer');
       const toggle = document.querySelector('.qr-toggle');
       container.classList.toggle('show');
-      toggle.textContent = container.classList.contains('show') ? 'Hide QR Code' : 'Show QR Code';
+      toggle.textContent = container.classList.contains('show') ? 'HIDE QR CODE' : 'SHOW QR CODE';
     }
 
-    // Toast notification
     function showToast(message) {
       const toast = document.getElementById('toast');
       toast.textContent = message;
@@ -526,7 +585,6 @@ END:VCARD`;
       setTimeout(() => toast.classList.remove('show'), 2000);
     }
 
-    // Init
     loadConfig();
   </script>
 </body>
