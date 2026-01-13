@@ -125,6 +125,39 @@
       opacity: 0.5;
     }
 
+    /* Phase Notice */
+    .phase-notice {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+      padding: var(--space-sm) var(--space-md);
+      background: rgba(212,175,55,.08);
+      border: 1px dashed var(--border-gold);
+      border-radius: var(--radius-md);
+      font-size: 11px;
+    }
+
+    .phase-badge {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--bg);
+      background: var(--gold);
+      padding: 4px 8px;
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+    }
+
+    .phase-text {
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .phase-text strong {
+      color: var(--gold);
+    }
+
     /* 명함 카드 */
     .business-card {
       background: linear-gradient(145deg, var(--bg-elevated), var(--bg-card));
@@ -624,15 +657,15 @@
         <span class="link-icon">📺</span>
         <div class="link-text">
           <div class="link-name">YouTube</div>
-          <div class="link-desc">튜토리얼 & 데모</div>
+          <div class="link-desc">Manual but Essential</div>
         </div>
         <span class="link-arrow">→</span>
       </a>
-      <a href="#" class="link-item">
-        <span class="link-icon">📗</span>
+      <a href="https://www.tistory.com/" target="_blank" class="link-item">
+        <span class="link-icon">📝</span>
         <div class="link-text">
-          <div class="link-name">Naver Blog</div>
-          <div class="link-desc">블로그 포스트</div>
+          <div class="link-name">Tistory</div>
+          <div class="link-desc">HTML 블로그</div>
         </div>
         <span class="link-arrow">→</span>
       </a>
@@ -644,6 +677,13 @@
         </div>
         <span class="link-arrow">→</span>
       </a>
+    </div>
+    <!-- Phase 2 Notice -->
+    <div class="phase-notice">
+      <div class="phase-badge">PHASE 2</div>
+      <div class="phase-text">
+        <strong>Coming Soon:</strong> GUI Automation via Claude in Chrome on Desktop
+      </div>
     </div>
   </section>
 
