@@ -32,6 +32,18 @@
     "enabled": true,
     "cacheName": "dtslib-v1"
   },
+  "card": {
+    "name": "DIMAS",
+    "title": "AI Automation Consultant",
+    "organization": "dtslib",
+    "tagline": "AI 업무 자동화 전문가",
+    "quote": "AI로 당신의 업무를 자동화합니다",
+    "email": "dimas@dtslib.com",
+    "phone": "",
+    "website": "https://dtslib.com",
+    "cardUrl": "https://dtslib.com/card/",
+    "theme": "gold"
+  },
   "meta": {
     "version": "1.0.0",
     "lastUpdated": "2026-01-12",
