@@ -1235,13 +1235,41 @@ function showToast(msg) {
 }
 
 // 카드 클릭 시 링크 복사
-businessCard.addEventListener('click', (e) => {
-  if (e.target.closest('button') || e.target.closest('a')) return;
+function copyLink() {
+  const url = 'https://dtslib1979.github.io/dtslib-branch/';
 
-  navigator.clipboard.writeText('https://dtslib1979.github.io/dtslib-branch/').then(() => {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(() => {
+      showToast('Link copied');
+      if (navigator.vibrate) navigator.vibrate(50);
+    }).catch(() => {
+      fallbackCopy(url);
+    });
+  } else {
+    fallbackCopy(url);
+  }
+}
+
+function fallbackCopy(text) {
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+  try {
+    document.execCommand('copy');
     showToast('Link copied');
     if (navigator.vibrate) navigator.vibrate(50);
-  });
+  } catch (err) {
+    showToast('Copy failed');
+  }
+  document.body.removeChild(textarea);
+}
+
+businessCard.addEventListener('click', (e) => {
+  if (e.target.closest('button') || e.target.closest('a')) return;
+  copyLink();
 });
 
 // vCard 저장
