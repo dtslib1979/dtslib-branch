@@ -116,13 +116,30 @@
 
     .portal-header {
       text-align: center;
-      margin-bottom: 24px;
-      padding: 16px 0;
-      border-bottom: 1px solid var(--border);
+      margin-bottom: 28px;
+      padding: 24px 0;
+      border-bottom: 2px solid var(--border-gold);
+      background: linear-gradient(180deg, rgba(240,200,80,.08) 0%, transparent 100%);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
     }
 
-    .portal-title { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
-    .portal-subtitle { font-size: 14px; color: var(--text-secondary); }
+    .portal-title {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+      text-shadow: 0 2px 8px rgba(240,200,80,.3);
+    }
+
+    .portal-subtitle {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
 
     /* Accordion */
     .accordion { margin-bottom: 14px; }
@@ -824,8 +841,8 @@
   <!-- Portal Content -->
   <div class="portal" id="portal">
     <header class="portal-header">
-      <h1 class="portal-title">Staff Portal</h1>
-      <p class="portal-subtitle">dtslib 레포지토리 관리 대시보드</p>
+      <h1 class="portal-title">Secret Office</h1>
+      <p class="portal-subtitle">dtslib Admin Dashboard</p>
     </header>
 
     <!-- Step 1: 홈페이지 구성하기 -->
