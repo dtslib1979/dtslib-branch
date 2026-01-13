@@ -158,6 +158,90 @@
       color: var(--gold);
     }
 
+    /* Phase Accordion */
+    .phase-accordion {
+      margin-top: var(--space-md);
+      background: rgba(212,175,55,.05);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .phase-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .phase-header::-webkit-details-marker { display: none; }
+
+    .phase-title {
+      flex: 1;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .phase-toggle {
+      font-size: 10px;
+      color: var(--gold);
+      transition: transform 0.2s;
+    }
+
+    .phase-accordion[open] .phase-toggle {
+      transform: rotate(180deg);
+    }
+
+    .phase-content {
+      padding: 0 var(--space-md) var(--space-md);
+    }
+
+    .phase-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: var(--space-md);
+      font-style: italic;
+    }
+
+    .platform-category {
+      margin-bottom: var(--space-sm);
+    }
+
+    .category-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .platform-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .platform-chip {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-full);
+      padding: 4px 10px;
+      transition: all 0.2s;
+    }
+
+    .platform-chip:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+      background: rgba(212,175,55,.1);
+    }
+
     /* 명함 카드 */
     .business-card {
       background: linear-gradient(145deg, var(--bg-elevated), var(--bg-card));
@@ -678,13 +762,50 @@
         <span class="link-arrow">→</span>
       </a>
     </div>
-    <!-- Phase 2 Notice -->
-    <div class="phase-notice">
-      <div class="phase-badge">PHASE 2</div>
-      <div class="phase-text">
-        <strong>Coming Soon:</strong> GUI Automation via Claude in Chrome on Desktop
+    <!-- Phase 2 Notice Accordion -->
+    <details class="phase-accordion">
+      <summary class="phase-header">
+        <span class="phase-badge">PHASE 2</span>
+        <span class="phase-title">GUI Automation Targets</span>
+        <span class="phase-toggle">▼</span>
+      </summary>
+      <div class="phase-content">
+        <p class="phase-desc">Claude in Chrome on Desktop — Coming Soon</p>
+
+        <!-- Essential -->
+        <div class="platform-category">
+          <div class="category-label">Essential</div>
+          <div class="platform-links">
+            <a href="https://www.linkedin.com/feed/" target="_blank" class="platform-chip">LinkedIn</a>
+            <a href="https://www.instagram.com/" target="_blank" class="platform-chip">Instagram</a>
+            <a href="https://www.facebook.com/" target="_blank" class="platform-chip">Facebook</a>
+            <a href="https://blog.naver.com/" target="_blank" class="platform-chip">Naver Blog</a>
+            <a href="https://center-pf.kakao.com/" target="_blank" class="platform-chip">Kakao Channel</a>
+          </div>
+        </div>
+
+        <!-- Premium -->
+        <div class="platform-category">
+          <div class="category-label">Premium</div>
+          <div class="platform-links">
+            <a href="https://brunch.co.kr/" target="_blank" class="platform-chip">Brunch</a>
+            <a href="https://medium.com/new-story" target="_blank" class="platform-chip">Medium</a>
+            <a href="https://x.com/compose/tweet" target="_blank" class="platform-chip">X</a>
+            <a href="https://www.threads.net/" target="_blank" class="platform-chip">Threads</a>
+          </div>
+        </div>
+
+        <!-- Business -->
+        <div class="platform-category">
+          <div class="category-label">Business</div>
+          <div class="platform-links">
+            <a href="https://www.daangn.com/business" target="_blank" class="platform-chip">Karrot Biz</a>
+            <a href="https://sell.smartstore.naver.com/" target="_blank" class="platform-chip">SmartStore</a>
+            <a href="https://www.notion.so/" target="_blank" class="platform-chip">Notion</a>
+          </div>
+        </div>
       </div>
-    </div>
+    </details>
   </section>
 
   <!-- Project Button -->
