@@ -340,46 +340,148 @@
       padding-left: var(--space-xs);
     }
 
-    /* GitHub Pages Panel */
-    .pages-section {
+    /* Rolls-Royce Dashboard */
+    .dashboard-section {
       margin-bottom: var(--space-xl);
     }
 
-    .pages-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--space-sm);
+    .dashboard-container {
+      background: linear-gradient(145deg, #0a1510 0%, #1a2e22 50%, #0f1f15 100%);
+      border: 2px solid rgba(212,175,55,.2);
+      border-radius: 24px;
+      padding: var(--space-lg);
+      position: relative;
+      overflow: hidden;
     }
 
-    .page-card {
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
+    .dashboard-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      border-radius: 0 0 4px 4px;
+    }
+
+    .dashboard-header {
+      text-align: center;
+      margin-bottom: var(--space-md);
+    }
+
+    .dashboard-title {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.7;
+    }
+
+    .dashboard-panels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+    }
+
+    .dashboard-panel {
+      background: rgba(0,0,0,.3);
+      border: 1px solid rgba(212,175,55,.15);
+      border-radius: 16px;
       padding: var(--space-md);
-      transition: all 0.2s;
+      position: relative;
+    }
+
+    .dashboard-panel::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 20%;
+      right: 20%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212,175,55,.4), transparent);
+    }
+
+    .panel-label {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: var(--space-sm);
+      padding-bottom: var(--space-xs);
+      border-bottom: 1px solid rgba(245,245,240,.05);
+    }
+
+    .panel-tools {
       display: flex;
       flex-direction: column;
-      gap: var(--space-xs);
+      gap: 6px;
     }
 
-    .page-card:hover {
-      border-color: var(--gold);
-      background: var(--bg-card);
+    .tool-btn {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: 10px 12px;
+      background: rgba(212,175,55,.05);
+      border: 1px solid rgba(212,175,55,.1);
+      border-radius: 10px;
+      transition: all 0.2s;
+      cursor: pointer;
     }
 
-    .page-icon {
-      font-size: 28px;
-      margin-bottom: var(--space-xs);
+    .tool-btn:hover {
+      background: rgba(212,175,55,.12);
+      border-color: rgba(212,175,55,.3);
+      transform: translateY(-1px);
     }
 
-    .page-name {
-      font-size: 13px;
-      font-weight: 600;
+    .tool-btn:active {
+      transform: translateY(0);
     }
 
-    .page-desc {
+    .tool-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 8px rgba(212,175,55,.5);
+      flex-shrink: 0;
+    }
+
+    .tool-name {
       font-size: 11px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+
+    .dashboard-footer {
+      display: flex;
+      justify-content: center;
+      margin-top: var(--space-md);
+      padding-top: var(--space-sm);
+      border-top: 1px solid rgba(245,245,240,.05);
+    }
+
+    .dashboard-staff {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
       color: var(--text-muted);
+      padding: 6px 16px;
+      border: 1px solid rgba(245,245,240,.1);
+      border-radius: 20px;
+      transition: all 0.2s;
+    }
+
+    .dashboard-staff:hover {
+      color: var(--gold);
+      border-color: rgba(212,175,55,.3);
     }
 
     /* YouTube Carousel */
@@ -689,7 +791,8 @@
 
     @media (min-width: 768px) {
       .container { max-width: 600px; }
-      .pages-grid { grid-template-columns: repeat(3, 1fr); }
+      .dashboard-container { padding: var(--space-xl); }
+      .dashboard-panels { gap: var(--space-lg); }
     }
   </style>
 </head>
@@ -762,45 +865,52 @@
     </div>
   </section>
 
-  <!-- GitHub Pages -->
-  <section class="pages-section">
-    <h2 class="section-title">Pages</h2>
-    <div class="pages-grid">
-      <a href="./staff/" class="page-card">
-        <span class="page-icon">🔐</span>
-        <span class="page-name">Staff Portal</span>
-        <span class="page-desc">내부 관리 도구</span>
-      </a>
-      <a href="#" class="page-card">
-        <span class="page-icon">📄</span>
-        <span class="page-name">About</span>
-        <span class="page-desc">소개 페이지</span>
-      </a>
-      <a href="#" id="blogLink" target="_blank" class="page-card">
-        <span class="page-icon">📝</span>
-        <span class="page-name">Blog</span>
-        <span class="page-desc">HTML 포스트</span>
-      </a>
-      <a href="./tools/html-poster.html" class="page-card">
-        <span class="page-icon">✍️</span>
-        <span class="page-name">HTML 포스터</span>
-        <span class="page-desc">블로그 배포 도구</span>
-      </a>
-      <a href="./tools/webpage-prompt.html" class="page-card">
-        <span class="page-icon">🚀</span>
-        <span class="page-name">웹페이지 프롬프트</span>
-        <span class="page-desc">AI 프롬프트 생성</span>
-      </a>
-      <a href="./tools/image-manager.html" class="page-card">
-        <span class="page-icon">📷</span>
-        <span class="page-name">사진 관리</span>
-        <span class="page-desc">이미지 업로드</span>
-      </a>
-      <a href="./tools/audio-manager.html" class="page-card">
-        <span class="page-icon">🎵</span>
-        <span class="page-name">음원 관리</span>
-        <span class="page-desc">오디오 업로드</span>
-      </a>
+  <!-- Rolls-Royce Dashboard -->
+  <section class="dashboard-section">
+    <div class="dashboard-container">
+      <div class="dashboard-header">
+        <div class="dashboard-title">Control Panel</div>
+      </div>
+
+      <div class="dashboard-panels">
+        <!-- Writing Tools -->
+        <div class="dashboard-panel">
+          <div class="panel-label">Writing</div>
+          <div class="panel-tools">
+            <a href="#" id="blogLink" target="_blank" class="tool-btn">
+              <span class="tool-indicator"></span>
+              <span class="tool-name">GitPages</span>
+            </a>
+            <a href="./tools/html-poster.html" class="tool-btn">
+              <span class="tool-indicator"></span>
+              <span class="tool-name">HTMLPost</span>
+            </a>
+            <a href="./tools/webpage-prompt.html" class="tool-btn">
+              <span class="tool-indicator"></span>
+              <span class="tool-name">WebPrompt</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Media Tools -->
+        <div class="dashboard-panel">
+          <div class="panel-label">Media</div>
+          <div class="panel-tools">
+            <a href="./tools/image-manager.html" class="tool-btn">
+              <span class="tool-indicator"></span>
+              <span class="tool-name">ImageUp</span>
+            </a>
+            <a href="./tools/audio-manager.html" class="tool-btn">
+              <span class="tool-indicator"></span>
+              <span class="tool-name">AudioUp</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-footer">
+        <a href="./staff/" class="dashboard-staff">STAFF PORTAL</a>
+      </div>
     </div>
   </section>
 
