@@ -675,6 +675,88 @@
     .check-status.fail { background: rgba(255,85,85,.2); color: #ff5555; }
     .check-status.checking { background: var(--gold-dim); color: var(--gold); }
 
+    /* Tutorial Carousel */
+    .tutorial-carousel {
+      background: var(--bg-elevated);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .carousel-header {
+      margin-bottom: 12px;
+    }
+
+    .carousel-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+    }
+
+    .carousel-scroll {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .carousel-scroll::-webkit-scrollbar { height: 4px; }
+    .carousel-scroll::-webkit-scrollbar-track { background: var(--bg); border-radius: 2px; }
+    .carousel-scroll::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
+
+    .tutorial-card {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 24px;
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      transition: all 0.2s;
+    }
+
+    .tutorial-card:hover {
+      border-color: var(--gold);
+      background: var(--gold-dim);
+    }
+
+    .tutorial-icon { font-size: 24px; }
+    .tutorial-title { font-size: 12px; font-weight: 600; color: var(--text-secondary); }
+
+    /* Doc Links */
+    .doc-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .doc-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      background: var(--bg-elevated);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      transition: all 0.2s;
+    }
+
+    .doc-item:hover {
+      border-color: var(--gold);
+      background: var(--bg-card);
+    }
+
+    .doc-icon { font-size: 24px; }
+    .doc-content { flex: 1; }
+    .doc-name { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+    .doc-desc { font-size: 12px; color: var(--text-secondary); }
+    .doc-arrow { font-size: 18px; color: var(--gold); }
+
     @media (max-width: 400px) {
       .instruction-tabs { grid-template-columns: repeat(2, 1fr); }
       .connection-flow { flex-direction: column; }
@@ -1023,6 +1105,51 @@ GitHub Pages 기반 랜딩페이지 + Staff Portal 레포지토리를 구축해�
       </div>
       <div class="quick-links" id="quickLinks">
         <!-- 동적으로 렌더링됨 -->
+      </div>
+    </section>
+
+    <!-- dtslib 프로젝트 안내 -->
+    <section class="section">
+      <div class="section-header">
+        <span class="section-badge">About</span>
+        <h2 class="section-title">dtslib 프로젝트</h2>
+      </div>
+
+      <!-- YouTube 튜토리얼 캐러셀 -->
+      <div class="tutorial-carousel">
+        <div class="carousel-header">
+          <span class="carousel-label">튜토리얼 영상</span>
+        </div>
+        <div class="carousel-scroll" id="tutorialCarousel">
+          <a href="https://youtube.com/shorts/ex50PdCReRc" target="_blank" class="tutorial-card">
+            <span class="tutorial-icon">▶️</span>
+            <span class="tutorial-title">시작하기</span>
+          </a>
+          <a href="https://youtube.com/@dtslib" target="_blank" class="tutorial-card">
+            <span class="tutorial-icon">📺</span>
+            <span class="tutorial-title">전체 영상</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 문서 링크 -->
+      <div class="doc-links">
+        <a href="../docs/manual.html" class="doc-item">
+          <span class="doc-icon">📖</span>
+          <div class="doc-content">
+            <p class="doc-name">사용 설명서</p>
+            <p class="doc-desc">단계별 가이드 문서</p>
+          </div>
+          <span class="doc-arrow">→</span>
+        </a>
+        <a href="mailto:dimas@dtslib.com" class="doc-item">
+          <span class="doc-icon">✉️</span>
+          <div class="doc-content">
+            <p class="doc-name">문의하기</p>
+            <p class="doc-desc">dimas@dtslib.com</p>
+          </div>
+          <span class="doc-arrow">→</span>
+        </a>
       </div>
     </section>
 

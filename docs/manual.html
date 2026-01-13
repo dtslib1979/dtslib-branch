@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0f0c" />
+  <title>사용 설명서 | dtslib</title>
+  <style>
+    :root {
+      --bg: #0a0f0c;
+      --bg-elevated: #141f18;
+      --bg-card: #1a2b20;
+      --gold: #f0c850;
+      --gold-dim: rgba(240,200,80,.2);
+      --text: #ffffff;
+      --text-secondary: rgba(255,255,255,.85);
+      --text-muted: rgba(255,255,255,.6);
+      --border: rgba(255,255,255,.15);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 16px;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 20px;
+      line-height: 1.7;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      padding: 24px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .section {
+      margin-bottom: 32px;
+    }
+
+    h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--gold-dim);
+    }
+
+    h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin: 20px 0 12px;
+      color: var(--text);
+    }
+
+    p {
+      margin-bottom: 12px;
+      color: var(--text-secondary);
+    }
+
+    ol, ul {
+      margin-bottom: 16px;
+      padding-left: 24px;
+    }
+
+    li {
+      margin-bottom: 8px;
+      color: var(--text-secondary);
+    }
+
+    code {
+      background: var(--bg-elevated);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 14px;
+      color: var(--gold);
+    }
+
+    .step-box {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .step-number {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      background: var(--gold);
+      color: var(--bg);
+      border-radius: 50%;
+      text-align: center;
+      line-height: 24px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-right: 10px;
+    }
+
+    .step-title {
+      font-weight: 600;
+      display: inline;
+    }
+
+    .step-desc {
+      margin-top: 10px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .contact-box {
+      background: var(--gold-dim);
+      border: 2px solid var(--gold);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .contact-box p {
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .contact-email {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      padding: 16px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      margin-top: 24px;
+    }
+
+    .back-link:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>dtslib 사용 설명서</h1>
+    <p class="subtitle">Mobile First Programmer를 위한 가이드</p>
+  </header>
+
+  <div class="section">
+    <h2>1. 시작하기</h2>
+    <p>dtslib은 GitHub Pages 기반의 개인 브랜딩 플랫폼입니다. Claude Code를 통해 음성 명령으로 웹사이트를 구축하고 관리할 수 있습니다.</p>
+
+    <div class="step-box">
+      <span class="step-number">1</span>
+      <span class="step-title">GitHub 계정 생성</span>
+      <p class="step-desc">github.com/signup에서 계정을 만듭니다.</p>
+    </div>
+
+    <div class="step-box">
+      <span class="step-number">2</span>
+      <span class="step-title">템플릿 복제</span>
+      <p class="step-desc">이 보일러플레이트를 Import하여 나만의 레포를 만듭니다.</p>
+    </div>
+
+    <div class="step-box">
+      <span class="step-number">3</span>
+      <span class="step-title">GitHub Pages 활성화</span>
+      <p class="step-desc">Settings > Pages에서 main 브랜치 배포를 설정합니다.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>2. 레포지토리 구조</h2>
+    <p>dtslib은 6개의 레포지토리로 구성됩니다:</p>
+    <ul>
+      <li><strong>branch</strong> - 메인 랜딩페이지 + Staff Portal</li>
+      <li><strong>posts</strong> - HTML 블로그 포스트</li>
+      <li><strong>logs</strong> - 캡처 데이터 저장소</li>
+      <li><strong>pwa</strong> - PWA 앱 (Vercel 배포)</li>
+      <li><strong>apk-lab</strong> - Android APK 빌드</li>
+      <li><strong>media</strong> - 이미지/오디오 CDN</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>3. Control Panel 사용법</h2>
+
+    <h3>Writing 도구</h3>
+    <ul>
+      <li><strong>GitPages</strong> - GitHub Pages 블로그 관리</li>
+      <li><strong>HTMLPost</strong> - HTML 포스트 작성 및 배포</li>
+      <li><strong>WebPrompt</strong> - AI용 웹페이지 프롬프트 생성</li>
+    </ul>
+
+    <h3>Media 도구</h3>
+    <ul>
+      <li><strong>ImageUp</strong> - 이미지 업로드 (GitHub API)</li>
+      <li><strong>AudioUp</strong> - 오디오 업로드 (GitHub API)</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>4. Claude Code 연동</h2>
+    <p>Termux에서 Claude Code를 설치하고, Staff Portal의 인스트럭션을 복사하여 붙여넣으면 자동으로 레포가 구축됩니다.</p>
+    <p>음성 명령으로 코드 수정, 배포, 콘텐츠 작성이 가능합니다.</p>
+  </div>
+
+  <div class="section">
+    <h2>5. 문의 및 지원</h2>
+    <div class="contact-box">
+      <p>궁금한 점이 있으시면 연락주세요</p>
+      <a href="mailto:dimas@dtslib.com" class="contact-email">dimas@dtslib.com</a>
+    </div>
+  </div>
+
+  <a href="../staff/" class="back-link">← Staff Portal로 돌아가기</a>
+</div>
+
+</body>
+</html>
