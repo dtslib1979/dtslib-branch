@@ -39,7 +39,7 @@ dtslib-branch/
 \u2502       \u2514\u2500\u2500 logo.png        # \uc571 \uc544\uc774\ucf58 (TODO: \ucd94\uac00 \ud544\uc694)
 \u2502
 \u2514\u2500\u2500 staff/
-    \u2514\u2500\u2500 index.html          # \uc2a4\ud0dc\ud504 \ud3ec\ud138 (\ube44\ubc00\ubc88\ud638: 1216)
+    \u2514\u2500\u2500 index.html          # \uc2a4\ud0dc\ud504 \ud3ec\ud138 (\ube44\ubc00\ubc88\ud638: 1126)
 ```
 
 ---
@@ -55,7 +55,7 @@ dtslib-branch/
 | `site.domain` | dtslib.com | \ub3c4\uba54\uc778 |
 | `owner.email` | dimas@dtslib.com | \uc5f0\ub77d\ucc98 |
 | `service.price` | 25\ub9cc\uc6d0 / 2\uc2dc\uac04 | \uc11c\ube44\uc2a4 \uac00\uaca9 |
-| `staff.accessCode` | 1216 | \uc2a4\ud0dc\ud504 \ud3ec\ud138 \ube44\ubc00\ubc88\ud638 |
+| `staff.accessCode` | 1126 | \uc2a4\ud0dc\ud504 \ud3ec\ud138 \ube44\ubc00\ubc88\ud638 |
 
 ### \ubcf5\uc81c \uc2dc \ubcc0\uacbd \ud56d\ubaa9
 1. `config.json` \uc218\uc815
