@@ -4,13 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#0F1F15" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>dtslib | 보일러플레이트</title>
   <meta name="description" content="GitHub Pages 보일러플레이트 템플릿" />
   <link rel="icon" href="./assets/icons/logo.png" />
   <link rel="apple-touch-icon" href="./assets/icons/logo.png" />
-  <link rel="manifest" href="./assets/manifest.json" />
   <style>
     :root {
       --bg: #0F1F15;
@@ -1044,11 +1041,6 @@
 <div class="toast" id="toast">명함이 복사되었습니다</div>
 
 <script>
-// Service Worker
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js').catch(() => {});
-}
-
 // 명함 복사
 const businessCard = document.getElementById('businessCard');
 const toast = document.getElementById('toast');
