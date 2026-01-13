@@ -74,18 +74,35 @@
     }
 
     .logo {
-      width: 80px;
-      height: 80px;
+      width: 120px;
+      height: 120px;
       margin: 0 auto var(--space-sm);
       border-radius: var(--radius-full);
-      border: 2px solid var(--gold);
+      border: 3px solid var(--gold);
       box-shadow: 0 4px 20px rgba(212,175,55,.2);
       overflow: hidden;
       background: var(--bg-elevated);
+      position: relative;
+    }
+
+    .logo iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200%;
+      height: 200%;
+      border: none;
+      pointer-events: none;
+    }
+
+    .logo-emoji {
+      width: 100%;
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 32px;
+      font-size: 48px;
     }
 
     .site-title {
@@ -830,7 +847,7 @@
   <header>
     <div class="slogan">Mobile-first AI Builder</div>
     <div class="logo" role="img" aria-label="dtslib 로고">
-      <span>🚀</span>
+      <iframe src="https://www.youtube.com/embed/SRkRmx4G5Gc?autoplay=1&mute=1&loop=1&playlist=SRkRmx4G5Gc&controls=0&showinfo=0" allow="autoplay; encrypted-media"></iframe>
     </div>
     <h1 class="site-title">dtslib</h1>
   </header>
