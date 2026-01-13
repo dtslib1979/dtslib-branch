@@ -479,11 +479,11 @@
 
     .door-frame {
       position: relative;
-      width: 64px;
+      width: 80px;
       height: 80px;
       background: linear-gradient(180deg, #2a1810 0%, #1a0f08 100%);
       border: 3px solid #4a3020;
-      border-radius: 8px 8px 0 0;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -506,9 +506,11 @@
       box-shadow: 0 0 6px var(--gold);
     }
 
-    .door-icon {
-      font-size: 32px;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,.5));
+    .door-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 6px;
       transition: transform 0.3s;
     }
 
@@ -527,8 +529,8 @@
         0 0 20px rgba(212,175,55,.3);
     }
 
-    .secret-door:hover .door-icon {
-      transform: scale(1.1);
+    .secret-door:hover .door-img {
+      transform: scale(1.05);
     }
 
     .secret-door:hover .door-glow {
@@ -937,7 +939,7 @@
       <div class="dashboard-footer">
         <a href="./staff/" class="secret-door">
           <div class="door-frame">
-            <div class="door-icon">📚</div>
+            <img src="./assets/icons/secret-office.png" alt="Secret Office" class="door-img">
             <div class="door-glow"></div>
           </div>
           <span class="door-label">Secret Office</span>
