@@ -468,20 +468,84 @@
       border-top: 1px solid rgba(245,245,240,.05);
     }
 
-    .dashboard-staff {
-      font-size: 9px;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      color: var(--text-muted);
-      padding: 6px 16px;
-      border: 1px solid rgba(245,245,240,.1);
-      border-radius: 20px;
-      transition: all 0.2s;
+    .secret-door {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px;
+      transition: all 0.3s;
     }
 
-    .dashboard-staff:hover {
+    .door-frame {
+      position: relative;
+      width: 64px;
+      height: 80px;
+      background: linear-gradient(180deg, #2a1810 0%, #1a0f08 100%);
+      border: 3px solid #4a3020;
+      border-radius: 8px 8px 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        inset 0 0 20px rgba(0,0,0,.5),
+        0 4px 12px rgba(0,0,0,.4);
+      overflow: hidden;
+    }
+
+    .door-frame::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: 8px;
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      transform: translateY(-50%);
+      box-shadow: 0 0 6px var(--gold);
+    }
+
+    .door-icon {
+      font-size: 32px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,.5));
+      transition: transform 0.3s;
+    }
+
+    .door-glow {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 60%, rgba(212,175,55,.1) 100%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .secret-door:hover .door-frame {
+      border-color: var(--gold);
+      box-shadow:
+        inset 0 0 20px rgba(0,0,0,.5),
+        0 0 20px rgba(212,175,55,.3);
+    }
+
+    .secret-door:hover .door-icon {
+      transform: scale(1.1);
+    }
+
+    .secret-door:hover .door-glow {
+      opacity: 1;
+    }
+
+    .door-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      transition: color 0.3s;
+    }
+
+    .secret-door:hover .door-label {
       color: var(--gold);
-      border-color: rgba(212,175,55,.3);
     }
 
     /* YouTube Carousel */
@@ -728,17 +792,6 @@
       margin-bottom: var(--space-sm);
     }
 
-    .staff-link {
-      font-size: 11px;
-      color: var(--text-muted);
-      opacity: 0.5;
-    }
-
-    .staff-link:hover {
-      opacity: 1;
-      color: var(--gold);
-    }
-
     /* Toast */
     .toast {
       position: fixed;
@@ -882,7 +935,13 @@
       </div>
 
       <div class="dashboard-footer">
-        <a href="./staff/" class="dashboard-staff">STAFF PORTAL</a>
+        <a href="./staff/" class="secret-door">
+          <div class="door-frame">
+            <div class="door-icon">📚</div>
+            <div class="door-glow"></div>
+          </div>
+          <span class="door-label">Secret Office</span>
+        </a>
       </div>
     </div>
   </section>
@@ -963,7 +1022,6 @@
 
   <footer>
     <p class="footer-text">© 2026 dtslib. All rights reserved.</p>
-    <a href="./staff/" class="staff-link">Staff Portal</a>
   </footer>
 </div>
 
