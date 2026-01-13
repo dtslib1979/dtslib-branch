@@ -1,0 +1,25 @@
+{
+  "title": "YouTube Carousel Samples",
+  "description": "랜딩페이지 Films 섹션용 YouTube 쇼츠 샘플",
+  "videos": [
+    {
+      "id": "ex50PdCReRc",
+      "title": "Sample Short 1",
+      "embed": "https://www.youtube.com/embed/ex50PdCReRc",
+      "url": "https://youtube.com/shorts/ex50PdCReRc"
+    },
+    {
+      "id": "PLACEHOLDER_2",
+      "title": "Sample Short 2",
+      "embed": "https://www.youtube.com/embed/PLACEHOLDER_2",
+      "url": "https://youtube.com/shorts/PLACEHOLDER_2"
+    },
+    {
+      "id": "PLACEHOLDER_3",
+      "title": "Sample Short 3",
+      "embed": "https://www.youtube.com/embed/PLACEHOLDER_3",
+      "url": "https://youtube.com/shorts/PLACEHOLDER_3"
+    }
+  ],
+  "usage": "각 video의 id를 실제 YouTube 쇼츠 ID로 교체하세요"
+}

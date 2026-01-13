@@ -452,6 +452,82 @@
       width: 24px;
     }
 
+    /* YouTube Shorts Carousel */
+    .shorts-carousel {
+      display: flex;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+    }
+
+    .shorts-track {
+      display: flex;
+      gap: var(--space-sm);
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding: 0 var(--space-sm);
+    }
+
+    .shorts-track::-webkit-scrollbar { display: none; }
+
+    .shorts-slide {
+      flex: 0 0 auto;
+      width: 180px;
+      aspect-ratio: 9/16;
+      background: var(--bg-elevated);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      scroll-snap-align: center;
+      border: 1px solid var(--border);
+    }
+
+    .shorts-slide iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .shorts-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .shorts-placeholder span:first-child {
+      font-size: 32px;
+      opacity: 0.5;
+    }
+
+    .shorts-nav {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+    }
+
+    .shorts-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: var(--radius-full);
+      background: var(--border);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .shorts-dot.active {
+      background: var(--gold);
+      width: 16px;
+    }
+
     .carousel-arrows {
       position: absolute;
       top: 50%;
@@ -660,36 +736,29 @@
   <!-- YouTube Films -->
   <section class="youtube-section">
     <h2 class="section-title">Films</h2>
-    <div class="carousel-container">
-      <div class="carousel-track" id="carouselTrack">
-        <div class="carousel-slide">
-          <div class="carousel-placeholder">
-            <span class="icon">🎬</span>
-            <span>YouTube Shorts</span>
+    <div class="shorts-carousel">
+      <div class="shorts-track" id="shortsTrack">
+        <div class="shorts-slide">
+          <iframe src="https://www.youtube.com/embed/ex50PdCReRc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="shorts-slide">
+          <div class="shorts-placeholder">
+            <span>🎬</span>
+            <span>Add Short</span>
           </div>
         </div>
-        <div class="carousel-slide">
-          <div class="carousel-placeholder">
-            <span class="icon">🎬</span>
-            <span>YouTube Shorts</span>
+        <div class="shorts-slide">
+          <div class="shorts-placeholder">
+            <span>🎬</span>
+            <span>Add Short</span>
           </div>
         </div>
-        <div class="carousel-slide">
-          <div class="carousel-placeholder">
-            <span class="icon">🎬</span>
-            <span>YouTube Shorts</span>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-arrows">
-        <button class="carousel-arrow" id="prevBtn">←</button>
-        <button class="carousel-arrow" id="nextBtn">→</button>
       </div>
     </div>
-    <div class="carousel-nav" id="carouselNav">
-      <button class="carousel-dot active" data-index="0"></button>
-      <button class="carousel-dot" data-index="1"></button>
-      <button class="carousel-dot" data-index="2"></button>
+    <div class="shorts-nav" id="shortsNav">
+      <button class="shorts-dot active" data-index="0"></button>
+      <button class="shorts-dot" data-index="1"></button>
+      <button class="shorts-dot" data-index="2"></button>
     </div>
   </section>
 
