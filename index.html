@@ -433,12 +433,12 @@
       box-shadow: 0 4px 20px rgba(212,175,55,.3);
     }
 
-    .card-qr-section {
+    .card-license-section {
       margin-top: 20px;
       text-align: center;
     }
 
-    .card-qr-toggle {
+    .card-license-toggle {
       font-size: 10px;
       color: rgba(245,245,240,.5);
       letter-spacing: 0.1em;
@@ -450,37 +450,63 @@
       font-family: inherit;
     }
 
-    .card-qr-toggle:hover {
+    .card-license-toggle:hover {
       color: var(--gold);
     }
 
-    .card-qr-container {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease, margin 0.4s ease, opacity 0.3s ease;
-      opacity: 0;
+    /* 사업자등록증 모달 */
+    .license-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.9);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
 
-    .card-qr-container.show {
-      max-height: 200px;
-      margin-top: 16px;
-      opacity: 1;
+    .license-modal.show {
+      display: flex;
     }
 
-    .card-qr-code {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto;
-      padding: 8px;
-      background: #fff;
+    .license-modal-content {
+      position: relative;
+      max-width: 500px;
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-gold);
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .license-modal-content img {
+      width: 100%;
+      height: auto;
       border-radius: 8px;
     }
 
-    .card-qr-hint {
-      font-size: 9px;
-      color: rgba(245,245,240,.5);
-      margin-top: 8px;
-      letter-spacing: 0.05em;
+    .license-close {
+      position: absolute;
+      top: -12px;
+      right: -12px;
+      width: 32px;
+      height: 32px;
+      background: var(--gold);
+      color: #0A0A0A;
+      border: none;
+      border-radius: 50%;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s;
+    }
+
+    .license-close:hover {
+      transform: scale(1.1);
     }
 
     .card-footer-note {
@@ -1002,9 +1028,9 @@
   <!-- 명함 카드 (buddies.kr style) -->
   <div class="business-card-wrapper">
     <article class="business-card" id="businessCard">
-      <!-- Logo -->
+      <!-- Profile Photo -->
       <div class="card-logo">
-        <img src="./assets/icons/1768298038450.png" alt="DIMAS" loading="eager">
+        <img src="./assets/icons/1768353694540.jpg" alt="DIMAS" loading="eager">
       </div>
 
       <!-- Brand -->
@@ -1046,19 +1072,21 @@
         </a>
       </div>
 
-      <!-- QR Code -->
-      <div class="card-qr-section">
-        <button class="card-qr-toggle" id="qrToggle" onclick="toggleQR()">Show QR Code</button>
-        <div class="card-qr-container" id="qrContainer">
-          <div class="card-qr-code">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://dtslib1979.github.io/dtslib-branch/" alt="QR Code">
-          </div>
-          <p class="card-qr-hint">Scan to open this page</p>
-        </div>
+      <!-- Business License -->
+      <div class="card-license-section">
+        <button class="card-license-toggle" onclick="toggleLicense()">사업자등록증 보기</button>
       </div>
     </article>
 
     <p class="card-footer-note">Tap card to copy link</p>
+  </div>
+
+  <!-- 사업자등록증 모달 -->
+  <div class="license-modal" id="licenseModal" onclick="closeLicenseModal(event)">
+    <div class="license-modal-content">
+      <button class="license-close" onclick="toggleLicense()">&times;</button>
+      <img src="./assets/icons/Screenshot_20251223_215007_Gallery(1).jpg" alt="사업자등록증">
+    </div>
   </div>
 
   <!-- YouTube Films -->
@@ -1298,13 +1326,17 @@ END:VCARD`;
   if (navigator.vibrate) navigator.vibrate(50);
 }
 
-// QR 코드 토글
-function toggleQR() {
-  const container = document.getElementById('qrContainer');
-  const toggle = document.getElementById('qrToggle');
+// 사업자등록증 모달 토글
+function toggleLicense() {
+  const modal = document.getElementById('licenseModal');
+  modal.classList.toggle('show');
+  document.body.style.overflow = modal.classList.contains('show') ? 'hidden' : '';
+}
 
-  container.classList.toggle('show');
-  toggle.textContent = container.classList.contains('show') ? 'Hide QR Code' : 'Show QR Code';
+function closeLicenseModal(event) {
+  if (event.target === event.currentTarget) {
+    toggleLicense();
+  }
 }
 
 // Carousel
