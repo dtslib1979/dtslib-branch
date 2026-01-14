@@ -712,6 +712,27 @@
       transition: opacity 0.3s;
     }
 
+    .fingerprint-frame {
+      background: linear-gradient(145deg, #1a1a1a 0%, #0d0d0d 100%);
+      border-color: var(--gold);
+    }
+
+    .fingerprint-frame::before {
+      display: none;
+    }
+
+    .fingerprint-icon {
+      width: 48px;
+      height: 48px;
+      transition: all 0.3s;
+    }
+
+    .secret-door:hover .fingerprint-icon {
+      stroke: var(--gold-light);
+      filter: drop-shadow(0 0 8px rgba(212,175,55,.5));
+      transform: scale(1.1);
+    }
+
     .secret-door:hover .door-frame {
       border-color: var(--gold);
       box-shadow:
@@ -1160,11 +1181,21 @@
 
       <div class="dashboard-footer">
         <a href="./staff/" class="secret-door">
-          <div class="door-frame">
-            <img src="./assets/icons/secret-office.png" alt="Secret Office" class="door-img">
+          <div class="door-frame fingerprint-frame">
+            <svg class="fingerprint-icon" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.2" stroke-linecap="round">
+              <path d="M12 2a6 6 0 0 0-6 6v4c0 4 2 8 6 8"/>
+              <path d="M18 8a6 6 0 0 0-6-6"/>
+              <path d="M18 8v4c0 2.5-1 5-2 6.5"/>
+              <path d="M6 12c0 2 .5 4 2 6"/>
+              <path d="M12 5a3 3 0 0 0-3 3v3"/>
+              <path d="M15 8a3 3 0 0 0-3-3"/>
+              <path d="M15 8v4c0 2-1 4-2 5"/>
+              <path d="M9 11v3c0 2 1 4 2 5"/>
+              <path d="M12 7v9"/>
+            </svg>
             <div class="door-glow"></div>
           </div>
-          <span class="door-label">Secret Office</span>
+          <span class="door-label">Staff</span>
         </a>
       </div>
     </div>
