@@ -13,17 +13,17 @@
   <meta property="og:url" content="https://dtslib1979.github.io/dtslib-branch/card/">
   <meta property="og:title" content="DIMAS">
   <meta property="og:description" content="AI Automation Consultant">
-  <meta property="og:image" content="https://dtslib.com/assets/og/card-preview.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
+  <meta property="og:image" content="https://dtslib1979.github.io/dtslib-branch/assets/icons/1768353694540.jpg">
+  <meta property="og:image:width" content="400">
+  <meta property="og:image:height" content="400">
   <meta property="og:locale" content="ko_KR">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="DIMAS">
   <meta name="twitter:description" content="AI Automation Consultant">
-  <meta name="twitter:image" content="https://dtslib.com/assets/og/card-preview.png">
+  <meta name="twitter:image" content="https://dtslib1979.github.io/dtslib-branch/assets/icons/1768353694540.jpg">
 
-  <link rel="icon" href="../assets/icons/1768298038450.png">
+  <link rel="icon" href="../assets/icons/1768353694540.jpg">
   <link rel="canonical" href="https://dtslib1979.github.io/dtslib-branch/card/">
 
   <style>
@@ -294,15 +294,15 @@
       font-size: 14px;
     }
 
-    /* QR Code Section */
-    .qr-section {
+    /* Business License Section */
+    .license-section {
       margin-top: 20px;
       text-align: center;
       position: relative;
       z-index: 1;
     }
 
-    .qr-toggle {
+    .license-toggle {
       font-size: 10px;
       color: var(--text-muted);
       letter-spacing: 0.1em;
@@ -314,43 +314,63 @@
       font-family: inherit;
     }
 
-    .qr-toggle:hover {
+    .license-toggle:hover {
       color: var(--gold);
     }
 
-    .qr-container {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease, margin 0.4s ease, opacity 0.3s ease;
-      opacity: 0;
+    /* 사업자등록증 모달 */
+    .license-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.9);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
 
-    .qr-container.show {
-      max-height: 200px;
-      margin-top: 16px;
-      opacity: 1;
+    .license-modal.show {
+      display: flex;
     }
 
-    .qr-code {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto;
-      padding: 8px;
-      background: #fff;
-      border-radius: 8px;
-      animation: float 4s ease-in-out infinite;
-    }
-
-    .qr-code svg {
+    .license-modal-content {
+      position: relative;
+      max-width: 500px;
       width: 100%;
-      height: 100%;
+      background: linear-gradient(145deg, #1a1a1a 0%, #0d0d0d 100%);
+      border: 1px solid var(--border-gold);
+      border-radius: 12px;
+      padding: 16px;
     }
 
-    .qr-hint {
-      font-size: 9px;
-      color: var(--text-muted);
-      margin-top: 8px;
-      letter-spacing: 0.05em;
+    .license-modal-content img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .license-close {
+      position: absolute;
+      top: -12px;
+      right: -12px;
+      width: 32px;
+      height: 32px;
+      background: var(--gold);
+      color: #0A0A0A;
+      border: none;
+      border-radius: 50%;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s;
+    }
+
+    .license-close:hover {
+      transform: scale(1.1);
     }
 
     /* Footer */
@@ -421,7 +441,7 @@
       <!-- Logo -->
       <section class="logo-section">
         <div class="logo">
-          <img src="../assets/icons/1768298038450.png" alt="BUDDIES" loading="eager">
+          <img src="../assets/icons/1768353694540.jpg" alt="DIMAS" loading="eager">
         </div>
         <h1 class="brand-name">DIMAS</h1>
         <p class="tagline">AI Automation Consultant</p>
@@ -462,96 +482,21 @@
         </a>
       </section>
 
-      <!-- QR Code -->
-      <section class="qr-section">
-        <button class="qr-toggle" id="qrToggle" onclick="toggleQR()">Show QR Code</button>
-        <div class="qr-container" id="qrContainer">
-          <div class="qr-code">
-            <!-- QR Code for dtslib1979.github.io/dtslib-branch/card/ -->
-            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-              <rect width="100" height="100" fill="#fff"/>
-              <!-- Position Detection Patterns -->
-              <rect x="4" y="4" width="21" height="21" fill="#000"/>
-              <rect x="7" y="7" width="15" height="15" fill="#fff"/>
-              <rect x="10" y="10" width="9" height="9" fill="#000"/>
-              <rect x="75" y="4" width="21" height="21" fill="#000"/>
-              <rect x="78" y="7" width="15" height="15" fill="#fff"/>
-              <rect x="81" y="10" width="9" height="9" fill="#000"/>
-              <rect x="4" y="75" width="21" height="21" fill="#000"/>
-              <rect x="7" y="78" width="15" height="15" fill="#fff"/>
-              <rect x="10" y="81" width="9" height="9" fill="#000"/>
-              <!-- Timing Patterns -->
-              <rect x="28" y="10" width="3" height="3" fill="#000"/>
-              <rect x="34" y="10" width="3" height="3" fill="#000"/>
-              <rect x="40" y="10" width="3" height="3" fill="#000"/>
-              <rect x="46" y="10" width="3" height="3" fill="#000"/>
-              <rect x="52" y="10" width="3" height="3" fill="#000"/>
-              <rect x="58" y="10" width="3" height="3" fill="#000"/>
-              <rect x="64" y="10" width="3" height="3" fill="#000"/>
-              <rect x="10" y="28" width="3" height="3" fill="#000"/>
-              <rect x="10" y="34" width="3" height="3" fill="#000"/>
-              <rect x="10" y="40" width="3" height="3" fill="#000"/>
-              <rect x="10" y="46" width="3" height="3" fill="#000"/>
-              <rect x="10" y="52" width="3" height="3" fill="#000"/>
-              <rect x="10" y="58" width="3" height="3" fill="#000"/>
-              <rect x="10" y="64" width="3" height="3" fill="#000"/>
-              <!-- Data modules (simplified representation) -->
-              <rect x="28" y="28" width="3" height="3" fill="#000"/>
-              <rect x="34" y="28" width="3" height="3" fill="#000"/>
-              <rect x="40" y="28" width="3" height="3" fill="#000"/>
-              <rect x="46" y="28" width="3" height="3" fill="#000"/>
-              <rect x="52" y="34" width="3" height="3" fill="#000"/>
-              <rect x="58" y="28" width="3" height="3" fill="#000"/>
-              <rect x="64" y="34" width="3" height="3" fill="#000"/>
-              <rect x="28" y="34" width="3" height="3" fill="#000"/>
-              <rect x="40" y="34" width="3" height="3" fill="#000"/>
-              <rect x="46" y="40" width="3" height="3" fill="#000"/>
-              <rect x="34" y="46" width="3" height="3" fill="#000"/>
-              <rect x="52" y="46" width="3" height="3" fill="#000"/>
-              <rect x="64" y="46" width="3" height="3" fill="#000"/>
-              <rect x="28" y="52" width="3" height="3" fill="#000"/>
-              <rect x="40" y="52" width="3" height="3" fill="#000"/>
-              <rect x="58" y="52" width="3" height="3" fill="#000"/>
-              <rect x="34" y="58" width="3" height="3" fill="#000"/>
-              <rect x="46" y="58" width="3" height="3" fill="#000"/>
-              <rect x="64" y="58" width="3" height="3" fill="#000"/>
-              <rect x="28" y="64" width="3" height="3" fill="#000"/>
-              <rect x="52" y="64" width="3" height="3" fill="#000"/>
-              <rect x="58" y="64" width="3" height="3" fill="#000"/>
-              <rect x="34" y="70" width="3" height="3" fill="#000"/>
-              <rect x="46" y="70" width="3" height="3" fill="#000"/>
-              <rect x="64" y="70" width="3" height="3" fill="#000"/>
-              <rect x="28" y="76" width="3" height="3" fill="#000"/>
-              <rect x="40" y="76" width="3" height="3" fill="#000"/>
-              <rect x="52" y="76" width="3" height="3" fill="#000"/>
-              <rect x="58" y="82" width="3" height="3" fill="#000"/>
-              <rect x="64" y="76" width="3" height="3" fill="#000"/>
-              <rect x="70" y="28" width="3" height="3" fill="#000"/>
-              <rect x="76" y="34" width="3" height="3" fill="#000"/>
-              <rect x="82" y="28" width="3" height="3" fill="#000"/>
-              <rect x="88" y="34" width="3" height="3" fill="#000"/>
-              <rect x="70" y="40" width="3" height="3" fill="#000"/>
-              <rect x="82" y="46" width="3" height="3" fill="#000"/>
-              <rect x="76" y="52" width="3" height="3" fill="#000"/>
-              <rect x="88" y="52" width="3" height="3" fill="#000"/>
-              <rect x="70" y="58" width="3" height="3" fill="#000"/>
-              <rect x="82" y="64" width="3" height="3" fill="#000"/>
-              <rect x="76" y="70" width="3" height="3" fill="#000"/>
-              <rect x="88" y="70" width="3" height="3" fill="#000"/>
-              <rect x="70" y="76" width="3" height="3" fill="#000"/>
-              <rect x="82" y="82" width="3" height="3" fill="#000"/>
-              <rect x="88" y="88" width="3" height="3" fill="#000"/>
-              <!-- Alignment pattern -->
-              <rect x="66" y="66" width="9" height="9" fill="#000"/>
-              <rect x="69" y="69" width="3" height="3" fill="#fff"/>
-            </svg>
-          </div>
-          <p class="qr-hint">Scan to open this card</p>
-        </div>
+      <!-- Business License -->
+      <section class="license-section">
+        <button class="license-toggle" onclick="toggleLicense()">사업자등록증 보기</button>
       </section>
     </article>
 
     <p class="footer-note">Tap card to copy link</p>
+  </div>
+
+  <!-- 사업자등록증 모달 -->
+  <div class="license-modal" id="licenseModal" onclick="closeLicenseModal(event)">
+    <div class="license-modal-content">
+      <button class="license-close" onclick="toggleLicense()">&times;</button>
+      <img src="../assets/icons/Screenshot_20251223_215007_Gallery(1).jpg" alt="사업자등록증">
+    </div>
   </div>
 
   <!-- Toast -->
@@ -605,13 +550,17 @@ END:VCARD`;
       if (navigator.vibrate) navigator.vibrate(50);
     }
 
-    // Toggle QR Code
-    function toggleQR() {
-      const container = document.getElementById('qrContainer');
-      const toggle = document.getElementById('qrToggle');
+    // 사업자등록증 모달 토글
+    function toggleLicense() {
+      const modal = document.getElementById('licenseModal');
+      modal.classList.toggle('show');
+      document.body.style.overflow = modal.classList.contains('show') ? 'hidden' : '';
+    }
 
-      container.classList.toggle('show');
-      toggle.textContent = container.classList.contains('show') ? 'Hide QR Code' : 'Show QR Code';
+    function closeLicenseModal(event) {
+      if (event.target === event.currentTarget) {
+        toggleLicense();
+      }
     }
   </script>
 </body>
