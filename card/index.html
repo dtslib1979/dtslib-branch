@@ -149,6 +149,7 @@
       border: 2px solid var(--gold);
       overflow: hidden;
       animation: logoPulse 3s ease-in-out infinite;
+      background: #0A0A0A;
     }
 
     .logo img {
@@ -405,13 +406,85 @@
       overflow-y: auto;
     }
 
+    .print-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
     .print-title {
       font-size: 16px;
       font-weight: 600;
       color: var(--gold);
-      text-align: center;
-      margin-bottom: 16px;
       letter-spacing: 0.05em;
+      margin: 0;
+    }
+
+    .edit-btn {
+      padding: 6px 12px;
+      background: transparent;
+      border: 1px solid var(--border-gold);
+      border-radius: 6px;
+      color: var(--gold);
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .edit-btn:hover {
+      background: rgba(212,175,55,0.1);
+    }
+
+    .edit-btn.active {
+      background: var(--gold);
+      color: #0A0A0A;
+    }
+
+    /* 편집 섹션 */
+    .edit-section {
+      display: none;
+      margin-bottom: 16px;
+    }
+
+    .edit-section.show {
+      display: block;
+    }
+
+    .edit-group {
+      margin-bottom: 12px;
+    }
+
+    .edit-group-title {
+      font-size: 10px;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .edit-input {
+      display: block;
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 13px;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+
+    .edit-input:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+
+    .edit-input::placeholder {
+      color: var(--text-muted);
     }
 
     .print-specs {
@@ -482,6 +555,7 @@
       border-radius: 50%;
       border: 2px solid var(--gold);
       object-fit: cover;
+      background: #0A0A0A;
     }
 
     .preview-name {
@@ -683,7 +757,31 @@
   <div class="license-modal" id="printModal" onclick="closePrintModal(event)">
     <div class="license-modal-content print-modal-content">
       <button class="license-close" onclick="togglePrintModal()">&times;</button>
-      <h2 class="print-title">명함 인쇄 스펙</h2>
+      <div class="print-header">
+        <h2 class="print-title">명함 인쇄 스펙</h2>
+        <button class="edit-btn" onclick="toggleEditMode()">✏️ 편집</button>
+      </div>
+
+      <!-- 편집 모드 -->
+      <div class="edit-section" id="editSection">
+        <div class="edit-group">
+          <p class="edit-group-title">앞면</p>
+          <input type="text" id="editName" placeholder="이름" class="edit-input">
+          <input type="text" id="editTitle" placeholder="직함" class="edit-input">
+          <input type="text" id="editQuote" placeholder="슬로건" class="edit-input">
+          <input type="text" id="editWebsite" placeholder="웹사이트" class="edit-input">
+        </div>
+        <div class="edit-group">
+          <p class="edit-group-title">뒷면</p>
+          <input type="text" id="editMobile" placeholder="휴대폰 (010-XXXX-XXXX)" class="edit-input">
+          <input type="text" id="editOffice" placeholder="사무실 (02-XXX-XXXX)" class="edit-input">
+          <input type="text" id="editEmail" placeholder="이메일" class="edit-input">
+          <input type="text" id="editBank" placeholder="은행명" class="edit-input">
+          <input type="text" id="editAccount" placeholder="계좌번호" class="edit-input">
+          <input type="text" id="editHolder" placeholder="예금주" class="edit-input">
+        </div>
+        <button class="license-download" onclick="saveCardData()">💾 저장하기</button>
+      </div>
 
       <div class="print-specs">
         <div class="spec-item">
@@ -717,24 +815,24 @@
           <p class="preview-label">앞면</p>
           <div class="preview-card" id="previewCard">
             <img src="../assets/icons/1768353694540.jpg" class="preview-photo" alt="Photo">
-            <p class="preview-name">DIMAS</p>
-            <p class="preview-title">AI Automation Consultant</p>
-            <p class="preview-quote">"AI로 당신의 업무를 자동화합니다."</p>
-            <p class="preview-contact">dtslib.com</p>
+            <p class="preview-name" id="prevName">DIMAS</p>
+            <p class="preview-title" id="prevTitle">AI Automation Consultant</p>
+            <p class="preview-quote" id="prevQuote">"AI로 당신의 업무를 자동화합니다."</p>
+            <p class="preview-contact" id="prevWebsite">dtslib.com</p>
           </div>
         </div>
         <div class="print-preview">
           <p class="preview-label">뒷면</p>
           <div class="preview-card preview-back">
             <p class="back-section-title">CONTACT</p>
-            <p class="preview-contact">📱 010-XXXX-XXXX</p>
-            <p class="preview-contact">📞 02-XXX-XXXX</p>
-            <p class="preview-contact">✉️ dimas@dtslib.com</p>
+            <p class="preview-contact" id="prevMobile">📱 010-XXXX-XXXX</p>
+            <p class="preview-contact" id="prevOffice">📞 02-XXX-XXXX</p>
+            <p class="preview-contact" id="prevEmail">✉️ dimas@dtslib.com</p>
             <div class="back-divider"></div>
             <p class="back-section-title">BANK</p>
-            <p class="preview-contact">카카오뱅크</p>
-            <p class="preview-contact">3333-XX-XXXXXXX</p>
-            <p class="preview-contact">예금주: 홍길동</p>
+            <p class="preview-contact" id="prevBank">카카오뱅크</p>
+            <p class="preview-contact" id="prevAccount">3333-XX-XXXXXXX</p>
+            <p class="preview-contact" id="prevHolder">예금주: 홍길동</p>
           </div>
         </div>
       </div>
@@ -888,6 +986,79 @@ ${window.location.href}
       window.location.href = `mailto:?subject=${subject}&body=${body}`;
       showToast('이메일 앱 열기');
     }
+
+    // 편집 모드 토글
+    function toggleEditMode() {
+      const editSection = document.getElementById('editSection');
+      const editBtn = document.querySelector('.edit-btn');
+
+      editSection.classList.toggle('show');
+      editBtn.classList.toggle('active');
+
+      if (editSection.classList.contains('show')) {
+        loadCardData();
+      }
+    }
+
+    // 카드 데이터 저장
+    function saveCardData() {
+      const data = {
+        name: document.getElementById('editName').value,
+        title: document.getElementById('editTitle').value,
+        quote: document.getElementById('editQuote').value,
+        website: document.getElementById('editWebsite').value,
+        mobile: document.getElementById('editMobile').value,
+        office: document.getElementById('editOffice').value,
+        email: document.getElementById('editEmail').value,
+        bank: document.getElementById('editBank').value,
+        account: document.getElementById('editAccount').value,
+        holder: document.getElementById('editHolder').value
+      };
+
+      localStorage.setItem('cardData', JSON.stringify(data));
+      updatePreview(data);
+      showToast('저장 완료');
+    }
+
+    // 카드 데이터 불러오기
+    function loadCardData() {
+      const saved = localStorage.getItem('cardData');
+      if (saved) {
+        const data = JSON.parse(saved);
+        document.getElementById('editName').value = data.name || '';
+        document.getElementById('editTitle').value = data.title || '';
+        document.getElementById('editQuote').value = data.quote || '';
+        document.getElementById('editWebsite').value = data.website || '';
+        document.getElementById('editMobile').value = data.mobile || '';
+        document.getElementById('editOffice').value = data.office || '';
+        document.getElementById('editEmail').value = data.email || '';
+        document.getElementById('editBank').value = data.bank || '';
+        document.getElementById('editAccount').value = data.account || '';
+        document.getElementById('editHolder').value = data.holder || '';
+      }
+    }
+
+    // 프리뷰 업데이트
+    function updatePreview(data) {
+      if (data.name) document.getElementById('prevName').textContent = data.name;
+      if (data.title) document.getElementById('prevTitle').textContent = data.title;
+      if (data.quote) document.getElementById('prevQuote').textContent = `"${data.quote}"`;
+      if (data.website) document.getElementById('prevWebsite').textContent = data.website;
+      if (data.mobile) document.getElementById('prevMobile').textContent = `📱 ${data.mobile}`;
+      if (data.office) document.getElementById('prevOffice').textContent = `📞 ${data.office}`;
+      if (data.email) document.getElementById('prevEmail').textContent = `✉️ ${data.email}`;
+      if (data.bank) document.getElementById('prevBank').textContent = data.bank;
+      if (data.account) document.getElementById('prevAccount').textContent = data.account;
+      if (data.holder) document.getElementById('prevHolder').textContent = `예금주: ${data.holder}`;
+    }
+
+    // 페이지 로드시 저장된 데이터 적용
+    window.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem('cardData');
+      if (saved) {
+        updatePreview(JSON.parse(saved));
+      }
+    });
   </script>
 </body>
 </html>
