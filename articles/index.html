@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0A0A0A">
+  <title>Articles | DIMAS</title>
+  <meta name="description" content="AI Automation Insights by DIMAS">
+  <link rel="icon" href="../assets/icons/1768298038450.png">
+  <style>
+    :root {
+      --bg: #0A0A0A;
+      --bg-card: #111111;
+      --bg-hover: #1a1a1a;
+      --gold: #D4AF37;
+      --gold-dim: rgba(212,175,55,.15);
+      --text: #F5F5F0;
+      --text-secondary: rgba(245,245,240,.7);
+      --text-muted: rgba(245,245,240,.4);
+      --border: rgba(245,245,240,.1);
+      --border-gold: rgba(212,175,55,.3);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+
+    body {
+      font-family: "Georgia", "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,10,.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+    }
+
+    .logo-text {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .nav-link {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 14px;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover {
+      color: var(--gold);
+    }
+
+    .nav-link.active {
+      color: var(--gold);
+    }
+
+    /* Hero */
+    .hero {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 80px 24px 60px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: var(--gold-dim);
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 48px;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .hero-subtitle {
+      font-size: 20px;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+
+    /* Stats Bar */
+    .stats-bar {
+      max-width: 600px;
+      margin: 0 auto 60px;
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      padding: 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .stat-label {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* Main Content */
+    .main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* Section Header */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-title {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 16px;
+    }
+
+    .filter-tab {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 13px;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .filter-tab:hover,
+    .filter-tab.active {
+      color: var(--gold);
+    }
+
+    /* Featured Article */
+    .featured-article {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 60px;
+      padding: 40px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-gold);
+      border-radius: 16px;
+      transition: border-color 0.3s;
+    }
+
+    .featured-article:hover {
+      border-color: var(--gold);
+    }
+
+    .featured-image {
+      aspect-ratio: 16/10;
+      background: linear-gradient(135deg, var(--gold-dim), var(--bg));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 64px;
+    }
+
+    .featured-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .article-category {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .featured-title {
+      font-size: 32px;
+      font-weight: 400;
+      line-height: 1.3;
+      margin-bottom: 16px;
+    }
+
+    .article-excerpt {
+      font-size: 17px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .article-date {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .article-read-time {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Article Grid */
+    .article-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .article-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+
+    .article-card:hover {
+      border-color: var(--border-gold);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.4);
+    }
+
+    .card-image {
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, var(--gold-dim), var(--bg));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+    }
+
+    .card-content {
+      padding: 24px;
+    }
+
+    .card-category {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+
+    .card-excerpt {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-meta {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 80px 24px;
+    }
+
+    .empty-icon {
+      font-size: 64px;
+      margin-bottom: 24px;
+      opacity: 0.5;
+    }
+
+    .empty-title {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .empty-desc {
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .empty-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--bg);
+      background: var(--gold);
+      padding: 12px 24px;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .empty-btn:hover {
+      background: #E8C547;
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    .footer {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 24px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .footer-text {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .footer-link {
+      color: var(--gold);
+      transition: opacity 0.2s;
+    }
+
+    .footer-link:hover {
+      opacity: 0.8;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .article-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 32px;
+      }
+
+      .hero-subtitle {
+        font-size: 16px;
+      }
+
+      .stats-bar {
+        gap: 24px;
+        padding: 20px;
+      }
+
+      .stat-number {
+        font-size: 24px;
+      }
+
+      .featured-article {
+        grid-template-columns: 1fr;
+        padding: 24px;
+      }
+
+      .featured-title {
+        font-size: 24px;
+      }
+
+      .article-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="../" class="logo-section">
+        <img src="../assets/icons/1768298038450.png" alt="DIMAS" class="logo-img">
+        <span class="logo-text">DIMAS</span>
+      </a>
+      <nav class="nav-links">
+        <a href="../" class="nav-link">Home</a>
+        <a href="./" class="nav-link active">Articles</a>
+        <a href="../card/" class="nav-link">Card</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <span class="hero-badge">AI Automation Insights</span>
+    <h1 class="hero-title">Articles & Essays</h1>
+    <p class="hero-subtitle">AI 업무 자동화에 대한 인사이트와 실전 가이드</p>
+  </section>
+
+  <!-- Stats -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-number" id="articleCount">0</div>
+      <div class="stat-label">Articles</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" id="categoryCount">0</div>
+      <div class="stat-label">Categories</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" id="totalReads">0</div>
+      <div class="stat-label">Total Reads</div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="main">
+    <!-- Section Header -->
+    <div class="section-header">
+      <h2 class="section-title">All Articles</h2>
+      <div class="filter-tabs">
+        <button class="filter-tab active">All</button>
+        <button class="filter-tab">AI</button>
+        <button class="filter-tab">Automation</button>
+        <button class="filter-tab">Business</button>
+      </div>
+    </div>
+
+    <!-- Article List Container -->
+    <div id="articleList">
+      <!-- Empty State (shown when no articles) -->
+      <div class="empty-state">
+        <div class="empty-icon">📝</div>
+        <h3 class="empty-title">No articles yet</h3>
+        <p class="empty-desc">Start writing your first article using WebPrompt</p>
+        <a href="../tools/webpage-prompt.html" class="empty-btn">
+          <span>✨</span>
+          <span>Create Article</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p class="footer-text">
+      © 2026 DIMAS. Powered by <a href="../" class="footer-link">dtslib</a>
+    </p>
+  </footer>
+
+  <script>
+    // Article data storage key
+    const ARTICLES_KEY = 'dtslib_articles';
+
+    // Load and render articles
+    function loadArticles() {
+      const saved = localStorage.getItem(ARTICLES_KEY);
+      const articles = saved ? JSON.parse(saved) : [];
+
+      // Update stats
+      document.getElementById('articleCount').textContent = articles.length;
+      document.getElementById('categoryCount').textContent =
+        new Set(articles.map(a => a.category)).size || 0;
+      document.getElementById('totalReads').textContent =
+        articles.reduce((sum, a) => sum + (a.reads || 0), 0);
+
+      // Render articles
+      const container = document.getElementById('articleList');
+
+      if (articles.length === 0) {
+        return; // Show empty state
+      }
+
+      // Sort by date (newest first)
+      articles.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+      // Featured article (most recent)
+      const featured = articles[0];
+      const rest = articles.slice(1);
+
+      let html = `
+        <a href="${featured.url || '#'}" class="featured-article">
+          <div class="featured-image">${featured.emoji || '📄'}</div>
+          <div class="featured-content">
+            <span class="article-category">${featured.category || 'Article'}</span>
+            <h2 class="featured-title">${featured.title}</h2>
+            <p class="article-excerpt">${featured.excerpt || ''}</p>
+            <div class="article-meta">
+              <span class="article-date">📅 ${formatDate(featured.date)}</span>
+              <span class="article-read-time">⏱️ ${featured.readTime || '5'} min read</span>
+            </div>
+          </div>
+        </a>
+      `;
+
+      if (rest.length > 0) {
+        html += '<div class="article-grid">';
+        rest.forEach(article => {
+          html += `
+            <a href="${article.url || '#'}" class="article-card">
+              <div class="card-image">${article.emoji || '📄'}</div>
+              <div class="card-content">
+                <span class="card-category">${article.category || 'Article'}</span>
+                <h3 class="card-title">${article.title}</h3>
+                <p class="card-excerpt">${article.excerpt || ''}</p>
+                <div class="card-meta">
+                  ${formatDate(article.date)} · ${article.readTime || '5'} min read
+                </div>
+              </div>
+            </a>
+          `;
+        });
+        html += '</div>';
+      }
+
+      container.innerHTML = html;
+    }
+
+    function formatDate(dateStr) {
+      if (!dateStr) return '';
+      const date = new Date(dateStr);
+      return date.toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
+    }
+
+    // Initialize
+    loadArticles();
+
+    // Filter tabs
+    document.querySelectorAll('.filter-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        // TODO: Filter articles by category
+      });
+    });
+  </script>
+</body>
+</html>
