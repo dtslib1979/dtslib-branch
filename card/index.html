@@ -442,8 +442,15 @@
       font-weight: 500;
     }
 
-    .print-preview {
+    .print-preview-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
       margin-bottom: 16px;
+    }
+
+    .print-preview {
+      margin-bottom: 0;
     }
 
     .preview-label {
@@ -501,6 +508,33 @@
     .preview-contact {
       font-size: 8px;
       color: var(--text);
+    }
+
+    .preview-back {
+      justify-content: flex-start;
+      padding-top: 16px;
+      gap: 4px;
+    }
+
+    .back-section-title {
+      font-size: 8px;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      font-weight: 600;
+      margin-top: 8px;
+      margin-bottom: 4px;
+    }
+
+    .back-section-title:first-child {
+      margin-top: 0;
+    }
+
+    .back-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.3;
+      margin: 8px 0;
     }
 
     .print-shops {
@@ -672,17 +706,36 @@
           <span class="spec-label">해상도</span>
           <span class="spec-value">300 DPI</span>
         </div>
+        <div class="spec-item">
+          <span class="spec-label">인쇄</span>
+          <span class="spec-value">양면 (앞: 컬러 / 뒤: 단색)</span>
+        </div>
       </div>
 
-      <div class="print-preview">
-        <p class="preview-label">앞면 미리보기</p>
-        <div class="preview-card" id="previewCard">
-          <img src="../assets/icons/1768353694540.jpg" class="preview-photo" alt="Photo">
-          <p class="preview-name">DIMAS</p>
-          <p class="preview-title">AI Automation Consultant</p>
-          <p class="preview-quote">"AI로 당신의 업무를 자동화합니다."</p>
-          <p class="preview-contact">dtslib.com</p>
-          <p class="preview-contact">dimas@dtslib.com</p>
+      <div class="print-preview-grid">
+        <div class="print-preview">
+          <p class="preview-label">앞면</p>
+          <div class="preview-card" id="previewCard">
+            <img src="../assets/icons/1768353694540.jpg" class="preview-photo" alt="Photo">
+            <p class="preview-name">DIMAS</p>
+            <p class="preview-title">AI Automation Consultant</p>
+            <p class="preview-quote">"AI로 당신의 업무를 자동화합니다."</p>
+            <p class="preview-contact">dtslib.com</p>
+          </div>
+        </div>
+        <div class="print-preview">
+          <p class="preview-label">뒷면</p>
+          <div class="preview-card preview-back">
+            <p class="back-section-title">CONTACT</p>
+            <p class="preview-contact">📱 010-XXXX-XXXX</p>
+            <p class="preview-contact">📞 02-XXX-XXXX</p>
+            <p class="preview-contact">✉️ dimas@dtslib.com</p>
+            <div class="back-divider"></div>
+            <p class="back-section-title">BANK</p>
+            <p class="preview-contact">카카오뱅크</p>
+            <p class="preview-contact">3333-XX-XXXXXXX</p>
+            <p class="preview-contact">예금주: 홍길동</p>
+          </div>
         </div>
       </div>
 
@@ -690,9 +743,8 @@
 
       <div class="print-shops">
         <p class="preview-label">추천 인쇄소</p>
-        <a href="https://www.vistaprint.co.kr" target="_blank" class="shop-link">비스타프린트</a>
-        <a href="https://www.dodoprint.com" target="_blank" class="shop-link">도도인쇄</a>
-        <a href="https://www.printcity.co.kr" target="_blank" class="shop-link">프린트시티</a>
+        <a href="https://www.redprinting.co.kr" target="_blank" class="shop-link">레드프린팅</a>
+        <a href="https://www.ecard21.co.kr" target="_blank" class="shop-link">명함천국</a>
       </div>
     </div>
   </div>
@@ -808,9 +860,22 @@ ${window.location.href}
 - 사이즈: 90 x 50 mm (세로형)
 - 용지: 블랙 레자크 or 모조지 350g
 - 컬러: 배경 #0A0A0A / 골드 #D4AF37
+- 인쇄: 양면 (앞면: 컬러 / 뒷면: 단색)
 - 특수인쇄: 골드 박 (선택)
 - 해상도: 300 DPI
 - 수량: 100장
+
+■ 앞면 내용
+- 프로필 사진
+- DIMAS
+- AI Automation Consultant
+- "AI로 당신의 업무를 자동화합니다."
+- dtslib.com
+
+■ 뒷면 내용
+- 연락처 (휴대폰, 사무실)
+- 이메일
+- 계좌정보
 
 ■ 배송지
 - 이름:
