@@ -373,6 +373,26 @@
       transform: scale(1.1);
     }
 
+    .license-download {
+      display: block;
+      width: 100%;
+      margin-top: 12px;
+      padding: 12px;
+      background: var(--gold);
+      color: #0A0A0A;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-family: inherit;
+    }
+
+    .license-download:hover {
+      background: var(--gold-light);
+    }
+
     /* Footer */
     .footer-note {
       text-align: center;
@@ -496,6 +516,7 @@
     <div class="license-modal-content">
       <button class="license-close" onclick="toggleLicense()">&times;</button>
       <img src="../assets/icons/Screenshot_20251223_215007_Gallery(1).jpg" alt="사업자등록증">
+      <button class="license-download" onclick="downloadLicense()">📥 다운로드</button>
     </div>
   </div>
 
@@ -561,6 +582,17 @@ END:VCARD`;
       if (event.target === event.currentTarget) {
         toggleLicense();
       }
+    }
+
+    // 사업자등록증 다운로드
+    function downloadLicense() {
+      const link = document.createElement('a');
+      link.href = '../assets/icons/Screenshot_20251223_215007_Gallery(1).jpg';
+      link.download = 'DIMAS_사업자등록증.jpg';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('다운로드 시작');
     }
   </script>
 </body>
