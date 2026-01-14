@@ -503,11 +503,26 @@
       color: var(--text);
     }
 
-    .print-tip {
-      font-size: 10px;
-      color: var(--text-muted);
+    .print-shops {
+      margin-top: 16px;
       text-align: center;
-      margin-top: 12px;
+    }
+
+    .shop-link {
+      display: inline-block;
+      margin: 4px 8px;
+      padding: 6px 12px;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-decoration: none;
+      border: 1px solid rgba(212,175,55,0.3);
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .shop-link:hover {
+      color: var(--gold);
+      border-color: var(--gold);
     }
 
     /* Footer */
@@ -671,9 +686,14 @@
         </div>
       </div>
 
-      <button class="license-download" onclick="downloadPrintCard()">📥 인쇄용 이미지 다운로드</button>
+      <button class="license-download" onclick="sendPrintOrder()">✉️ 이메일로 발주하기</button>
 
-      <p class="print-tip">💡 인쇄소: 비스타프린트, 도도인쇄, 프린트시티</p>
+      <div class="print-shops">
+        <p class="preview-label">추천 인쇄소</p>
+        <a href="https://www.vistaprint.co.kr" target="_blank" class="shop-link">비스타프린트</a>
+        <a href="https://www.dodoprint.com" target="_blank" class="shop-link">도도인쇄</a>
+        <a href="https://www.printcity.co.kr" target="_blank" class="shop-link">프린트시티</a>
+      </div>
     </div>
   </div>
 
@@ -774,38 +794,34 @@ END:VCARD`;
       }
     }
 
-    // 인쇄용 이미지 다운로드 (html2canvas)
-    async function downloadPrintCard() {
-      showToast('이미지 생성 중...');
+    // 이메일로 인쇄 발주
+    function sendPrintOrder() {
+      const subject = encodeURIComponent('명함 인쇄 발주 요청');
+      const body = encodeURIComponent(`안녕하세요,
 
-      // html2canvas CDN 로드
-      if (!window.html2canvas) {
-        const script = document.createElement('script');
-        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
-        document.head.appendChild(script);
-        await new Promise(resolve => script.onload = resolve);
-      }
+명함 인쇄를 요청드립니다.
 
-      const previewCard = document.getElementById('previewCard');
+■ 디자인 시안
+${window.location.href}
 
-      try {
-        const canvas = await html2canvas(previewCard, {
-          backgroundColor: '#0A0A0A',
-          scale: 6, // 300 DPI for print (50mm = ~591px at 300dpi, scale 6 gives ~600px)
-          useCORS: true,
-          allowTaint: true
-        });
+■ 인쇄 스펙
+- 사이즈: 90 x 50 mm (세로형)
+- 용지: 블랙 레자크 or 모조지 350g
+- 컬러: 배경 #0A0A0A / 골드 #D4AF37
+- 특수인쇄: 골드 박 (선택)
+- 해상도: 300 DPI
+- 수량: 100장
 
-        const link = document.createElement('a');
-        link.download = 'DIMAS_명함_앞면.png';
-        link.href = canvas.toDataURL('image/png');
-        link.click();
+■ 배송지
+- 이름:
+- 연락처:
+- 주소:
 
-        showToast('다운로드 완료');
-      } catch (err) {
-        showToast('다운로드 실패');
-        console.error(err);
-      }
+견적 확인 부탁드립니다.
+감사합니다.`);
+
+      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+      showToast('이메일 앱 열기');
     }
   </script>
 </body>
