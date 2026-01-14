@@ -393,6 +393,123 @@
       background: var(--gold-light);
     }
 
+    .license-divider {
+      color: var(--text-muted);
+      margin: 0 8px;
+    }
+
+    /* 명함 인쇄 모달 */
+    .print-modal-content {
+      max-width: 400px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .print-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: 16px;
+      letter-spacing: 0.05em;
+    }
+
+    .print-specs {
+      background: rgba(255,255,255,0.03);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 16px;
+    }
+
+    .spec-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(212,175,55,0.1);
+      font-size: 12px;
+    }
+
+    .spec-item:last-child {
+      border-bottom: none;
+    }
+
+    .spec-label {
+      color: var(--text-muted);
+    }
+
+    .spec-value {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .print-preview {
+      margin-bottom: 16px;
+    }
+
+    .preview-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .preview-card {
+      background: #0A0A0A;
+      border: 2px solid var(--gold);
+      border-radius: 8px;
+      padding: 20px 16px;
+      text-align: center;
+      aspect-ratio: 50 / 90;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .preview-photo {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      object-fit: cover;
+    }
+
+    .preview-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+    }
+
+    .preview-title {
+      font-size: 8px;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .preview-quote {
+      font-size: 9px;
+      color: var(--text);
+      font-style: italic;
+      margin: 8px 0;
+    }
+
+    .preview-contact {
+      font-size: 8px;
+      color: var(--text);
+    }
+
+    .print-tip {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 12px;
+    }
+
     /* Footer */
     .footer-note {
       text-align: center;
@@ -505,10 +622,59 @@
       <!-- Business License -->
       <section class="license-section">
         <button class="license-toggle" onclick="toggleLicense()">사업자등록증 보기</button>
+        <span class="license-divider">|</span>
+        <button class="license-toggle" onclick="togglePrintModal()">명함 인쇄</button>
       </section>
     </article>
 
     <p class="footer-note">Tap card to copy link</p>
+  </div>
+
+  <!-- 명함 인쇄 모달 -->
+  <div class="license-modal" id="printModal" onclick="closePrintModal(event)">
+    <div class="license-modal-content print-modal-content">
+      <button class="license-close" onclick="togglePrintModal()">&times;</button>
+      <h2 class="print-title">명함 인쇄 스펙</h2>
+
+      <div class="print-specs">
+        <div class="spec-item">
+          <span class="spec-label">사이즈</span>
+          <span class="spec-value">90 x 50 mm (세로형)</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">용지</span>
+          <span class="spec-value">블랙 레자크 or 모조지 350g</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">컬러</span>
+          <span class="spec-value">배경 #0A0A0A / 골드 #D4AF37</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">특수인쇄</span>
+          <span class="spec-value">골드 박 (선택)</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">해상도</span>
+          <span class="spec-value">300 DPI</span>
+        </div>
+      </div>
+
+      <div class="print-preview">
+        <p class="preview-label">앞면 미리보기</p>
+        <div class="preview-card" id="previewCard">
+          <img src="../assets/icons/1768353694540.jpg" class="preview-photo" alt="Photo">
+          <p class="preview-name">DIMAS</p>
+          <p class="preview-title">AI Automation Consultant</p>
+          <p class="preview-quote">"AI로 당신의 업무를 자동화합니다."</p>
+          <p class="preview-contact">dtslib.com</p>
+          <p class="preview-contact">dimas@dtslib.com</p>
+        </div>
+      </div>
+
+      <button class="license-download" onclick="downloadPrintCard()">📥 인쇄용 이미지 다운로드</button>
+
+      <p class="print-tip">💡 인쇄소: 비스타프린트, 도도인쇄, 프린트시티</p>
+    </div>
   </div>
 
   <!-- 사업자등록증 모달 -->
@@ -593,6 +759,53 @@ END:VCARD`;
       link.click();
       document.body.removeChild(link);
       showToast('다운로드 시작');
+    }
+
+    // 명함 인쇄 모달 토글
+    function togglePrintModal() {
+      const modal = document.getElementById('printModal');
+      modal.classList.toggle('show');
+      document.body.style.overflow = modal.classList.contains('show') ? 'hidden' : '';
+    }
+
+    function closePrintModal(event) {
+      if (event.target === event.currentTarget) {
+        togglePrintModal();
+      }
+    }
+
+    // 인쇄용 이미지 다운로드 (html2canvas)
+    async function downloadPrintCard() {
+      showToast('이미지 생성 중...');
+
+      // html2canvas CDN 로드
+      if (!window.html2canvas) {
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+        document.head.appendChild(script);
+        await new Promise(resolve => script.onload = resolve);
+      }
+
+      const previewCard = document.getElementById('previewCard');
+
+      try {
+        const canvas = await html2canvas(previewCard, {
+          backgroundColor: '#0A0A0A',
+          scale: 6, // 300 DPI for print (50mm = ~591px at 300dpi, scale 6 gives ~600px)
+          useCORS: true,
+          allowTaint: true
+        });
+
+        const link = document.createElement('a');
+        link.download = 'DIMAS_명함_앞면.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+
+        showToast('다운로드 완료');
+      } catch (err) {
+        showToast('다운로드 실패');
+        console.error(err);
+      }
     }
   </script>
 </body>
