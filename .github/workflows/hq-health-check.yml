@@ -1,0 +1,70 @@
+name: HQ Health Check
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'  # Every 15 minutes
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Load health check config
+        id: config
+        run: |
+          ENDPOINTS=$(jq -c '.endpoints' hq/recovery/health-check.json)
+          echo "endpoints=$ENDPOINTS" >> $GITHUB_OUTPUT
+
+      - name: Check endpoints
+        id: health
+        run: |
+          RESULTS="[]"
+          FAILURES=0
+
+          for endpoint in $(echo '${{ steps.config.outputs.endpoints }}' | jq -c '.[]'); do
+            CELL=$(echo "$endpoint" | jq -r '.cell')
+            URL=$(echo "$endpoint" | jq -r '.url')
+            EXPECTED=$(echo "$endpoint" | jq -r '.expectedStatus')
+
+            echo "Checking $CELL at $URL..."
+
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "$URL" 2>/dev/null || echo "000")
+
+            if [ "$STATUS" = "$EXPECTED" ]; then
+              RESULT="success"
+              echo "✓ $CELL: $STATUS"
+            else
+              RESULT="failed"
+              FAILURES=$((FAILURES + 1))
+              echo "✗ $CELL: $STATUS (expected $EXPECTED)"
+            fi
+
+            RESULTS=$(echo "$RESULTS" | jq ". + [{\"cell\":\"$CELL\",\"status\":\"$STATUS\",\"result\":\"$RESULT\"}]")
+          done
+
+          echo "results=$RESULTS" >> $GITHUB_OUTPUT
+          echo "failures=$FAILURES" >> $GITHUB_OUTPUT
+
+      - name: Record to ledger
+        run: |
+          ENTRY=$(cat <<EOF
+          {"id":"TXN-$(date +%Y%m%d)-$(date +%H%M%S)","timestamp":"$(date -Iseconds)","eventType":"health_check","actor":"system","data":{"results":${{ steps.health.outputs.results }},"failures":${{ steps.health.outputs.failures }}},"status":"$([[ ${{ steps.health.outputs.failures }} -gt 0 ]] && echo "warning" || echo "success")"}
+          EOF
+          )
+          echo "$ENTRY" >> hq/ledger/ledger.jsonl
+
+      - name: Commit ledger
+        run: |
+          git config user.name "HQ Bot"
+          git config user.email "hq@dtslib.com"
+          git add hq/ledger/ledger.jsonl
+          git commit -m "ledger: health check (${{ steps.health.outputs.failures }} failures)" || true
+          git push || true
+
+      - name: Alert on failures
+        if: steps.health.outputs.failures > 0
+        run: |
+          echo "::error::${{ steps.health.outputs.failures }} health check(s) failed"
+          # TODO: Trigger notification

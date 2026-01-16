@@ -1,0 +1,34 @@
+{
+  "version": "1.0",
+  "enabled": true,
+  "schedule": "*/15 * * * *",
+  "endpoints": [
+    {
+      "cell": "koosy",
+      "url": "https://koosy.dtslib.com/",
+      "method": "GET",
+      "expectedStatus": 200,
+      "timeout": 10000
+    },
+    {
+      "cell": "gohsy",
+      "url": "https://gohsy.dtslib.com/",
+      "method": "GET",
+      "expectedStatus": 200,
+      "timeout": 10000
+    },
+    {
+      "cell": "papafly",
+      "url": "https://papafly.dtslib.com/",
+      "method": "GET",
+      "expectedStatus": 200,
+      "timeout": 10000
+    }
+  ],
+  "onFailure": {
+    "retryCount": 3,
+    "retryDelaySeconds": 30,
+    "actions": ["notify", "log_to_ledger"],
+    "escalateAfterFailures": 5
+  }
+}

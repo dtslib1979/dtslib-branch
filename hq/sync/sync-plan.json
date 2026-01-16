@@ -1,0 +1,45 @@
+{
+  "version": "1.0",
+  "strategy": "canary",
+  "enabled": true,
+  "downstream": {
+    "description": "HQ to Cell sync via PR",
+    "method": "pull_request",
+    "tiers": ["canary", "standard", "incubation"],
+    "order": ["papafly", "koosy", "gohsy", "*"],
+    "onFailure": "halt",
+    "maxRetries": 3,
+    "retryDelayMinutes": 5,
+    "templates": [
+      ".hq/manifest.json",
+      ".github/workflows/hq-receiver.yml",
+      ".github/workflows/hq-upstream.yml"
+    ],
+    "excludePaths": [
+      "*.local.*",
+      "*.secret.*",
+      ".env*"
+    ]
+  },
+  "upstream": {
+    "description": "Cell to HQ event reporting",
+    "method": "repository_dispatch",
+    "events": [
+      "deploy_succeeded",
+      "deploy_failed",
+      "health_check",
+      "cost_recorded"
+    ],
+    "reportInterval": "hourly"
+  },
+  "conflict": {
+    "priority": "cell",
+    "onConflict": {
+      "action": "label",
+      "label": "hq-conflict",
+      "notify": "cell_owner",
+      "timeoutHours": 72,
+      "escalateTo": "hq_admin"
+    }
+  }
+}

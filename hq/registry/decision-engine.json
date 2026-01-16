@@ -1,0 +1,62 @@
+{
+  "$schema": "./schemas/decision-engine.schema.json",
+  "version": "1.0",
+  "killSwitch": false,
+  "maintenanceMode": {
+    "global": false,
+    "cells": {}
+  },
+  "currentMode": "physical",
+  "modes": {
+    "physical": {
+      "id": "physical",
+      "name": "Physical Mode",
+      "icon": "person",
+      "priority": 1,
+      "executor": "human",
+      "requiresHuman": true,
+      "autoApprove": false,
+      "description": "All decisions made by human"
+    },
+    "rag": {
+      "id": "rag",
+      "name": "RAG Mode",
+      "icon": "search",
+      "priority": 2,
+      "executor": "rag-engine",
+      "requiresHuman": true,
+      "autoApprove": false,
+      "source": "hq-knowledge-base",
+      "description": "Document-based suggestions, human approval"
+    },
+    "llm": {
+      "id": "llm",
+      "name": "LLM Mode",
+      "icon": "robot",
+      "priority": 3,
+      "executor": "llm-engine",
+      "requiresHuman": false,
+      "autoApprove": true,
+      "model": "claude",
+      "description": "AI autonomous decisions within permissions"
+    },
+    "ontology": {
+      "id": "ontology",
+      "name": "Ontology Mode",
+      "icon": "brain",
+      "priority": 4,
+      "executor": "ontology-engine",
+      "requiresHuman": false,
+      "autoApprove": true,
+      "ruleset": "ontology-schema.json",
+      "description": "Rule-based automatic validation"
+    }
+  },
+  "fallbackChain": ["ontology", "llm", "rag", "physical"],
+  "escalation": {
+    "deployFailure": ["retry", "rollback", "hq_admin"],
+    "llmError": ["rag", "physical", "hq_admin"],
+    "conflictDetected": ["notify_owner", "wait_72h", "hq_admin"],
+    "costExceeded": ["throttle", "notify", "suspend"]
+  }
+}

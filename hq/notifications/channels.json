@@ -1,0 +1,44 @@
+{
+  "version": "1.0",
+  "channels": {
+    "slack": {
+      "critical": {
+        "type": "webhook",
+        "url": "${SLACK_WEBHOOK_CRITICAL}",
+        "enabled": false
+      },
+      "ops": {
+        "type": "webhook",
+        "url": "${SLACK_WEBHOOK_OPS}",
+        "enabled": false
+      }
+    },
+    "kakao": {
+      "hq": {
+        "type": "webhook",
+        "url": "${KAKAO_WEBHOOK_HQ}",
+        "enabled": false
+      }
+    },
+    "email": {
+      "hq_admin": {
+        "type": "email",
+        "address": "dimas@dtslib.com",
+        "enabled": true
+      }
+    },
+    "github": {
+      "issues": {
+        "type": "github_issue",
+        "repo": "dtslib1979/dtslib-branch",
+        "labels": ["hq-alert"],
+        "enabled": true
+      }
+    }
+  },
+  "defaults": {
+    "fallback": "github:issues",
+    "retryCount": 3,
+    "retryDelaySeconds": 30
+  }
+}

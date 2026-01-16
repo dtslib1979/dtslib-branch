@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "branch.schema.json",
+  "title": "DTSLIB Cell Branch Schema",
+  "type": "object",
+  "required": ["id", "repo", "domain", "tier", "visibility", "status"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Unique cell identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name"
+    },
+    "repo": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9-]+/[a-zA-Z0-9-]+$",
+      "description": "GitHub repo in owner/repo format"
+    },
+    "domain": {
+      "type": "string",
+      "format": "hostname",
+      "description": "Cell domain"
+    },
+    "area": {
+      "type": "string",
+      "enum": ["product", "business", "content"],
+      "description": "Business area"
+    },
+    "tier": {
+      "type": "string",
+      "enum": ["canary", "standard", "incubation"],
+      "description": "Deployment tier"
+    },
+    "visibility": {
+      "type": "string",
+      "enum": ["public", "private"],
+      "description": "Repo visibility"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "pending", "maintenance", "archived"],
+      "description": "Cell status"
+    },
+    "owner": {
+      "type": "string",
+      "format": "email",
+      "description": "Cell owner email"
+    },
+    "hqProtocolVersion": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+$",
+      "description": "HQ protocol version"
+    },
+    "features": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Cell features"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "maintenanceMode": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

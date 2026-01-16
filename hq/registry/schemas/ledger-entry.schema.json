@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "ledger-entry.schema.json",
+  "title": "DTSLIB Ledger Entry Schema",
+  "type": "object",
+  "required": ["id", "timestamp", "eventType", "actor"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^TXN-[0-9]{8}-[0-9]+$",
+      "description": "Transaction ID"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Event timestamp"
+    },
+    "eventType": {
+      "type": "string",
+      "enum": [
+        "deploy_started",
+        "deploy_succeeded",
+        "deploy_failed",
+        "pr_opened",
+        "pr_merged",
+        "pr_closed",
+        "conflict_detected",
+        "cost_recorded",
+        "cost_limit_exceeded",
+        "health_check",
+        "health_failed",
+        "cell_registered",
+        "cell_updated",
+        "sync_downstream",
+        "sync_upstream",
+        "mode_changed",
+        "kill_switch_activated",
+        "maintenance_enabled",
+        "maintenance_disabled",
+        "escalation_triggered"
+      ],
+      "description": "Standard event type"
+    },
+    "actor": {
+      "type": "string",
+      "enum": ["human", "llm", "rag", "ontology", "worker", "ci", "system"],
+      "description": "Who triggered this event"
+    },
+    "cell": {
+      "type": "string",
+      "description": "Target cell ID"
+    },
+    "data": {
+      "type": "object",
+      "description": "Event-specific data"
+    },
+    "tokens": {
+      "type": "number",
+      "description": "LLM tokens used"
+    },
+    "cost": {
+      "type": "number",
+      "description": "Cost in USD"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["success", "failed", "pending", "cancelled"]
+    },
+    "error": {
+      "type": "string",
+      "description": "Error message if failed"
+    }
+  }
+}

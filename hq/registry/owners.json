@@ -1,0 +1,28 @@
+{
+  "version": "1.0",
+  "hqAdmin": {
+    "email": "dimas@dtslib.com",
+    "role": "admin",
+    "permissions": ["all"]
+  },
+  "cellOwners": {
+    "koosy": {
+      "email": "dimas@dtslib.com",
+      "role": "owner"
+    },
+    "gohsy": {
+      "email": "dimas@dtslib.com",
+      "role": "owner"
+    },
+    "papafly": {
+      "email": "dimas@dtslib.com",
+      "role": "owner"
+    }
+  },
+  "pathOwnership": {
+    "/*": ["dimas@dtslib.com"],
+    "/hq/registry/*": ["dimas@dtslib.com"],
+    "/hq/ledger/*": ["dimas@dtslib.com", "worker"],
+    "/hq/sync/*": ["dimas@dtslib.com", "worker"]
+  }
+}

@@ -1,0 +1,61 @@
+name: HQ Dispatch Receiver
+
+on:
+  repository_dispatch:
+    types:
+      - cell-report
+      - deploy-result
+      - health-report
+      - cost-report
+
+jobs:
+  receive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate event
+        run: |
+          echo "Received event: ${{ github.event.action }}"
+          echo "Payload: ${{ toJson(github.event.client_payload) }}"
+
+      - name: Append to ledger
+        run: |
+          PAYLOAD='${{ toJson(github.event.client_payload) }}'
+          CELL=$(echo "$PAYLOAD" | jq -r '.cell // .branch // "unknown"')
+          EVENT_TYPE="${{ github.event.action }}"
+
+          # Map dispatch type to ledger eventType
+          case "$EVENT_TYPE" in
+            "cell-report") LEDGER_TYPE="sync_upstream" ;;
+            "deploy-result") LEDGER_TYPE="deploy_succeeded" ;;
+            "health-report") LEDGER_TYPE="health_check" ;;
+            "cost-report") LEDGER_TYPE="cost_recorded" ;;
+            *) LEDGER_TYPE="$EVENT_TYPE" ;;
+          esac
+
+          ENTRY=$(cat <<EOF
+          {"id":"TXN-$(date +%Y%m%d)-$(date +%H%M%S)","timestamp":"$(date -Iseconds)","eventType":"$LEDGER_TYPE","actor":"worker","cell":"$CELL","data":$PAYLOAD,"status":"success"}
+          EOF
+          )
+
+          echo "$ENTRY" >> hq/ledger/ledger.jsonl
+          echo "Recorded: $ENTRY"
+
+      - name: Check for alerts
+        run: |
+          PAYLOAD='${{ toJson(github.event.client_payload) }}'
+          STATUS=$(echo "$PAYLOAD" | jq -r '.status // "unknown"')
+
+          if [ "$STATUS" = "failed" ]; then
+            echo "::warning::Failure reported from cell"
+            # TODO: Trigger notification workflow
+          fi
+
+      - name: Commit ledger
+        run: |
+          git config user.name "HQ Bot"
+          git config user.email "hq@dtslib.com"
+          git add hq/ledger/ledger.jsonl
+          git commit -m "ledger: received ${{ github.event.action }} from cell"
+          git push

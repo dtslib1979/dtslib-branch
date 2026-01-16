@@ -1,0 +1,40 @@
+{
+  "version": "1.0",
+  "rules": {
+    "deploy_failed": {
+      "severity": "critical",
+      "channels": ["slack:critical", "github:issues"],
+      "template": "Deploy failed for ${cell}: ${error}"
+    },
+    "deploy_succeeded": {
+      "severity": "info",
+      "channels": ["slack:ops"],
+      "template": "Deploy succeeded for ${cell}"
+    },
+    "conflict_detected": {
+      "severity": "warning",
+      "channels": ["github:issues"],
+      "template": "Conflict detected in ${cell}: ${file}"
+    },
+    "cost_limit_exceeded": {
+      "severity": "warning",
+      "channels": ["email:hq_admin", "github:issues"],
+      "template": "Cost limit exceeded for ${cell}: ${current}/${limit}"
+    },
+    "health_failed": {
+      "severity": "critical",
+      "channels": ["slack:critical", "github:issues"],
+      "template": "Health check failed for ${cell}: ${endpoint}"
+    },
+    "kill_switch_activated": {
+      "severity": "critical",
+      "channels": ["slack:critical", "email:hq_admin"],
+      "template": "KILL SWITCH ACTIVATED by ${actor}"
+    },
+    "escalation_triggered": {
+      "severity": "warning",
+      "channels": ["email:hq_admin", "github:issues"],
+      "template": "Escalation triggered: ${reason}"
+    }
+  }
+}

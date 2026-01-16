@@ -1,0 +1,32 @@
+{
+  "version": "1.0",
+  "priority": "cell",
+  "description": "Cell modifications take priority over HQ pushes",
+  "rules": [
+    {
+      "path": ".hq/*",
+      "priority": "hq",
+      "reason": "HQ configuration must be controlled by HQ"
+    },
+    {
+      "path": ".github/workflows/hq-*.yml",
+      "priority": "hq",
+      "reason": "HQ workflows must be controlled by HQ"
+    },
+    {
+      "path": "*",
+      "priority": "cell",
+      "reason": "All other content belongs to cell"
+    }
+  ],
+  "resolution": {
+    "autoResolve": false,
+    "notifyOnConflict": true,
+    "timeoutHours": 72,
+    "escalation": {
+      "enabled": true,
+      "escalateTo": "hq_admin",
+      "afterHours": 72
+    }
+  }
+}

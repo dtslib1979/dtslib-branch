@@ -1,0 +1,88 @@
+name: HQ Backup
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # Daily at 2 AM
+  workflow_dispatch:
+    inputs:
+      type:
+        description: 'Backup type'
+        required: true
+        default: 'daily'
+        type: choice
+        options:
+          - daily
+          - weekly
+          - manual
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for tagging
+
+      - name: Determine backup tag
+        id: tag
+        run: |
+          TYPE="${{ inputs.type || 'daily' }}"
+          DATE=$(date +%Y-%m-%d)
+          TAG="backup/ledger/$TYPE-$DATE"
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          echo "Backup tag: $TAG"
+
+      - name: Verify ledger integrity
+        run: |
+          if [ -f hq/ledger/ledger.jsonl ]; then
+            LINES=$(wc -l < hq/ledger/ledger.jsonl)
+            echo "Ledger entries: $LINES"
+
+            # Verify each line is valid JSON
+            VALID=true
+            while IFS= read -r line; do
+              if ! echo "$line" | python3 -m json.tool > /dev/null 2>&1; then
+                echo "Invalid JSON: $line"
+                VALID=false
+              fi
+            done < hq/ledger/ledger.jsonl
+
+            if [ "$VALID" = "false" ]; then
+              echo "::error::Ledger integrity check failed"
+              exit 1
+            fi
+            echo "Ledger integrity verified"
+          fi
+
+      - name: Create backup tag
+        run: |
+          TAG="${{ steps.tag.outputs.tag }}"
+
+          # Check if tag exists
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "Tag $TAG already exists, skipping"
+          else
+            git tag "$TAG"
+            git push origin "$TAG"
+            echo "Created backup tag: $TAG"
+          fi
+
+      - name: Cleanup old backups
+        run: |
+          # Keep last 7 daily, 4 weekly, 12 monthly
+          echo "Cleanup would remove old backup tags..."
+          # TODO: Implement retention policy
+
+      - name: Record to ledger
+        run: |
+          ENTRY=$(cat <<EOF
+          {"id":"TXN-$(date +%Y%m%d)-$(date +%H%M%S)","timestamp":"$(date -Iseconds)","eventType":"sync_downstream","actor":"system","data":{"type":"backup","tag":"${{ steps.tag.outputs.tag }}"},"status":"success"}
+          EOF
+          )
+          echo "$ENTRY" >> hq/ledger/ledger.jsonl
+
+          git config user.name "HQ Bot"
+          git config user.email "hq@dtslib.com"
+          git add hq/ledger/ledger.jsonl
+          git commit -m "ledger: backup created (${{ steps.tag.outputs.tag }})" || true
+          git push || true

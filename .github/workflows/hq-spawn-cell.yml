@@ -1,0 +1,317 @@
+name: HQ Spawn Cell
+
+on:
+  workflow_dispatch:
+    inputs:
+      cell_id:
+        description: 'Cell ID (e.g., koosy, gohsy, papafly)'
+        required: true
+      repo:
+        description: 'Target repo (e.g., dtslib1979/koosy)'
+        required: true
+      tier:
+        description: 'Cell tier'
+        required: true
+        default: 'incubation'
+        type: choice
+        options:
+          - canary
+          - standard
+          - incubation
+      create_repo:
+        description: 'Create repo if not exists'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  spawn:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check kill switch
+        run: |
+          KILL_SWITCH=$(jq -r '.killSwitch' hq/registry/decision-engine.json)
+          if [ "$KILL_SWITCH" = "true" ]; then
+            echo "::error::Kill switch is ACTIVE. Cannot spawn cell."
+            exit 1
+          fi
+
+      - name: Validate cell ID
+        run: |
+          CELL_ID="${{ inputs.cell_id }}"
+          if [[ ! "$CELL_ID" =~ ^[a-z0-9-]+$ ]]; then
+            echo "::error::Invalid cell ID. Use lowercase letters, numbers, and hyphens only."
+            exit 1
+          fi
+          echo "Cell ID validated: $CELL_ID"
+
+      - name: Check if cell exists in registry
+        id: check_registry
+        run: |
+          CELL_ID="${{ inputs.cell_id }}"
+          EXISTS=$(jq -r ".cells[] | select(.id == \"$CELL_ID\") | .id" hq/registry/branches.json)
+          if [ -n "$EXISTS" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Cell $CELL_ID already in registry"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Cell $CELL_ID not in registry, will add"
+          fi
+
+      - name: Check repo access
+        id: check_repo
+        env:
+          GH_TOKEN: ${{ secrets.HQ_PAT }}
+        run: |
+          REPO="${{ inputs.repo }}"
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "Authorization: token $GH_TOKEN" \
+            "https://api.github.com/repos/$REPO")
+
+          if [ "$STATUS" = "200" ]; then
+            echo "accessible=true" >> $GITHUB_OUTPUT
+            echo "Repo $REPO is accessible"
+          else
+            echo "accessible=false" >> $GITHUB_OUTPUT
+            echo "Repo $REPO not accessible (status: $STATUS)"
+          fi
+
+      - name: Create manifest content
+        id: manifest
+        run: |
+          cat > /tmp/manifest.json << 'EOF'
+          {
+            "cellId": "${{ inputs.cell_id }}",
+            "hqRepo": "${{ github.repository }}",
+            "hqProtocolVersion": "2.1",
+            "tier": "${{ inputs.tier }}",
+            "syncEnabled": true,
+            "reportInterval": "hourly",
+            "createdAt": "$(date -Iseconds)",
+            "createdBy": "hq-spawn-cell"
+          }
+          EOF
+          MANIFEST=$(cat /tmp/manifest.json | jq -c .)
+          echo "manifest=$MANIFEST" >> $GITHUB_OUTPUT
+
+      - name: Create receiver workflow content
+        id: receiver
+        run: |
+          cat > /tmp/hq-receiver.yml << 'WORKFLOW_EOF'
+          name: HQ Receiver
+
+          on:
+            repository_dispatch:
+              types: [hq-sync, hq-command]
+
+          jobs:
+            receive:
+              runs-on: ubuntu-latest
+              steps:
+                - uses: actions/checkout@v4
+
+                - name: Process HQ command
+                  run: |
+                    echo "Received from HQ: ${{ github.event.action }}"
+                    echo "Payload: ${{ toJson(github.event.client_payload) }}"
+
+                - name: Update manifest
+                  if: github.event.action == 'hq-sync'
+                  run: |
+                    echo '${{ toJson(github.event.client_payload) }}' > .hq/manifest.json
+                    git config user.name "HQ Bot"
+                    git config user.email "hq@dtslib.com"
+                    git add .hq/manifest.json
+                    git commit -m "hq: sync manifest" || true
+                    git push || true
+          WORKFLOW_EOF
+          echo "receiver_created=true" >> $GITHUB_OUTPUT
+
+      - name: Create upstream workflow content
+        id: upstream
+        run: |
+          cat > /tmp/hq-upstream.yml << 'WORKFLOW_EOF'
+          name: HQ Upstream Report
+
+          on:
+            push:
+              branches: [main]
+            schedule:
+              - cron: '0 * * * *'  # Hourly
+            workflow_dispatch:
+
+          jobs:
+            report:
+              runs-on: ubuntu-latest
+              steps:
+                - uses: actions/checkout@v4
+
+                - name: Load manifest
+                  id: manifest
+                  run: |
+                    if [ -f .hq/manifest.json ]; then
+                      CELL_ID=$(jq -r '.cellId' .hq/manifest.json)
+                      HQ_REPO=$(jq -r '.hqRepo' .hq/manifest.json)
+                      echo "cell_id=$CELL_ID" >> $GITHUB_OUTPUT
+                      echo "hq_repo=$HQ_REPO" >> $GITHUB_OUTPUT
+                    else
+                      echo "::error::No manifest found"
+                      exit 1
+                    fi
+
+                - name: Report to HQ
+                  env:
+                    GH_TOKEN: ${{ secrets.HQ_REPORT_TOKEN }}
+                  run: |
+                    curl -X POST \
+                      -H "Authorization: token $GH_TOKEN" \
+                      -H "Accept: application/vnd.github.v3+json" \
+                      "https://api.github.com/repos/${{ steps.manifest.outputs.hq_repo }}/dispatches" \
+                      -d '{
+                        "event_type": "cell-report",
+                        "client_payload": {
+                          "cell": "${{ steps.manifest.outputs.cell_id }}",
+                          "repo": "${{ github.repository }}",
+                          "timestamp": "'$(date -Iseconds)'",
+                          "commits": "'$(git rev-list --count HEAD)'"
+                        }
+                      }'
+                    echo "Report sent to HQ"
+          WORKFLOW_EOF
+          echo "upstream_created=true" >> $GITHUB_OUTPUT
+
+      - name: Create PR to target repo
+        if: steps.check_repo.outputs.accessible == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.HQ_PAT }}
+        run: |
+          REPO="${{ inputs.repo }}"
+          CELL_ID="${{ inputs.cell_id }}"
+          BRANCH="hq-init-$CELL_ID"
+
+          echo "Creating PR to $REPO..."
+
+          # Get default branch
+          DEFAULT_BRANCH=$(curl -s \
+            -H "Authorization: token $GH_TOKEN" \
+            "https://api.github.com/repos/$REPO" | jq -r '.default_branch')
+
+          # Get latest commit SHA
+          SHA=$(curl -s \
+            -H "Authorization: token $GH_TOKEN" \
+            "https://api.github.com/repos/$REPO/git/ref/heads/$DEFAULT_BRANCH" | jq -r '.object.sha')
+
+          # Create new branch
+          curl -X POST \
+            -H "Authorization: token $GH_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/$REPO/git/refs" \
+            -d "{\"ref\":\"refs/heads/$BRANCH\",\"sha\":\"$SHA\"}"
+
+          # Create .hq directory and manifest
+          MANIFEST_CONTENT=$(cat /tmp/manifest.json | base64 -w 0)
+          curl -X PUT \
+            -H "Authorization: token $GH_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/$REPO/contents/.hq/manifest.json" \
+            -d "{
+              \"message\":\"hq: add manifest\",
+              \"content\":\"$MANIFEST_CONTENT\",
+              \"branch\":\"$BRANCH\"
+            }"
+
+          # Create receiver workflow
+          RECEIVER_CONTENT=$(cat /tmp/hq-receiver.yml | base64 -w 0)
+          curl -X PUT \
+            -H "Authorization: token $GH_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/$REPO/contents/.github/workflows/hq-receiver.yml" \
+            -d "{
+              \"message\":\"hq: add receiver workflow\",
+              \"content\":\"$RECEIVER_CONTENT\",
+              \"branch\":\"$BRANCH\"
+            }"
+
+          # Create upstream workflow
+          UPSTREAM_CONTENT=$(cat /tmp/hq-upstream.yml | base64 -w 0)
+          curl -X PUT \
+            -H "Authorization: token $GH_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/$REPO/contents/.github/workflows/hq-upstream.yml" \
+            -d "{
+              \"message\":\"hq: add upstream workflow\",
+              \"content\":\"$UPSTREAM_CONTENT\",
+              \"branch\":\"$BRANCH\"
+            }"
+
+          # Create PR
+          curl -X POST \
+            -H "Authorization: token $GH_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/$REPO/pulls" \
+            -d "{
+              \"title\":\"[HQ] Initialize cell: $CELL_ID\",
+              \"body\":\"This PR initializes HQ connection for cell $CELL_ID.\\n\\n## Added files\\n- .hq/manifest.json\\n- .github/workflows/hq-receiver.yml\\n- .github/workflows/hq-upstream.yml\\n\\n## Next steps\\n1. Review and merge this PR\\n2. Add HQ_REPORT_TOKEN to repo secrets\\n3. Cell will automatically report to HQ\",
+              \"head\":\"$BRANCH\",
+              \"base\":\"$DEFAULT_BRANCH\"
+            }"
+
+          echo "PR created successfully"
+
+      - name: Register cell in HQ
+        if: steps.check_registry.outputs.exists == 'false'
+        run: |
+          CELL_ID="${{ inputs.cell_id }}"
+          REPO="${{ inputs.repo }}"
+          TIER="${{ inputs.tier }}"
+
+          # Add to branches.json
+          jq ".cells += [{
+            \"id\": \"$CELL_ID\",
+            \"name\": \"$(echo $CELL_ID | tr '[:lower:]' '[:upper:]')\",
+            \"repo\": \"$REPO\",
+            \"domain\": \"$CELL_ID.dtslib.com\",
+            \"area\": \"product\",
+            \"tier\": \"$TIER\",
+            \"visibility\": \"private\",
+            \"status\": \"pending\",
+            \"owner\": \"dimas@dtslib.com\",
+            \"hqProtocolVersion\": \"2.1\",
+            \"features\": [],
+            \"createdAt\": \"$(date -Iseconds)\",
+            \"maintenanceMode\": false
+          }]" hq/registry/branches.json > /tmp/branches.json
+          mv /tmp/branches.json hq/registry/branches.json
+
+          echo "Cell $CELL_ID registered in HQ"
+
+      - name: Record to ledger
+        run: |
+          ENTRY=$(cat <<EOF
+          {"id":"TXN-$(date +%Y%m%d)-$(date +%H%M%S)","timestamp":"$(date -Iseconds)","eventType":"cell_registered","actor":"human","cell":"${{ inputs.cell_id }}","data":{"repo":"${{ inputs.repo }}","tier":"${{ inputs.tier }}"},"status":"success"}
+          EOF
+          )
+          echo "$ENTRY" >> hq/ledger/ledger.jsonl
+
+      - name: Commit changes
+        run: |
+          git config user.name "HQ Bot"
+          git config user.email "hq@dtslib.com"
+          git add hq/registry/branches.json hq/ledger/ledger.jsonl
+          git commit -m "hq: spawn cell ${{ inputs.cell_id }}"
+          git push
+
+      - name: Summary
+        run: |
+          echo "## Cell Spawn Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Cell ID**: ${{ inputs.cell_id }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Repo**: ${{ inputs.repo }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Tier**: ${{ inputs.tier }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Next Steps" >> $GITHUB_STEP_SUMMARY
+          echo "1. Review and merge the PR in target repo" >> $GITHUB_STEP_SUMMARY
+          echo "2. Add \`HQ_REPORT_TOKEN\` secret to target repo" >> $GITHUB_STEP_SUMMARY
+          echo "3. Cell will automatically connect to HQ" >> $GITHUB_STEP_SUMMARY

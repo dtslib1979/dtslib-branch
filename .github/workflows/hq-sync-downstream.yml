@@ -1,0 +1,94 @@
+name: HQ Sync Downstream
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'hq/sync/templates/**'
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Target cell ID (or "all")'
+        required: true
+        default: 'all'
+      dry_run:
+        description: 'Dry run (no actual PR)'
+        required: false
+        default: 'false'
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      cells: ${{ steps.load.outputs.cells }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check kill switch
+        run: |
+          KILL_SWITCH=$(jq -r '.killSwitch' hq/registry/decision-engine.json)
+          if [ "$KILL_SWITCH" = "true" ]; then
+            echo "Kill switch is ACTIVE. Aborting."
+            exit 1
+          fi
+
+      - name: Load target cells
+        id: load
+        run: |
+          if [ "${{ inputs.target }}" = "all" ] || [ -z "${{ inputs.target }}" ]; then
+            CELLS=$(jq -c '[.cells[] | select(.status != "archived")]' hq/registry/branches.json)
+          else
+            CELLS=$(jq -c '[.cells[] | select(.id == "${{ inputs.target }}")]' hq/registry/branches.json)
+          fi
+          echo "cells=$CELLS" >> $GITHUB_OUTPUT
+          echo "Target cells: $CELLS"
+
+  sync:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cell: ${{ fromJson(needs.prepare.outputs.cells) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Sync to ${{ matrix.cell.id }}
+        if: inputs.dry_run != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.HQ_PAT }}
+        run: |
+          echo "Syncing templates to ${{ matrix.cell.repo }}"
+
+          # Create PR content
+          MANIFEST=$(cat <<'EOF'
+          {
+            "cellId": "${{ matrix.cell.id }}",
+            "hqRepo": "${{ github.repository }}",
+            "hqProtocolVersion": "2.1",
+            "syncedAt": "${{ github.event.head_commit.timestamp }}"
+          }
+          EOF
+          )
+
+          # Use GitHub API to create PR
+          # Note: Requires HQ_PAT with repo scope
+          echo "Would create PR to ${{ matrix.cell.repo }}"
+          echo "Manifest: $MANIFEST"
+
+      - name: Record to ledger
+        run: |
+          ENTRY=$(cat <<EOF
+          {"id":"TXN-$(date +%Y%m%d)-$(date +%H%M%S)","timestamp":"$(date -Iseconds)","eventType":"sync_downstream","actor":"worker","cell":"${{ matrix.cell.id }}","data":{"target":"${{ matrix.cell.repo }}","dryRun":"${{ inputs.dry_run }}"},"status":"success"}
+          EOF
+          )
+          echo "$ENTRY" >> hq/ledger/ledger.jsonl
+
+      - name: Commit ledger
+        if: inputs.dry_run != 'true'
+        run: |
+          git config user.name "HQ Bot"
+          git config user.email "hq@dtslib.com"
+          git add hq/ledger/ledger.jsonl
+          git commit -m "ledger: sync downstream to ${{ matrix.cell.id }}" || true
+          git push || true
