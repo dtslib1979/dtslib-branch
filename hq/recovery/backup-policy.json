@@ -1,0 +1,24 @@
+{
+  "version": "1.0",
+  "ledger": {
+    "strategy": "git-tag",
+    "schedule": "daily",
+    "retention": {
+      "daily": 7,
+      "weekly": 4,
+      "monthly": 12
+    },
+    "tagPrefix": "backup/ledger/",
+    "futureTarget": "r2://dtslib-backup/ledger/"
+  },
+  "registry": {
+    "strategy": "git-tag",
+    "schedule": "on-change",
+    "tagPrefix": "backup/registry/"
+  },
+  "verification": {
+    "enabled": true,
+    "checksum": true,
+    "alertOnFailure": true
+  }
+}

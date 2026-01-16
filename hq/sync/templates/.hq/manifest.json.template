@@ -1,0 +1,10 @@
+{
+  "cellId": "{{CELL_ID}}",
+  "hqRepo": "dtslib1979/dtslib-branch",
+  "hqProtocolVersion": "2.1",
+  "tier": "{{TIER}}",
+  "syncEnabled": true,
+  "reportInterval": "hourly",
+  "createdAt": "{{CREATED_AT}}",
+  "createdBy": "hq-spawn-cell"
+}

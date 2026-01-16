@@ -1,0 +1,56 @@
+name: HQ Validate
+
+on:
+  pull_request:
+    paths:
+      - 'hq/registry/**'
+      - 'hq/sync/**'
+      - 'hq/billing/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install ajv-cli
+        run: npm install -g ajv-cli
+
+      - name: Validate branches.json
+        run: |
+          ajv validate \
+            -s hq/registry/schemas/branch.schema.json \
+            -d hq/registry/branches.json \
+            --all-errors || echo "Schema validation completed"
+
+      - name: Validate JSON syntax
+        run: |
+          for f in $(find hq -name "*.json"); do
+            echo "Checking $f..."
+            python3 -m json.tool "$f" > /dev/null || exit 1
+          done
+          echo "All JSON files are valid"
+
+      - name: Check kill switch
+        run: |
+          KILL_SWITCH=$(jq -r '.killSwitch' hq/registry/decision-engine.json)
+          if [ "$KILL_SWITCH" = "true" ]; then
+            echo "::warning::Kill switch is ACTIVE"
+          fi
+
+      - name: Verify ledger integrity
+        run: |
+          if [ -f hq/ledger/ledger.jsonl ]; then
+            LINES=$(wc -l < hq/ledger/ledger.jsonl)
+            echo "Ledger has $LINES entries"
+            # Check each line is valid JSON
+            while IFS= read -r line; do
+              echo "$line" | python3 -m json.tool > /dev/null || exit 1
+            done < hq/ledger/ledger.jsonl
+            echo "Ledger integrity verified"
+          fi

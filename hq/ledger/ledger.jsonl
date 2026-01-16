@@ -1,0 +1,3 @@
+{"id":"TXN-20260116-001","timestamp":"2026-01-16T00:00:00Z","eventType":"cell_registered","actor":"human","cell":"koosy","data":{"tier":"standard","area":"content"},"status":"success"}
+{"id":"TXN-20260116-002","timestamp":"2026-01-16T00:00:01Z","eventType":"cell_registered","actor":"human","cell":"gohsy","data":{"tier":"standard","area":"business"},"status":"success"}
+{"id":"TXN-20260116-003","timestamp":"2026-01-16T00:00:02Z","eventType":"cell_registered","actor":"human","cell":"papafly","data":{"tier":"canary","area":"product"},"status":"success"}

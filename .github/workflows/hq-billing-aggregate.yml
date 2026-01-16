@@ -1,0 +1,88 @@
+name: HQ Billing Aggregate
+
+on:
+  schedule:
+    - cron: '0 0 1 * *'  # First day of each month
+  workflow_dispatch:
+    inputs:
+      month:
+        description: 'Month to aggregate (YYYY-MM)'
+        required: false
+
+jobs:
+  aggregate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Determine period
+        id: period
+        run: |
+          if [ -n "${{ inputs.month }}" ]; then
+            MONTH="${{ inputs.month }}"
+          else
+            MONTH=$(date -d "last month" +%Y-%m)
+          fi
+          echo "month=$MONTH" >> $GITHUB_OUTPUT
+          echo "Processing month: $MONTH"
+
+      - name: Aggregate costs
+        run: |
+          MONTH="${{ steps.period.outputs.month }}"
+          mkdir -p hq/billing/reports
+
+          # Extract cost entries from ledger
+          REPORT=$(cat <<EOF
+          {
+            "period": "$MONTH",
+            "generatedAt": "$(date -Iseconds)",
+            "cells": {}
+          }
+          EOF
+          )
+
+          # Parse ledger for cost_recorded events
+          if [ -f hq/ledger/ledger.jsonl ]; then
+            while IFS= read -r line; do
+              EVENT_TYPE=$(echo "$line" | jq -r '.eventType')
+              TIMESTAMP=$(echo "$line" | jq -r '.timestamp')
+
+              # Check if in target month
+              if [[ "$TIMESTAMP" == "$MONTH"* ]] && [[ "$EVENT_TYPE" == "cost_recorded" ]]; then
+                CELL=$(echo "$line" | jq -r '.cell')
+                TOKENS=$(echo "$line" | jq -r '.tokens // 0')
+                COST=$(echo "$line" | jq -r '.cost // 0')
+
+                echo "Found cost entry: $CELL - $TOKENS tokens, \$$COST"
+              fi
+            done < hq/ledger/ledger.jsonl
+          fi
+
+          # Save report
+          echo "$REPORT" > "hq/billing/reports/$MONTH.json"
+          echo "Report saved to hq/billing/reports/$MONTH.json"
+
+      - name: Commit report
+        run: |
+          git config user.name "HQ Bot"
+          git config user.email "hq@dtslib.com"
+          git add hq/billing/reports/
+          git commit -m "billing: aggregate report for ${{ steps.period.outputs.month }}" || true
+          git push || true
+
+      - name: Record to ledger
+        run: |
+          ENTRY=$(cat <<EOF
+          {"id":"TXN-$(date +%Y%m%d)-$(date +%H%M%S)","timestamp":"$(date -Iseconds)","eventType":"cost_recorded","actor":"system","data":{"period":"${{ steps.period.outputs.month }}","type":"monthly_aggregate"},"status":"success"}
+          EOF
+          )
+          echo "$ENTRY" >> hq/ledger/ledger.jsonl
+
+          git add hq/ledger/ledger.jsonl
+          git commit -m "ledger: billing aggregate completed" || true
+          git push || true

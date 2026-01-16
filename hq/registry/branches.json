@@ -1,0 +1,84 @@
+{
+  "$schema": "./schemas/branch.schema.json",
+  "version": "2.1",
+  "hqProtocolVersion": "2.1",
+  "lastUpdated": "2026-01-16T00:00:00Z",
+  "cells": [
+    {
+      "id": "koosy",
+      "name": "KOOSY",
+      "repo": "dtslib1979/koosy",
+      "domain": "koosy.dtslib.com",
+      "area": "content",
+      "tier": "standard",
+      "visibility": "public",
+      "status": "active",
+      "owner": "dimas@dtslib.com",
+      "hqProtocolVersion": "2.1",
+      "features": ["celeb-story", "bluffing-edit"],
+      "createdAt": "2026-01-01T00:00:00Z",
+      "maintenanceMode": false
+    },
+    {
+      "id": "gohsy",
+      "name": "GOHSY",
+      "repo": "dtslib1979/gohsy",
+      "domain": "gohsy.dtslib.com",
+      "area": "business",
+      "tier": "standard",
+      "visibility": "private",
+      "status": "pending",
+      "owner": "dimas@dtslib.com",
+      "hqProtocolVersion": "2.1",
+      "features": ["wish-tracking", "goal-setting"],
+      "createdAt": "2026-01-16T00:00:00Z",
+      "maintenanceMode": false
+    },
+    {
+      "id": "papafly",
+      "name": "PAPAFLY",
+      "repo": "dtslib1979/papafly",
+      "domain": "papafly.dtslib.com",
+      "area": "product",
+      "tier": "canary",
+      "visibility": "private",
+      "status": "pending",
+      "owner": "dimas@dtslib.com",
+      "hqProtocolVersion": "2.1",
+      "features": ["experimental", "prototype"],
+      "createdAt": "2026-01-16T00:00:00Z",
+      "maintenanceMode": false
+    }
+  ],
+  "tiers": {
+    "canary": {
+      "description": "Test deployments first",
+      "deployOrder": 1,
+      "autoMerge": false
+    },
+    "standard": {
+      "description": "Main production cells",
+      "deployOrder": 2,
+      "autoMerge": false
+    },
+    "incubation": {
+      "description": "New experimental cells",
+      "deployOrder": 3,
+      "autoMerge": false
+    }
+  },
+  "areas": {
+    "product": {
+      "name": "Product & Platform",
+      "cells": ["papafly"]
+    },
+    "business": {
+      "name": "Business & Service",
+      "cells": ["gohsy"]
+    },
+    "content": {
+      "name": "Content",
+      "cells": ["koosy"]
+    }
+  }
+}

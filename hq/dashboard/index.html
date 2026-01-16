@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DTSLIB HQ Dashboard</title>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --card: #1a1a1a;
+      --border: #333;
+      --gold: #D4AF37;
+      --green: #4CAF50;
+      --red: #f44336;
+      --yellow: #ff9800;
+      --text: #f5f5f5;
+      --muted: #888;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    h1 { font-size: 24px; color: var(--gold); }
+    .mode-selector {
+      display: flex;
+      gap: 8px;
+    }
+    .mode-btn {
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .mode-btn.active {
+      border-color: var(--gold);
+      background: rgba(212,175,55,0.1);
+    }
+    .mode-btn:hover { border-color: var(--gold); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .card-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .cell-list { display: flex; flex-direction: column; gap: 8px; }
+    .cell-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--bg);
+      border-radius: 8px;
+    }
+    .cell-status {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .cell-status.active { background: var(--green); }
+    .cell-status.pending { background: var(--yellow); }
+    .cell-status.error { background: var(--red); }
+    .cell-info { flex: 1; }
+    .cell-name { font-weight: 600; }
+    .cell-meta { font-size: 12px; color: var(--muted); }
+    .cell-tier {
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--border);
+    }
+    .cell-tier.canary { background: rgba(255,152,0,0.2); color: var(--yellow); }
+    .cell-tier.standard { background: rgba(76,175,80,0.2); color: var(--green); }
+    .ledger-list { max-height: 300px; overflow-y: auto; }
+    .ledger-item {
+      display: flex;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .ledger-time { color: var(--muted); width: 60px; }
+    .ledger-type { width: 120px; }
+    .ledger-cell { color: var(--gold); width: 80px; }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .metric {
+      text-align: center;
+      padding: 16px;
+      background: var(--bg);
+      border-radius: 8px;
+    }
+    .metric-value { font-size: 28px; font-weight: 700; color: var(--gold); }
+    .metric-label { font-size: 11px; color: var(--muted); margin-top: 4px; }
+    .quick-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .action-btn {
+      padding: 10px 20px;
+      background: var(--card);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+    .action-btn:hover {
+      background: rgba(212,175,55,0.1);
+    }
+    .action-btn.danger { border-color: var(--red); color: var(--red); }
+    #killSwitchStatus {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+    #killSwitchStatus.safe { background: rgba(76,175,80,0.2); color: var(--green); }
+    #killSwitchStatus.danger { background: rgba(244,67,54,0.2); color: var(--red); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>DTSLIB HQ</h1>
+      <div class="mode-selector">
+        <button class="mode-btn active" data-mode="physical">Physical</button>
+        <button class="mode-btn" data-mode="rag">RAG</button>
+        <button class="mode-btn" data-mode="llm">LLM</button>
+        <button class="mode-btn" data-mode="ontology">Ontology</button>
+      </div>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">Cell Status</div>
+        <div class="cell-list" id="cellList"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Metrics</div>
+        <div class="metrics-grid">
+          <div class="metric">
+            <div class="metric-value" id="totalCells">3</div>
+            <div class="metric-label">Total Cells</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value" id="activeCells">1</div>
+            <div class="metric-label">Active</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value" id="totalTxns">3</div>
+            <div class="metric-label">Transactions</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value" id="currentMode">PHY</div>
+            <div class="metric-label">Mode</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 24px;">
+      <div class="card-title">Recent Ledger</div>
+      <div class="ledger-list" id="ledgerList"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Quick Actions</div>
+      <div class="quick-actions">
+        <button class="action-btn" onclick="syncAll()">Sync All</button>
+        <button class="action-btn" onclick="healthCheck()">Health Check</button>
+        <button class="action-btn" onclick="viewRegistry()">View Registry</button>
+        <button class="action-btn danger" onclick="toggleKillSwitch()">Kill Switch</button>
+        <span id="killSwitchStatus" class="safe">SAFE</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const basePath = '/hq';
+
+    async function loadDashboard() {
+      try {
+        // Load branches
+        const branches = await fetch(`${basePath}/registry/branches.json`).then(r => r.json());
+        renderCells(branches.cells);
+
+        // Load ledger
+        const ledgerText = await fetch(`${basePath}/ledger/ledger.jsonl`).then(r => r.text());
+        const ledgerEntries = ledgerText.trim().split('\n').map(JSON.parse);
+        renderLedger(ledgerEntries);
+
+        // Load decision engine
+        const engine = await fetch(`${basePath}/registry/decision-engine.json`).then(r => r.json());
+        updateMode(engine.currentMode);
+        updateKillSwitch(engine.killSwitch);
+
+        // Update metrics
+        document.getElementById('totalCells').textContent = branches.cells.length;
+        document.getElementById('activeCells').textContent = branches.cells.filter(c => c.status === 'active').length;
+        document.getElementById('totalTxns').textContent = ledgerEntries.length;
+      } catch (err) {
+        console.error('Failed to load dashboard:', err);
+      }
+    }
+
+    function renderCells(cells) {
+      const list = document.getElementById('cellList');
+      list.innerHTML = cells.map(cell => `
+        <div class="cell-item">
+          <div class="cell-status ${cell.status}"></div>
+          <div class="cell-info">
+            <div class="cell-name">${cell.name}</div>
+            <div class="cell-meta">${cell.domain} | ${cell.area}</div>
+          </div>
+          <span class="cell-tier ${cell.tier}">${cell.tier}</span>
+        </div>
+      `).join('');
+    }
+
+    function renderLedger(entries) {
+      const list = document.getElementById('ledgerList');
+      list.innerHTML = entries.slice(-20).reverse().map(e => `
+        <div class="ledger-item">
+          <span class="ledger-time">${new Date(e.timestamp).toLocaleTimeString('ko-KR', {hour:'2-digit',minute:'2-digit'})}</span>
+          <span class="ledger-type">${e.eventType}</span>
+          <span class="ledger-cell">${e.cell || '-'}</span>
+          <span>${e.status || ''}</span>
+        </div>
+      `).join('');
+    }
+
+    function updateMode(mode) {
+      document.querySelectorAll('.mode-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.mode === mode);
+      });
+      const modeMap = {physical:'PHY', rag:'RAG', llm:'LLM', ontology:'ONT'};
+      document.getElementById('currentMode').textContent = modeMap[mode] || mode;
+    }
+
+    function updateKillSwitch(active) {
+      const el = document.getElementById('killSwitchStatus');
+      el.textContent = active ? 'ACTIVE' : 'SAFE';
+      el.className = active ? 'danger' : 'safe';
+    }
+
+    function syncAll() { alert('Sync triggered via GitHub Actions'); }
+    function healthCheck() { alert('Health check triggered via GitHub Actions'); }
+    function viewRegistry() { window.open(`${basePath}/registry/branches.json`, '_blank'); }
+    function toggleKillSwitch() {
+      if (confirm('Are you sure you want to toggle Kill Switch?')) {
+        alert('Kill switch toggle requires manual edit to decision-engine.json');
+      }
+    }
+
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        alert(`Mode change to ${btn.dataset.mode} requires PR to decision-engine.json`);
+      });
+    });
+
+    loadDashboard();
+  </script>
+</body>
+</html>

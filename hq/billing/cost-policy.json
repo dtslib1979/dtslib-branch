@@ -1,0 +1,38 @@
+{
+  "version": "1.0",
+  "currency": "USD",
+  "rates": {
+    "llm": {
+      "claude-opus": 0.000075,
+      "claude-sonnet": 0.000015,
+      "claude-haiku": 0.000001
+    }
+  },
+  "tiers": {
+    "canary": {
+      "monthlyTokenLimit": 100000,
+      "monthlyBudget": 10,
+      "alertThreshold": 0.8
+    },
+    "standard": {
+      "monthlyTokenLimit": 500000,
+      "monthlyBudget": 50,
+      "alertThreshold": 0.8
+    },
+    "incubation": {
+      "monthlyTokenLimit": 50000,
+      "monthlyBudget": 5,
+      "alertThreshold": 0.8
+    }
+  },
+  "onExceed": {
+    "action": "throttle",
+    "notify": ["cell_owner", "hq_admin"],
+    "suspendAfterDays": 7
+  },
+  "aggregation": {
+    "schedule": "monthly",
+    "reportPath": "hq/billing/reports/",
+    "format": "json"
+  }
+}

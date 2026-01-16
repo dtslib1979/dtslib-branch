@@ -1,0 +1,26 @@
+name: HQ Receiver
+
+on:
+  repository_dispatch:
+    types: [hq-sync, hq-command]
+
+jobs:
+  receive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Process HQ command
+        run: |
+          echo "Received from HQ: ${{ github.event.action }}"
+          echo "Payload: ${{ toJson(github.event.client_payload) }}"
+
+      - name: Update manifest
+        if: github.event.action == 'hq-sync'
+        run: |
+          echo '${{ toJson(github.event.client_payload) }}' > .hq/manifest.json
+          git config user.name "HQ Bot"
+          git config user.email "hq@dtslib.com"
+          git add .hq/manifest.json
+          git commit -m "hq: sync manifest" || true
+          git push || true
