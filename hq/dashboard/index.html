@@ -13,6 +13,9 @@
       --green: #4CAF50;
       --red: #f44336;
       --yellow: #ff9800;
+      --blue: #2196F3;
+      --purple: #A78BFA;
+      --cyan: #4ECDC4;
       --text: #f5f5f5;
       --muted: #888;
     }
@@ -24,7 +27,7 @@
       min-height: 100vh;
       padding: 20px;
     }
-    .container { max-width: 1200px; margin: 0 auto; }
+    .container { max-width: 900px; margin: 0 auto; }
     header {
       display: flex;
       justify-content: space-between;
@@ -34,265 +37,647 @@
       border-bottom: 1px solid var(--border);
     }
     h1 { font-size: 24px; color: var(--gold); }
-    .mode-selector {
+    .back-link { color: var(--muted); text-decoration: none; font-size: 14px; }
+    .back-link:hover { color: var(--gold); }
+
+    /* Tabs */
+    .tabs {
       display: flex;
       gap: 8px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
     }
-    .mode-btn {
-      padding: 8px 16px;
+    .tab-btn {
+      padding: 10px 20px;
       border: 1px solid var(--border);
       background: var(--card);
-      color: var(--text);
-      border-radius: 8px;
+      color: var(--muted);
+      border-radius: 8px 8px 0 0;
       cursor: pointer;
+      font-size: 14px;
       transition: all 0.2s;
     }
-    .mode-btn.active {
+    .tab-btn.active {
       border-color: var(--gold);
-      background: rgba(212,175,55,0.1);
+      border-bottom-color: var(--bg);
+      background: var(--bg);
+      color: var(--gold);
     }
-    .mode-btn:hover { border-color: var(--gold); }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 16px;
-      margin-bottom: 24px;
-    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Cards */
     .card {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
     }
     .card-title {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-    .cell-list { display: flex; flex-direction: column; gap: 8px; }
-    .cell-item {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 16px;
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 12px;
-      background: var(--bg);
-      border-radius: 8px;
-    }
-    .cell-status {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-    }
-    .cell-status.active { background: var(--green); }
-    .cell-status.pending { background: var(--yellow); }
-    .cell-status.error { background: var(--red); }
-    .cell-info { flex: 1; }
-    .cell-name { font-weight: 600; }
-    .cell-meta { font-size: 12px; color: var(--muted); }
-    .cell-tier {
-      font-size: 10px;
-      padding: 2px 8px;
-      border-radius: 4px;
-      background: var(--border);
-    }
-    .cell-tier.canary { background: rgba(255,152,0,0.2); color: var(--yellow); }
-    .cell-tier.standard { background: rgba(76,175,80,0.2); color: var(--green); }
-    .ledger-list { max-height: 300px; overflow-y: auto; }
-    .ledger-item {
-      display: flex;
-      gap: 12px;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 13px;
-    }
-    .ledger-time { color: var(--muted); width: 60px; }
-    .ledger-type { width: 120px; }
-    .ledger-cell { color: var(--gold); width: 80px; }
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-    .metric {
-      text-align: center;
-      padding: 16px;
-      background: var(--bg);
-      border-radius: 8px;
-    }
-    .metric-value { font-size: 28px; font-weight: 700; color: var(--gold); }
-    .metric-label { font-size: 11px; color: var(--muted); margin-top: 4px; }
-    .quick-actions {
-      display: flex;
       gap: 8px;
-      flex-wrap: wrap;
     }
-    .action-btn {
-      padding: 10px 20px;
-      background: var(--card);
-      border: 1px solid var(--gold);
-      color: var(--gold);
-      border-radius: 8px;
+
+    /* Branch Selector */
+    .branch-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .branch-card {
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
       cursor: pointer;
-      font-size: 13px;
       transition: all 0.2s;
+      text-align: center;
     }
-    .action-btn:hover {
+    .branch-card:hover { border-color: var(--gold); }
+    .branch-card.selected {
+      border-color: var(--gold);
       background: rgba(212,175,55,0.1);
     }
-    .action-btn.danger { border-color: var(--red); color: var(--red); }
-    #killSwitchStatus {
-      padding: 8px 16px;
+    .branch-card.selected.koosy { border-color: var(--gold); }
+    .branch-card.selected.gohsy { border-color: var(--cyan); }
+    .branch-card.selected.papafly { border-color: var(--purple); }
+    .branch-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      margin: 0 auto 8px;
+      border: 2px solid var(--gold);
+      overflow: hidden;
+    }
+    .branch-logo img { width: 100%; height: 100%; object-fit: cover; }
+    .branch-name { font-weight: 600; font-size: 14px; }
+    .branch-desc { font-size: 11px; color: var(--muted); margin-top: 4px; }
+    .branch-check {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      margin: 8px auto 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: transparent;
+    }
+    .branch-card.selected .branch-check {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--bg);
+    }
+
+    /* Form */
+    .form-group { margin-bottom: 16px; }
+    .form-label {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .form-input, .form-textarea {
+      width: 100%;
+      padding: 12px 14px;
+      background: var(--bg);
+      border: 1px solid var(--border);
       border-radius: 8px;
+      color: var(--text);
+      font-size: 14px;
+      transition: border-color 0.2s;
+    }
+    .form-input:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+    .form-textarea { min-height: 120px; resize: vertical; font-family: inherit; }
+
+    /* Select All */
+    .select-actions {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .select-btn {
+      padding: 6px 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .select-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* Buttons */
+    .btn-group {
+      display: flex;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .btn {
+      padding: 12px 24px;
+      border: 1px solid var(--gold);
+      background: transparent;
+      color: var(--gold);
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: rgba(212,175,55,0.1); }
+    .btn.primary {
+      background: var(--gold);
+      color: var(--bg);
+    }
+    .btn.primary:hover { background: #E8C547; }
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Notice List */
+    .notice-list { display: flex; flex-direction: column; gap: 12px; }
+    .notice-item {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .notice-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+    .notice-title { font-weight: 600; font-size: 15px; }
+    .notice-date { font-size: 11px; color: var(--muted); }
+    .notice-content {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    .notice-targets {
+      display: flex;
+      gap: 6px;
+    }
+    .target-badge {
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 4px;
       font-weight: 600;
     }
-    #killSwitchStatus.safe { background: rgba(76,175,80,0.2); color: var(--green); }
-    #killSwitchStatus.danger { background: rgba(244,67,54,0.2); color: var(--red); }
+    .target-badge.koosy { background: rgba(212,175,55,0.2); color: var(--gold); }
+    .target-badge.gohsy { background: rgba(78,205,196,0.2); color: var(--cyan); }
+    .target-badge.papafly { background: rgba(167,139,250,0.2); color: var(--purple); }
+    .target-badge.all { background: rgba(76,175,80,0.2); color: var(--green); }
+    .notice-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+    .notice-btn {
+      padding: 6px 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--muted);
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .notice-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .notice-btn.delete:hover { border-color: var(--red); color: var(--red); }
+
+    /* Cell Status */
+    .cell-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .cell-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+    .cell-status {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin: 0 auto 8px;
+    }
+    .cell-status.active { background: var(--green); box-shadow: 0 0 8px var(--green); }
+    .cell-status.pending { background: var(--yellow); }
+    .cell-name { font-weight: 600; margin-bottom: 4px; }
+    .cell-link { font-size: 11px; color: var(--muted); }
+    .cell-link:hover { color: var(--gold); }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--card);
+      border: 1px solid var(--gold);
+      padding: 12px 24px;
+      border-radius: 8px;
+      color: var(--gold);
+      font-size: 14px;
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 1000;
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+      color: var(--muted);
+    }
+    .empty-icon { font-size: 48px; margin-bottom: 12px; opacity: 0.5; }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <h1>DTSLIB HQ</h1>
-      <div class="mode-selector">
-        <button class="mode-btn active" data-mode="physical">Physical</button>
-        <button class="mode-btn" data-mode="rag">RAG</button>
-        <button class="mode-btn" data-mode="llm">LLM</button>
-        <button class="mode-btn" data-mode="ontology">Ontology</button>
-      </div>
+      <h1>📡 HQ Broadcast</h1>
+      <a href="../../" class="back-link">← 메인으로</a>
     </header>
 
-    <div class="grid">
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="broadcast">새 공지</button>
+      <button class="tab-btn" data-tab="history">공지 목록</button>
+      <button class="tab-btn" data-tab="status">계열사 현황</button>
+    </div>
+
+    <!-- 새 공지 작성 -->
+    <div id="broadcast" class="tab-content active">
       <div class="card">
-        <div class="card-title">Cell Status</div>
-        <div class="cell-list" id="cellList"></div>
+        <div class="card-title">📢 배포 대상 선택</div>
+
+        <div class="select-actions">
+          <button class="select-btn" onclick="selectAll()">전체 선택</button>
+          <button class="select-btn" onclick="selectNone()">선택 해제</button>
+        </div>
+
+        <div class="branch-grid">
+          <div class="branch-card koosy" data-branch="koosy" onclick="toggleBranch(this)">
+            <div class="branch-logo">
+              <img src="https://dtslib1979.github.io/koosy/assets/icons/profile.jpg" alt="KOOSY">
+            </div>
+            <div class="branch-name">KOOSY</div>
+            <div class="branch-desc">셀럽 스토리 방송</div>
+            <div class="branch-check">✓</div>
+          </div>
+
+          <div class="branch-card gohsy" data-branch="gohsy" onclick="toggleBranch(this)">
+            <div class="branch-logo" style="border-color: var(--cyan);">
+              <img src="https://dtslib1979.github.io/gohsy/assets/mh.jpg" alt="GOHSY">
+            </div>
+            <div class="branch-name">GOHSY</div>
+            <div class="branch-desc">소원 실현 플랫폼</div>
+            <div class="branch-check">✓</div>
+          </div>
+
+          <div class="branch-card papafly" data-branch="papafly" onclick="toggleBranch(this)">
+            <div class="branch-logo" style="border-color: var(--purple);">
+              <img src="https://dtslib1979.github.io/papafly/assets/Face.jpg" alt="PAPAFLY">
+            </div>
+            <div class="branch-name">PAPAFLY</div>
+            <div class="branch-desc">인큐베이션</div>
+            <div class="branch-check">✓</div>
+          </div>
+        </div>
       </div>
 
       <div class="card">
-        <div class="card-title">Metrics</div>
-        <div class="metrics-grid">
-          <div class="metric">
-            <div class="metric-value" id="totalCells">3</div>
-            <div class="metric-label">Total Cells</div>
-          </div>
-          <div class="metric">
-            <div class="metric-value" id="activeCells">1</div>
-            <div class="metric-label">Active</div>
-          </div>
-          <div class="metric">
-            <div class="metric-value" id="totalTxns">3</div>
-            <div class="metric-label">Transactions</div>
-          </div>
-          <div class="metric">
-            <div class="metric-value" id="currentMode">PHY</div>
-            <div class="metric-label">Mode</div>
+        <div class="card-title">✏️ 공지 내용</div>
+
+        <div class="form-group">
+          <label class="form-label">제목</label>
+          <input type="text" class="form-input" id="noticeTitle" placeholder="공지 제목을 입력하세요">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">내용</label>
+          <textarea class="form-textarea" id="noticeContent" placeholder="공지 내용을 입력하세요..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">타입</label>
+          <select class="form-input" id="noticeType">
+            <option value="notice">📢 공지사항</option>
+            <option value="update">🔄 업데이트</option>
+            <option value="event">🎉 이벤트</option>
+            <option value="urgent">🚨 긴급</option>
+          </select>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn" onclick="previewNotice()">미리보기</button>
+          <button class="btn primary" onclick="publishNotice()">배포하기</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 공지 목록 -->
+    <div id="history" class="tab-content">
+      <div class="card">
+        <div class="card-title">📋 배포된 공지</div>
+        <div class="notice-list" id="noticeList">
+          <div class="empty-state">
+            <div class="empty-icon">📭</div>
+            <p>아직 배포된 공지가 없습니다</p>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="card" style="margin-bottom: 24px;">
-      <div class="card-title">Recent Ledger</div>
-      <div class="ledger-list" id="ledgerList"></div>
-    </div>
+    <!-- 계열사 현황 -->
+    <div id="status" class="tab-content">
+      <div class="card">
+        <div class="card-title">🏢 계열사 현황</div>
+        <div class="cell-grid">
+          <div class="cell-card">
+            <div class="cell-status active"></div>
+            <div class="cell-name">KOOSY</div>
+            <a href="https://dtslib1979.github.io/koosy/" target="_blank" class="cell-link">koosy.kr →</a>
+          </div>
+          <div class="cell-card">
+            <div class="cell-status active"></div>
+            <div class="cell-name">GOHSY</div>
+            <a href="https://dtslib1979.github.io/gohsy/" target="_blank" class="cell-link">gohsy.kr →</a>
+          </div>
+          <div class="cell-card">
+            <div class="cell-status pending"></div>
+            <div class="cell-name">PAPAFLY</div>
+            <a href="https://dtslib1979.github.io/papafly/" target="_blank" class="cell-link">papafly.kr →</a>
+          </div>
+        </div>
+      </div>
 
-    <div class="card">
-      <div class="card-title">Quick Actions</div>
-      <div class="quick-actions">
-        <button class="action-btn" onclick="syncAll()">Sync All</button>
-        <button class="action-btn" onclick="healthCheck()">Health Check</button>
-        <button class="action-btn" onclick="viewRegistry()">View Registry</button>
-        <button class="action-btn danger" onclick="toggleKillSwitch()">Kill Switch</button>
-        <span id="killSwitchStatus" class="safe">SAFE</span>
+      <div class="card">
+        <div class="card-title">📊 통계</div>
+        <div class="cell-grid">
+          <div class="cell-card">
+            <div style="font-size: 28px; color: var(--gold); font-weight: 700;">3</div>
+            <div class="cell-name">총 계열사</div>
+          </div>
+          <div class="cell-card">
+            <div style="font-size: 28px; color: var(--green); font-weight: 700;" id="statActive">2</div>
+            <div class="cell-name">활성</div>
+          </div>
+          <div class="cell-card">
+            <div style="font-size: 28px; color: var(--gold); font-weight: 700;" id="statNotices">0</div>
+            <div class="cell-name">공지 수</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
+  <div class="toast" id="toast"></div>
+
   <script>
-    const basePath = '/hq';
+    // Storage key
+    const STORAGE_KEY = 'dtslib_hq_notices';
 
-    async function loadDashboard() {
-      try {
-        // Load branches
-        const branches = await fetch(`${basePath}/registry/branches.json`).then(r => r.json());
-        renderCells(branches.cells);
-
-        // Load ledger
-        const ledgerText = await fetch(`${basePath}/ledger/ledger.jsonl`).then(r => r.text());
-        const ledgerEntries = ledgerText.trim().split('\n').map(JSON.parse);
-        renderLedger(ledgerEntries);
-
-        // Load decision engine
-        const engine = await fetch(`${basePath}/registry/decision-engine.json`).then(r => r.json());
-        updateMode(engine.currentMode);
-        updateKillSwitch(engine.killSwitch);
-
-        // Update metrics
-        document.getElementById('totalCells').textContent = branches.cells.length;
-        document.getElementById('activeCells').textContent = branches.cells.filter(c => c.status === 'active').length;
-        document.getElementById('totalTxns').textContent = ledgerEntries.length;
-      } catch (err) {
-        console.error('Failed to load dashboard:', err);
-      }
-    }
-
-    function renderCells(cells) {
-      const list = document.getElementById('cellList');
-      list.innerHTML = cells.map(cell => `
-        <div class="cell-item">
-          <div class="cell-status ${cell.status}"></div>
-          <div class="cell-info">
-            <div class="cell-name">${cell.name}</div>
-            <div class="cell-meta">${cell.domain} | ${cell.area}</div>
-          </div>
-          <span class="cell-tier ${cell.tier}">${cell.tier}</span>
-        </div>
-      `).join('');
-    }
-
-    function renderLedger(entries) {
-      const list = document.getElementById('ledgerList');
-      list.innerHTML = entries.slice(-20).reverse().map(e => `
-        <div class="ledger-item">
-          <span class="ledger-time">${new Date(e.timestamp).toLocaleTimeString('ko-KR', {hour:'2-digit',minute:'2-digit'})}</span>
-          <span class="ledger-type">${e.eventType}</span>
-          <span class="ledger-cell">${e.cell || '-'}</span>
-          <span>${e.status || ''}</span>
-        </div>
-      `).join('');
-    }
-
-    function updateMode(mode) {
-      document.querySelectorAll('.mode-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.mode === mode);
-      });
-      const modeMap = {physical:'PHY', rag:'RAG', llm:'LLM', ontology:'ONT'};
-      document.getElementById('currentMode').textContent = modeMap[mode] || mode;
-    }
-
-    function updateKillSwitch(active) {
-      const el = document.getElementById('killSwitchStatus');
-      el.textContent = active ? 'ACTIVE' : 'SAFE';
-      el.className = active ? 'danger' : 'safe';
-    }
-
-    function syncAll() { alert('Sync triggered via GitHub Actions'); }
-    function healthCheck() { alert('Health check triggered via GitHub Actions'); }
-    function viewRegistry() { window.open(`${basePath}/registry/branches.json`, '_blank'); }
-    function toggleKillSwitch() {
-      if (confirm('Are you sure you want to toggle Kill Switch?')) {
-        alert('Kill switch toggle requires manual edit to decision-engine.json');
-      }
-    }
-
-    document.querySelectorAll('.mode-btn').forEach(btn => {
+    // Tab switching
+    document.querySelectorAll('.tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        alert(`Mode change to ${btn.dataset.mode} requires PR to decision-engine.json`);
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.tab).classList.add('active');
       });
     });
 
-    loadDashboard();
+    // Branch selection
+    function toggleBranch(el) {
+      el.classList.toggle('selected');
+    }
+
+    function selectAll() {
+      document.querySelectorAll('.branch-card').forEach(c => c.classList.add('selected'));
+    }
+
+    function selectNone() {
+      document.querySelectorAll('.branch-card').forEach(c => c.classList.remove('selected'));
+    }
+
+    function getSelectedBranches() {
+      return Array.from(document.querySelectorAll('.branch-card.selected'))
+        .map(c => c.dataset.branch);
+    }
+
+    // Toast
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    // Load notices from localStorage
+    function loadNotices() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      } catch {
+        return [];
+      }
+    }
+
+    // Save notices to localStorage
+    function saveNotices(notices) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(notices));
+    }
+
+    // Render notice list
+    function renderNotices() {
+      const notices = loadNotices();
+      const list = document.getElementById('noticeList');
+
+      if (notices.length === 0) {
+        list.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">📭</div>
+            <p>아직 배포된 공지가 없습니다</p>
+          </div>
+        `;
+        return;
+      }
+
+      list.innerHTML = notices.slice().reverse().map((n, idx) => `
+        <div class="notice-item" data-id="${n.id}">
+          <div class="notice-header">
+            <div class="notice-title">${getTypeEmoji(n.type)} ${n.title}</div>
+            <div class="notice-date">${formatDate(n.date)}</div>
+          </div>
+          <div class="notice-content">${n.content}</div>
+          <div class="notice-targets">
+            ${n.targets.length === 3
+              ? '<span class="target-badge all">전체</span>'
+              : n.targets.map(t => `<span class="target-badge ${t}">${t.toUpperCase()}</span>`).join('')
+            }
+          </div>
+          <div class="notice-actions">
+            <button class="notice-btn" onclick="copyNoticeJSON('${n.id}')">JSON 복사</button>
+            <button class="notice-btn delete" onclick="deleteNotice('${n.id}')">삭제</button>
+          </div>
+        </div>
+      `).join('');
+
+      // Update stats
+      document.getElementById('statNotices').textContent = notices.length;
+    }
+
+    function getTypeEmoji(type) {
+      const types = { notice: '📢', update: '🔄', event: '🎉', urgent: '🚨' };
+      return types[type] || '📢';
+    }
+
+    function formatDate(dateStr) {
+      const d = new Date(dateStr);
+      return d.toLocaleDateString('ko-KR', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    }
+
+    // Preview notice
+    function previewNotice() {
+      const title = document.getElementById('noticeTitle').value.trim();
+      const content = document.getElementById('noticeContent').value.trim();
+      const targets = getSelectedBranches();
+
+      if (!title || !content) {
+        showToast('제목과 내용을 입력하세요');
+        return;
+      }
+
+      if (targets.length === 0) {
+        showToast('배포 대상을 선택하세요');
+        return;
+      }
+
+      alert(`[미리보기]\n\n제목: ${title}\n내용: ${content}\n대상: ${targets.join(', ')}`);
+    }
+
+    // Publish notice
+    function publishNotice() {
+      const title = document.getElementById('noticeTitle').value.trim();
+      const content = document.getElementById('noticeContent').value.trim();
+      const type = document.getElementById('noticeType').value;
+      const targets = getSelectedBranches();
+
+      if (!title || !content) {
+        showToast('제목과 내용을 입력하세요');
+        return;
+      }
+
+      if (targets.length === 0) {
+        showToast('배포 대상을 선택하세요');
+        return;
+      }
+
+      const notice = {
+        id: 'notice_' + Date.now(),
+        title,
+        content,
+        type,
+        targets,
+        date: new Date().toISOString()
+      };
+
+      const notices = loadNotices();
+      notices.push(notice);
+      saveNotices(notices);
+
+      // Export JSON for GitHub commit
+      const json = JSON.stringify({ notices }, null, 2);
+      console.log('Updated notices.json:', json);
+
+      // Clear form
+      document.getElementById('noticeTitle').value = '';
+      document.getElementById('noticeContent').value = '';
+      selectNone();
+
+      showToast(`✅ ${targets.length}개 계열사에 배포 완료`);
+      renderNotices();
+
+      // Show JSON for manual commit
+      if (confirm('공지가 저장되었습니다.\n\nGitHub에 커밋하려면 JSON을 복사하세요.\n복사하시겠습니까?')) {
+        copyToClipboard(json);
+        showToast('JSON이 클립보드에 복사되었습니다');
+      }
+    }
+
+    // Delete notice
+    function deleteNotice(id) {
+      if (!confirm('이 공지를 삭제하시겠습니까?')) return;
+
+      const notices = loadNotices().filter(n => n.id !== id);
+      saveNotices(notices);
+      renderNotices();
+      showToast('공지가 삭제되었습니다');
+    }
+
+    // Copy notice JSON
+    function copyNoticeJSON(id) {
+      const notice = loadNotices().find(n => n.id === id);
+      if (notice) {
+        copyToClipboard(JSON.stringify(notice, null, 2));
+        showToast('JSON이 복사되었습니다');
+      }
+    }
+
+    // Copy to clipboard
+    function copyToClipboard(text) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text);
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
+    }
+
+    // Export all notices JSON
+    function exportNoticesJSON() {
+      const notices = loadNotices();
+      const json = {
+        version: "1.0",
+        lastUpdated: new Date().toISOString(),
+        notices
+      };
+      copyToClipboard(JSON.stringify(json, null, 2));
+      showToast('전체 공지 JSON이 복사되었습니다');
+    }
+
+    // Initialize
+    renderNotices();
   </script>
 </body>
 </html>
