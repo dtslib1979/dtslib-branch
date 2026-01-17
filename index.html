@@ -2294,8 +2294,8 @@ document.addEventListener('DOMContentLoaded', function() {
   var nodes = [
     { id: 'dtslib', label: 'DTSLIB', color: '#D4AF37', url: './', img: './assets/icons/1768353694540.jpg', radius: 45, x: 0, y: 0, vx: 0, vy: 0, image: null },
     { id: 'koosy', label: 'KOOSY', color: '#E8C547', url: 'https://dtslib1979.github.io/koosy/', img: 'https://dtslib1979.github.io/koosy/assets/icons/profile.jpg', radius: 38, x: 0, y: 0, vx: 0, vy: 0, image: null },
-    { id: 'gohsy', label: 'GOHSY', color: '#4ECDC4', url: 'https://dtslib1979.github.io/gohsy/', img: 'https://dtslib1979.github.io/gohsy/assets/icons/profile.jpg', radius: 38, x: 0, y: 0, vx: 0, vy: 0, image: null },
-    { id: 'papafly', label: 'PAPAFLY', color: '#A78BFA', url: 'https://dtslib1979.github.io/papafly/', img: 'https://dtslib1979.github.io/papafly/assets/icons/profile.jpg', radius: 38, x: 0, y: 0, vx: 0, vy: 0, image: null }
+    { id: 'gohsy', label: 'GOHSY', color: '#4ECDC4', url: 'https://dtslib1979.github.io/gohsy/', img: 'https://dtslib1979.github.io/gohsy/assets/mh.jpg', radius: 38, x: 0, y: 0, vx: 0, vy: 0, image: null },
+    { id: 'papafly', label: 'PAPAFLY', color: '#A78BFA', url: 'https://dtslib1979.github.io/papafly/', img: 'https://dtslib1979.github.io/papafly/assets/Face.jpg', radius: 38, x: 0, y: 0, vx: 0, vy: 0, image: null }
   ];
 
   // Load images
@@ -2408,15 +2408,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Draw nodes
     for (var i = 0; i < nodes.length; i++) {
       var n = nodes[i];
-      var border = 3;
+      var border = 1.5;
 
-      // Glow
+      // Glow (subtle gold)
       ctx.beginPath();
-      ctx.arc(n.x, n.y, n.radius + border + 4, 0, Math.PI * 2);
-      ctx.fillStyle = n.color + '33';
+      ctx.arc(n.x, n.y, n.radius + 6, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(212, 175, 55, 0.15)';
       ctx.fill();
 
-      // Draw image with border stroke on top
+      // Draw image with thin gold border
       if (n.image) {
         ctx.save();
         ctx.beginPath();
@@ -2424,10 +2424,10 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.clip();
         ctx.drawImage(n.image, n.x - n.radius, n.y - n.radius, n.radius * 2, n.radius * 2);
         ctx.restore();
-        // Border stroke on top of image
+        // Thin gold border on top of image
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
-        ctx.strokeStyle = n.color;
+        ctx.strokeStyle = '#D4AF37';
         ctx.lineWidth = border * 2;
         ctx.stroke();
       } else {
