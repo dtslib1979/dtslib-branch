@@ -1,0 +1,49 @@
+{
+  "version": "1.0.0",
+  "hq": {
+    "name": "DTSLIB",
+    "fullName": "DTSLIB Holdings",
+    "domain": "dtslib.com",
+    "established": "2026-01-13",
+    "owner": "DIMAS"
+  },
+  "features": {
+    "notices": {
+      "enabled": true,
+      "branches": ["koosy", "gohsy", "papafly"]
+    },
+    "analytics": {
+      "enabled": true,
+      "branches": ["koosy", "gohsy", "papafly"]
+    },
+    "heartbeat": {
+      "enabled": true,
+      "interval": 30000
+    },
+    "hqBadge": {
+      "enabled": true,
+      "branches": ["koosy", "gohsy", "papafly"]
+    },
+    "darkMode": {
+      "enabled": true,
+      "percentage": 100
+    },
+    "experimentalUI": {
+      "enabled": true,
+      "branches": ["papafly"]
+    }
+  },
+  "theme": {
+    "primary": "#D4AF37",
+    "secondary": "#2D8B57",
+    "background": "#040806",
+    "text": "#FAFAF8"
+  },
+  "links": {
+    "hq": "https://dtslib1979.github.io/dtslib-branch/",
+    "dashboard": "https://dtslib1979.github.io/dtslib-branch/hq/dashboard/",
+    "docs": "https://dtslib1979.github.io/dtslib-branch/docs/",
+    "github": "https://github.com/dtslib1979"
+  },
+  "lastUpdated": "2026-01-17T12:00:00Z"
+}

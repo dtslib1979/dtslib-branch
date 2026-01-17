@@ -1,683 +1,1169 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DTSLIB HQ Dashboard</title>
-  <style>
-    :root {
-      --bg: #0a0a0a;
-      --card: #1a1a1a;
-      --border: #333;
-      --gold: #D4AF37;
-      --green: #4CAF50;
-      --red: #f44336;
-      --yellow: #ff9800;
-      --blue: #2196F3;
-      --purple: #A78BFA;
-      --cyan: #4ECDC4;
-      --text: #f5f5f5;
-      --muted: #888;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      padding: 20px;
-    }
-    .container { max-width: 900px; margin: 0 auto; }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid var(--border);
-    }
-    h1 { font-size: 24px; color: var(--gold); }
-    .back-link { color: var(--muted); text-decoration: none; font-size: 14px; }
-    .back-link:hover { color: var(--gold); }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DTSLIB HQ - Command Center</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --bg-elevated: #12121a;
+            --bg-card: #1a1a25;
+            --bg-hover: #22222f;
+            --gold: #D4AF37;
+            --gold-dim: rgba(212,175,55,0.15);
+            --green: #10B981;
+            --green-dim: rgba(16,185,129,0.15);
+            --blue: #3B82F6;
+            --blue-dim: rgba(59,130,246,0.15);
+            --purple: #A78BFA;
+            --purple-dim: rgba(167,139,250,0.15);
+            --red: #EF4444;
+            --red-dim: rgba(239,68,68,0.15);
+            --orange: #F59E0B;
+            --text: #FAFAFA;
+            --text-secondary: rgba(250,250,250,0.7);
+            --text-muted: rgba(250,250,250,0.4);
+            --border: rgba(250,250,250,0.08);
+        }
 
-    /* Tabs */
-    .tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 24px;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 12px;
-    }
-    .tab-btn {
-      padding: 10px 20px;
-      border: 1px solid var(--border);
-      background: var(--card);
-      color: var(--muted);
-      border-radius: 8px 8px 0 0;
-      cursor: pointer;
-      font-size: 14px;
-      transition: all 0.2s;
-    }
-    .tab-btn.active {
-      border-color: var(--gold);
-      border-bottom-color: var(--bg);
-      background: var(--bg);
-      color: var(--gold);
-    }
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    /* Cards */
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 16px;
-    }
-    .card-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--gold);
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
 
-    /* Branch Selector */
-    .branch-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-    .branch-card {
-      background: var(--bg);
-      border: 2px solid var(--border);
-      border-radius: 12px;
-      padding: 16px;
-      cursor: pointer;
-      transition: all 0.2s;
-      text-align: center;
-    }
-    .branch-card:hover { border-color: var(--gold); }
-    .branch-card.selected {
-      border-color: var(--gold);
-      background: rgba(212,175,55,0.1);
-    }
-    .branch-card.selected.koosy { border-color: var(--gold); }
-    .branch-card.selected.gohsy { border-color: var(--cyan); }
-    .branch-card.selected.papafly { border-color: var(--purple); }
-    .branch-logo {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      margin: 0 auto 8px;
-      border: 2px solid var(--gold);
-      overflow: hidden;
-    }
-    .branch-logo img { width: 100%; height: 100%; object-fit: cover; }
-    .branch-name { font-weight: 600; font-size: 14px; }
-    .branch-desc { font-size: 11px; color: var(--muted); margin-top: 4px; }
-    .branch-check {
-      width: 20px;
-      height: 20px;
-      border: 2px solid var(--border);
-      border-radius: 4px;
-      margin: 8px auto 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      color: transparent;
-    }
-    .branch-card.selected .branch-check {
-      background: var(--gold);
-      border-color: var(--gold);
-      color: var(--bg);
-    }
+        /* Header */
+        .header {
+            background: var(--bg-elevated);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-    /* Form */
-    .form-group { margin-bottom: 16px; }
-    .form-label {
-      display: block;
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .form-input, .form-textarea {
-      width: 100%;
-      padding: 12px 14px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text);
-      font-size: 14px;
-      transition: border-color 0.2s;
-    }
-    .form-input:focus, .form-textarea:focus {
-      outline: none;
-      border-color: var(--gold);
-    }
-    .form-textarea { min-height: 120px; resize: vertical; font-family: inherit; }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-    /* Select All */
-    .select-actions {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-    .select-btn {
-      padding: 6px 12px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--muted);
-      font-size: 12px;
-      cursor: pointer;
-    }
-    .select-btn:hover { border-color: var(--gold); color: var(--gold); }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--gold), #B8860B);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+        }
 
-    /* Buttons */
-    .btn-group {
-      display: flex;
-      gap: 8px;
-      margin-top: 20px;
-    }
-    .btn {
-      padding: 12px 24px;
-      border: 1px solid var(--gold);
-      background: transparent;
-      color: var(--gold);
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .btn:hover { background: rgba(212,175,55,0.1); }
-    .btn.primary {
-      background: var(--gold);
-      color: var(--bg);
-    }
-    .btn.primary:hover { background: #E8C547; }
-    .btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+        .logo-text {
+            font-size: 20px;
+            font-weight: 600;
+        }
 
-    /* Notice List */
-    .notice-list { display: flex; flex-direction: column; gap: 12px; }
-    .notice-item {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px;
-    }
-    .notice-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 8px;
-    }
-    .notice-title { font-weight: 600; font-size: 15px; }
-    .notice-date { font-size: 11px; color: var(--muted); }
-    .notice-content {
-      font-size: 13px;
-      color: var(--text);
-      line-height: 1.5;
-      margin-bottom: 10px;
-    }
-    .notice-targets {
-      display: flex;
-      gap: 6px;
-    }
-    .target-badge {
-      font-size: 10px;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-weight: 600;
-    }
-    .target-badge.koosy { background: rgba(212,175,55,0.2); color: var(--gold); }
-    .target-badge.gohsy { background: rgba(78,205,196,0.2); color: var(--cyan); }
-    .target-badge.papafly { background: rgba(167,139,250,0.2); color: var(--purple); }
-    .target-badge.all { background: rgba(76,175,80,0.2); color: var(--green); }
-    .notice-actions {
-      display: flex;
-      gap: 8px;
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px solid var(--border);
-    }
-    .notice-btn {
-      padding: 6px 12px;
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--muted);
-      font-size: 11px;
-      cursor: pointer;
-    }
-    .notice-btn:hover { border-color: var(--gold); color: var(--gold); }
-    .notice-btn.delete:hover { border-color: var(--red); color: var(--red); }
+        .logo-text span {
+            color: var(--gold);
+        }
 
-    /* Cell Status */
-    .cell-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-    .cell-card {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 16px;
-      text-align: center;
-    }
-    .cell-status {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      margin: 0 auto 8px;
-    }
-    .cell-status.active { background: var(--green); box-shadow: 0 0 8px var(--green); }
-    .cell-status.pending { background: var(--yellow); }
-    .cell-name { font-weight: 600; margin-bottom: 4px; }
-    .cell-link { font-size: 11px; color: var(--muted); }
-    .cell-link:hover { color: var(--gold); }
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
 
-    /* Toast */
-    .toast {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%) translateY(100px);
-      background: var(--card);
-      border: 1px solid var(--gold);
-      padding: 12px 24px;
-      border-radius: 8px;
-      color: var(--gold);
-      font-size: 14px;
-      opacity: 0;
-      transition: all 0.3s;
-      z-index: 1000;
-    }
-    .toast.show {
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
-    }
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--green-dim);
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--green);
+        }
 
-    /* Empty State */
-    .empty-state {
-      text-align: center;
-      padding: 40px;
-      color: var(--muted);
-    }
-    .empty-icon { font-size: 48px; margin-bottom: 12px; opacity: 0.5; }
-  </style>
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Main Layout */
+        .main {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: calc(100vh - 73px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--bg-elevated);
+            border-right: 1px solid var(--border);
+            padding: 20px 0;
+        }
+
+        .nav-section {
+            margin-bottom: 24px;
+        }
+
+        .nav-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            padding: 0 20px;
+            margin-bottom: 8px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: var(--bg-hover);
+            color: var(--text);
+        }
+
+        .nav-item.active {
+            background: var(--gold-dim);
+            color: var(--gold);
+            border-left-color: var(--gold);
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            opacity: 0.8;
+        }
+
+        /* Content Area */
+        .content {
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .page-header {
+            margin-bottom: 24px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 600;
+        }
+
+        .stat-change {
+            font-size: 12px;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .stat-change.positive {
+            color: var(--green);
+        }
+
+        /* Branch Cards */
+        .branch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .branch-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .branch-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .branch-header {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .branch-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid var(--gold);
+        }
+
+        .branch-info h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .branch-info p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .branch-status {
+            margin-left: auto;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .branch-status.active {
+            background: var(--green-dim);
+            color: var(--green);
+        }
+
+        .branch-status.incubation {
+            background: var(--purple-dim);
+            color: var(--purple);
+        }
+
+        .branch-body {
+            padding: 20px;
+        }
+
+        .branch-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .metric {
+            text-align: center;
+            padding: 12px;
+            background: var(--bg);
+            border-radius: 8px;
+        }
+
+        .metric-value {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        .metric-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .branch-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 4px 10px;
+            background: var(--bg);
+            border-radius: 4px;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .branch-actions {
+            padding: 16px 20px;
+            background: var(--bg);
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            background: #E8C547;
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-hover);
+        }
+
+        /* Notice Creator */
+        .notice-form {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px var(--gold-dim);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .branch-selector {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .branch-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .branch-checkbox:hover {
+            border-color: var(--text-muted);
+        }
+
+        .branch-checkbox.selected {
+            border-color: var(--gold);
+            background: var(--gold-dim);
+        }
+
+        .branch-checkbox input {
+            display: none;
+        }
+
+        .branch-checkbox-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .branch-checkbox-name {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        /* Notice List */
+        .notice-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .notice-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .notice-type-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .notice-type-icon.info { background: var(--blue-dim); }
+        .notice-type-icon.warning { background: rgba(245,158,11,0.15); }
+        .notice-type-icon.success { background: var(--green-dim); }
+        .notice-type-icon.urgent { background: var(--red-dim); }
+
+        .notice-content {
+            flex: 1;
+        }
+
+        .notice-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .notice-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .notice-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: right;
+        }
+
+        .notice-branches {
+            display: flex;
+            gap: 4px;
+            margin-top: 4px;
+        }
+
+        .notice-branch-badge {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            object-fit: cover;
+        }
+
+        /* Activity Log */
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .activity-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-text {
+            margin-bottom: 4px;
+        }
+
+        .activity-text strong {
+            color: var(--gold);
+        }
+
+        .activity-time {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Terminal/Console */
+        .console {
+            background: #0d0d0d;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .console-header {
+            background: var(--bg-card);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .console-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .console-dot.red { background: #ff5f56; }
+        .console-dot.yellow { background: #ffbd2e; }
+        .console-dot.green { background: #27ca40; }
+
+        .console-body {
+            padding: 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .console-line {
+            margin-bottom: 4px;
+        }
+
+        .console-prefix {
+            color: var(--gold);
+        }
+
+        .console-success {
+            color: var(--green);
+        }
+
+        .console-info {
+            color: var(--blue);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>📡 HQ Broadcast</h1>
-      <a href="../../" class="back-link">← 메인으로</a>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">D</div>
+            <div class="logo-text"><span>DTSLIB</span> HQ</div>
+        </div>
+        <div class="header-actions">
+            <div class="status-indicator">
+                <span class="status-dot"></span>
+                <span>All Systems Operational</span>
+            </div>
+        </div>
     </header>
 
-    <div class="tabs">
-      <button class="tab-btn active" data-tab="broadcast">새 공지</button>
-      <button class="tab-btn" data-tab="history">공지 목록</button>
-      <button class="tab-btn" data-tab="status">계열사 현황</button>
-    </div>
+    <main class="main">
+        <aside class="sidebar">
+            <nav>
+                <div class="nav-section">
+                    <div class="nav-section-title">Overview</div>
+                    <div class="nav-item active" data-page="dashboard">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                        </svg>
+                        Dashboard
+                    </div>
+                    <div class="nav-item" data-page="branches">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                        </svg>
+                        Branches
+                    </div>
+                </div>
 
-    <!-- 새 공지 작성 -->
-    <div id="broadcast" class="tab-content active">
-      <div class="card">
-        <div class="card-title">📢 배포 대상 선택</div>
+                <div class="nav-section">
+                    <div class="nav-section-title">Broadcast</div>
+                    <div class="nav-item" data-page="notices">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/>
+                        </svg>
+                        Notices
+                    </div>
+                    <div class="nav-item" data-page="activity">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Activity
+                    </div>
+                </div>
 
-        <div class="select-actions">
-          <button class="select-btn" onclick="selectAll()">전체 선택</button>
-          <button class="select-btn" onclick="selectNone()">선택 해제</button>
-        </div>
+                <div class="nav-section">
+                    <div class="nav-section-title">System</div>
+                    <div class="nav-item" data-page="console">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                        Console
+                    </div>
+                </div>
+            </nav>
+        </aside>
 
-        <div class="branch-grid">
-          <div class="branch-card koosy" data-branch="koosy" onclick="toggleBranch(this)">
-            <div class="branch-logo">
-              <img src="https://dtslib1979.github.io/koosy/assets/icons/profile.jpg" alt="KOOSY">
+        <div class="content">
+            <!-- Dashboard Page -->
+            <div class="page active" id="page-dashboard">
+                <div class="page-header">
+                    <h1 class="page-title">Command Center</h1>
+                    <p class="page-subtitle">Real-time overview of all DTSLIB branches</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Branches</div>
+                        <div class="stat-value" id="stat-branches">3</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Active Notices</div>
+                        <div class="stat-value" id="stat-notices">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Total Visits (Today)</div>
+                        <div class="stat-value" id="stat-visits">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">System Status</div>
+                        <div class="stat-value" style="color: var(--green); font-size: 24px;">Operational</div>
+                    </div>
+                </div>
+
+                <div class="branch-grid" id="branch-grid">
+                    <!-- Branches loaded dynamically -->
+                </div>
             </div>
-            <div class="branch-name">KOOSY</div>
-            <div class="branch-desc">셀럽 스토리 방송</div>
-            <div class="branch-check">✓</div>
-          </div>
 
-          <div class="branch-card gohsy" data-branch="gohsy" onclick="toggleBranch(this)">
-            <div class="branch-logo" style="border-color: var(--cyan);">
-              <img src="https://dtslib1979.github.io/gohsy/assets/mh.jpg" alt="GOHSY">
+            <!-- Branches Page -->
+            <div class="page" id="page-branches">
+                <div class="page-header">
+                    <h1 class="page-title">Branch Management</h1>
+                    <p class="page-subtitle">Monitor and manage all connected branches</p>
+                </div>
+
+                <div class="branch-grid" id="branch-detail-grid">
+                    <!-- Detailed branch cards -->
+                </div>
             </div>
-            <div class="branch-name">GOHSY</div>
-            <div class="branch-desc">소원 실현 플랫폼</div>
-            <div class="branch-check">✓</div>
-          </div>
 
-          <div class="branch-card papafly" data-branch="papafly" onclick="toggleBranch(this)">
-            <div class="branch-logo" style="border-color: var(--purple);">
-              <img src="https://dtslib1979.github.io/papafly/assets/Face.jpg" alt="PAPAFLY">
+            <!-- Notices Page -->
+            <div class="page" id="page-notices">
+                <div class="page-header">
+                    <h1 class="page-title">Broadcast Center</h1>
+                    <p class="page-subtitle">Create and manage notices for branches</p>
+                </div>
+
+                <div class="notice-form">
+                    <h3 style="margin-bottom: 20px; font-size: 16px;">Create New Notice</h3>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Title</label>
+                            <input type="text" class="form-input" id="notice-title" placeholder="Notice title...">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Type</label>
+                            <select class="form-select" id="notice-type">
+                                <option value="info">Info</option>
+                                <option value="success">Success</option>
+                                <option value="warning">Warning</option>
+                                <option value="urgent">Urgent</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Content</label>
+                        <textarea class="form-textarea" id="notice-content" placeholder="Notice content..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Target Branches</label>
+                        <div class="branch-selector" id="branch-selector">
+                            <!-- Branch checkboxes loaded dynamically -->
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 12px; margin-top: 20px;">
+                        <button class="btn btn-primary" onclick="publishNotice()">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                            </svg>
+                            Publish Notice
+                        </button>
+                        <button class="btn btn-secondary" onclick="selectAllBranches()">Select All</button>
+                    </div>
+                </div>
+
+                <h3 style="margin-bottom: 16px; font-size: 16px;">Active Notices</h3>
+                <div class="notice-list" id="notice-list">
+                    <!-- Notices loaded dynamically -->
+                </div>
             </div>
-            <div class="branch-name">PAPAFLY</div>
-            <div class="branch-desc">인큐베이션</div>
-            <div class="branch-check">✓</div>
-          </div>
+
+            <!-- Activity Page -->
+            <div class="page" id="page-activity">
+                <div class="page-header">
+                    <h1 class="page-title">Activity Log</h1>
+                    <p class="page-subtitle">Recent events across all branches</p>
+                </div>
+
+                <div class="activity-list" id="activity-list">
+                    <!-- Activity loaded dynamically -->
+                </div>
+            </div>
+
+            <!-- Console Page -->
+            <div class="page" id="page-console">
+                <div class="page-header">
+                    <h1 class="page-title">System Console</h1>
+                    <p class="page-subtitle">Bridge SDK status and logs</p>
+                </div>
+
+                <div class="console">
+                    <div class="console-header">
+                        <span class="console-dot red"></span>
+                        <span class="console-dot yellow"></span>
+                        <span class="console-dot green"></span>
+                        <span style="margin-left: auto; font-size: 12px; color: var(--text-muted);">DTSLIB Bridge Console</span>
+                    </div>
+                    <div class="console-body" id="console-output">
+                        <div class="console-line"><span class="console-prefix">[HQ]</span> DTSLIB Bridge v1.0.0 initialized</div>
+                        <div class="console-line"><span class="console-success">[OK]</span> Connected to HQ API</div>
+                        <div class="console-line"><span class="console-info">[INFO]</span> Loading branch manifest...</div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+    </main>
 
-      <div class="card">
-        <div class="card-title">✏️ 공지 내용</div>
+    <script>
+        // ═══════════════════════════════════════════════════════════
+        // DTSLIB HQ Dashboard Controller
+        // ═══════════════════════════════════════════════════════════
 
-        <div class="form-group">
-          <label class="form-label">제목</label>
-          <input type="text" class="form-input" id="noticeTitle" placeholder="공지 제목을 입력하세요">
-        </div>
+        const HQ_BASE = 'https://dtslib1979.github.io/dtslib-branch';
+        const API_BASE = HQ_BASE + '/hq/api';
+        const NOTICES_BASE = HQ_BASE + '/hq/notices';
 
-        <div class="form-group">
-          <label class="form-label">내용</label>
-          <textarea class="form-textarea" id="noticeContent" placeholder="공지 내용을 입력하세요..."></textarea>
-        </div>
+        let manifest = null;
+        let config = null;
+        let notices = [];
+        let activities = [];
+        let selectedBranches = new Set();
 
-        <div class="form-group">
-          <label class="form-label">타입</label>
-          <select class="form-input" id="noticeType">
-            <option value="notice">📢 공지사항</option>
-            <option value="update">🔄 업데이트</option>
-            <option value="event">🎉 이벤트</option>
-            <option value="urgent">🚨 긴급</option>
-          </select>
-        </div>
+        // ─────────────────────────────────────────────────────────
+        // Initialize
+        // ─────────────────────────────────────────────────────────
 
-        <div class="btn-group">
-          <button class="btn" onclick="previewNotice()">미리보기</button>
-          <button class="btn primary" onclick="publishNotice()">배포하기</button>
-        </div>
-      </div>
-    </div>
+        async function init() {
+            logConsole('[HQ] Dashboard initializing...', 'info');
 
-    <!-- 공지 목록 -->
-    <div id="history" class="tab-content">
-      <div class="card">
-        <div class="card-title">📋 배포된 공지</div>
-        <div class="notice-list" id="noticeList">
-          <div class="empty-state">
-            <div class="empty-icon">📭</div>
-            <p>아직 배포된 공지가 없습니다</p>
-          </div>
-        </div>
-      </div>
-    </div>
+            // Load data
+            [manifest, config] = await Promise.all([
+                fetchJSON(API_BASE + '/manifest.json'),
+                fetchJSON(API_BASE + '/config.json')
+            ]);
 
-    <!-- 계열사 현황 -->
-    <div id="status" class="tab-content">
-      <div class="card">
-        <div class="card-title">🏢 계열사 현황</div>
-        <div class="cell-grid">
-          <div class="cell-card">
-            <div class="cell-status active"></div>
-            <div class="cell-name">KOOSY</div>
-            <a href="https://dtslib1979.github.io/koosy/" target="_blank" class="cell-link">koosy.kr →</a>
-          </div>
-          <div class="cell-card">
-            <div class="cell-status active"></div>
-            <div class="cell-name">GOHSY</div>
-            <a href="https://dtslib1979.github.io/gohsy/" target="_blank" class="cell-link">gohsy.kr →</a>
-          </div>
-          <div class="cell-card">
-            <div class="cell-status pending"></div>
-            <div class="cell-name">PAPAFLY</div>
-            <a href="https://dtslib1979.github.io/papafly/" target="_blank" class="cell-link">papafly.kr →</a>
-          </div>
-        </div>
-      </div>
+            const noticesData = await fetchJSON(NOTICES_BASE + '/notices.json');
+            notices = noticesData?.notices || [];
 
-      <div class="card">
-        <div class="card-title">📊 통계</div>
-        <div class="cell-grid">
-          <div class="cell-card">
-            <div style="font-size: 28px; color: var(--gold); font-weight: 700;">3</div>
-            <div class="cell-name">총 계열사</div>
-          </div>
-          <div class="cell-card">
-            <div style="font-size: 28px; color: var(--green); font-weight: 700;" id="statActive">2</div>
-            <div class="cell-name">활성</div>
-          </div>
-          <div class="cell-card">
-            <div style="font-size: 28px; color: var(--gold); font-weight: 700;" id="statNotices">0</div>
-            <div class="cell-name">공지 수</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+            logConsole('[OK] Manifest loaded: ' + manifest.branches.length + ' branches', 'success');
+            logConsole('[OK] Config loaded: v' + config.version, 'success');
 
-  <div class="toast" id="toast"></div>
+            // Render
+            renderBranches();
+            renderBranchSelector();
+            renderNotices();
+            renderStats();
+            generateActivities();
 
-  <script>
-    // Storage key
-    const STORAGE_KEY = 'dtslib_hq_notices';
+            logConsole('[HQ] Dashboard ready', 'success');
+        }
 
-    // Tab switching
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById(btn.dataset.tab).classList.add('active');
-      });
-    });
+        // ─────────────────────────────────────────────────────────
+        // Data Fetching
+        // ─────────────────────────────────────────────────────────
 
-    // Branch selection
-    function toggleBranch(el) {
-      el.classList.toggle('selected');
-    }
-
-    function selectAll() {
-      document.querySelectorAll('.branch-card').forEach(c => c.classList.add('selected'));
-    }
-
-    function selectNone() {
-      document.querySelectorAll('.branch-card').forEach(c => c.classList.remove('selected'));
-    }
-
-    function getSelectedBranches() {
-      return Array.from(document.querySelectorAll('.branch-card.selected'))
-        .map(c => c.dataset.branch);
-    }
-
-    // Toast
-    function showToast(msg) {
-      const toast = document.getElementById('toast');
-      toast.textContent = msg;
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2500);
-    }
-
-    // Load notices from localStorage
-    function loadNotices() {
-      try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-      } catch {
-        return [];
-      }
-    }
-
-    // Save notices to localStorage
-    function saveNotices(notices) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(notices));
-    }
-
-    // Render notice list
-    function renderNotices() {
-      const notices = loadNotices();
-      const list = document.getElementById('noticeList');
-
-      if (notices.length === 0) {
-        list.innerHTML = `
-          <div class="empty-state">
-            <div class="empty-icon">📭</div>
-            <p>아직 배포된 공지가 없습니다</p>
-          </div>
-        `;
-        return;
-      }
-
-      list.innerHTML = notices.slice().reverse().map((n, idx) => `
-        <div class="notice-item" data-id="${n.id}">
-          <div class="notice-header">
-            <div class="notice-title">${getTypeEmoji(n.type)} ${n.title}</div>
-            <div class="notice-date">${formatDate(n.date)}</div>
-          </div>
-          <div class="notice-content">${n.content}</div>
-          <div class="notice-targets">
-            ${n.targets.length === 3
-              ? '<span class="target-badge all">전체</span>'
-              : n.targets.map(t => `<span class="target-badge ${t}">${t.toUpperCase()}</span>`).join('')
+        async function fetchJSON(url) {
+            try {
+                const res = await fetch(url + '?t=' + Date.now());
+                return await res.json();
+            } catch (e) {
+                logConsole('[ERROR] Failed to fetch: ' + url, 'error');
+                return null;
             }
-          </div>
-          <div class="notice-actions">
-            <button class="notice-btn" onclick="copyNoticeJSON('${n.id}')">JSON 복사</button>
-            <button class="notice-btn delete" onclick="deleteNotice('${n.id}')">삭제</button>
-          </div>
-        </div>
-      `).join('');
+        }
 
-      // Update stats
-      document.getElementById('statNotices').textContent = notices.length;
-    }
+        // ─────────────────────────────────────────────────────────
+        // Navigation
+        // ─────────────────────────────────────────────────────────
 
-    function getTypeEmoji(type) {
-      const types = { notice: '📢', update: '🔄', event: '🎉', urgent: '🚨' };
-      return types[type] || '📢';
-    }
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const page = item.dataset.page;
+                if (!page) return;
 
-    function formatDate(dateStr) {
-      const d = new Date(dateStr);
-      return d.toLocaleDateString('ko-KR', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-    }
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
 
-    // Preview notice
-    function previewNotice() {
-      const title = document.getElementById('noticeTitle').value.trim();
-      const content = document.getElementById('noticeContent').value.trim();
-      const targets = getSelectedBranches();
+                item.classList.add('active');
+                document.getElementById('page-' + page).classList.add('active');
+            });
+        });
 
-      if (!title || !content) {
-        showToast('제목과 내용을 입력하세요');
-        return;
-      }
+        // ─────────────────────────────────────────────────────────
+        // Render Functions
+        // ─────────────────────────────────────────────────────────
 
-      if (targets.length === 0) {
-        showToast('배포 대상을 선택하세요');
-        return;
-      }
+        function renderBranches() {
+            const grid = document.getElementById('branch-grid');
+            const detailGrid = document.getElementById('branch-detail-grid');
 
-      alert(`[미리보기]\n\n제목: ${title}\n내용: ${content}\n대상: ${targets.join(', ')}`);
-    }
+            const html = manifest.branches.map(branch => `
+                <div class="branch-card">
+                    <div class="branch-header">
+                        <img src="${branch.avatar}" alt="${branch.name}" class="branch-avatar">
+                        <div class="branch-info">
+                            <h3>${branch.name}</h3>
+                            <p>${branch.tagline}</p>
+                        </div>
+                        <span class="branch-status ${branch.status}">${branch.status}</span>
+                    </div>
+                    <div class="branch-body">
+                        <div class="branch-metrics">
+                            <div class="metric">
+                                <div class="metric-value">${branch.tier === 'canary' ? 'Canary' : 'Prod'}</div>
+                                <div class="metric-label">Tier</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">${branch.visibility}</div>
+                                <div class="metric-label">Visibility</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">${branch.features.length}</div>
+                                <div class="metric-label">Features</div>
+                            </div>
+                        </div>
+                        <div class="branch-tags">
+                            ${branch.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="branch-actions">
+                        <a href="${branch.url}" target="_blank" class="btn btn-primary">Visit Site</a>
+                        <a href="https://github.com/${branch.repo}" target="_blank" class="btn btn-secondary">GitHub</a>
+                    </div>
+                </div>
+            `).join('');
 
-    // Publish notice
-    function publishNotice() {
-      const title = document.getElementById('noticeTitle').value.trim();
-      const content = document.getElementById('noticeContent').value.trim();
-      const type = document.getElementById('noticeType').value;
-      const targets = getSelectedBranches();
+            grid.innerHTML = html;
+            detailGrid.innerHTML = html;
+        }
 
-      if (!title || !content) {
-        showToast('제목과 내용을 입력하세요');
-        return;
-      }
+        function renderBranchSelector() {
+            const selector = document.getElementById('branch-selector');
+            selector.innerHTML = manifest.branches.map(branch => `
+                <label class="branch-checkbox" data-branch="${branch.id}">
+                    <input type="checkbox" value="${branch.id}">
+                    <img src="${branch.avatar}" alt="${branch.name}" class="branch-checkbox-avatar">
+                    <span class="branch-checkbox-name">${branch.name}</span>
+                </label>
+            `).join('');
 
-      if (targets.length === 0) {
-        showToast('배포 대상을 선택하세요');
-        return;
-      }
+            selector.querySelectorAll('.branch-checkbox').forEach(cb => {
+                cb.addEventListener('click', (e) => {
+                    if (e.target.tagName === 'INPUT') return;
+                    const input = cb.querySelector('input');
+                    input.checked = !input.checked;
+                    cb.classList.toggle('selected', input.checked);
 
-      const notice = {
-        id: 'notice_' + Date.now(),
-        title,
-        content,
-        type,
-        targets,
-        date: new Date().toISOString()
-      };
+                    if (input.checked) {
+                        selectedBranches.add(input.value);
+                    } else {
+                        selectedBranches.delete(input.value);
+                    }
+                });
+            });
+        }
 
-      const notices = loadNotices();
-      notices.push(notice);
-      saveNotices(notices);
+        function renderNotices() {
+            const list = document.getElementById('notice-list');
+            const icons = { info: 'i', warning: '!', success: '✓', urgent: '!' };
 
-      // Export JSON for GitHub commit
-      const json = JSON.stringify({ notices }, null, 2);
-      console.log('Updated notices.json:', json);
+            if (notices.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <p>No active notices</p>
+                    </div>
+                `;
+                return;
+            }
 
-      // Clear form
-      document.getElementById('noticeTitle').value = '';
-      document.getElementById('noticeContent').value = '';
-      selectNone();
+            list.innerHTML = notices.map(notice => `
+                <div class="notice-item">
+                    <div class="notice-type-icon ${notice.type}">${icons[notice.type]}</div>
+                    <div class="notice-content">
+                        <div class="notice-title">${notice.title}</div>
+                        <div class="notice-text">${notice.content}</div>
+                    </div>
+                    <div class="notice-meta">
+                        <div>${new Date(notice.createdAt).toLocaleDateString('ko-KR')}</div>
+                        <div class="notice-branches">
+                            ${notice.branches.map(b => {
+                                const branch = manifest.branches.find(br => br.id === b);
+                                return branch ? `<img src="${branch.avatar}" class="notice-branch-badge" title="${branch.name}">` : '';
+                            }).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
 
-      showToast(`✅ ${targets.length}개 계열사에 배포 완료`);
-      renderNotices();
+        function renderStats() {
+            document.getElementById('stat-branches').textContent = manifest.branches.length;
+            document.getElementById('stat-notices').textContent = notices.length;
+        }
 
-      // Show JSON for manual commit
-      if (confirm('공지가 저장되었습니다.\n\nGitHub에 커밋하려면 JSON을 복사하세요.\n복사하시겠습니까?')) {
-        copyToClipboard(json);
-        showToast('JSON이 클립보드에 복사되었습니다');
-      }
-    }
+        function generateActivities() {
+            const activityList = document.getElementById('activity-list');
+            const sampleActivities = [
+                { icon: '🚀', bg: 'var(--green-dim)', text: '<strong>KOOSY</strong> deployed successfully', time: '2 minutes ago' },
+                { icon: '📢', bg: 'var(--blue-dim)', text: 'New notice published to all branches', time: '15 minutes ago' },
+                { icon: '🔗', bg: 'var(--gold-dim)', text: '<strong>PAPAFLY</strong> connected to HQ Bridge', time: '1 hour ago' },
+                { icon: '✅', bg: 'var(--green-dim)', text: '<strong>GOHSY</strong> heartbeat received', time: '1 hour ago' },
+                { icon: '⚙️', bg: 'var(--purple-dim)', text: 'HQ config updated', time: '3 hours ago' }
+            ];
 
-    // Delete notice
-    function deleteNotice(id) {
-      if (!confirm('이 공지를 삭제하시겠습니까?')) return;
+            activityList.innerHTML = sampleActivities.map(a => `
+                <div class="activity-item">
+                    <div class="activity-icon" style="background: ${a.bg}">${a.icon}</div>
+                    <div class="activity-content">
+                        <div class="activity-text">${a.text}</div>
+                        <div class="activity-time">${a.time}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
 
-      const notices = loadNotices().filter(n => n.id !== id);
-      saveNotices(notices);
-      renderNotices();
-      showToast('공지가 삭제되었습니다');
-    }
+        // ─────────────────────────────────────────────────────────
+        // Notice Actions
+        // ─────────────────────────────────────────────────────────
 
-    // Copy notice JSON
-    function copyNoticeJSON(id) {
-      const notice = loadNotices().find(n => n.id === id);
-      if (notice) {
-        copyToClipboard(JSON.stringify(notice, null, 2));
-        showToast('JSON이 복사되었습니다');
-      }
-    }
+        function selectAllBranches() {
+            document.querySelectorAll('.branch-checkbox').forEach(cb => {
+                const input = cb.querySelector('input');
+                input.checked = true;
+                cb.classList.add('selected');
+                selectedBranches.add(input.value);
+            });
+        }
 
-    // Copy to clipboard
-    function copyToClipboard(text) {
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(text);
-      } else {
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-      }
-    }
+        function publishNotice() {
+            const title = document.getElementById('notice-title').value.trim();
+            const content = document.getElementById('notice-content').value.trim();
+            const type = document.getElementById('notice-type').value;
 
-    // Export all notices JSON
-    function exportNoticesJSON() {
-      const notices = loadNotices();
-      const json = {
-        version: "1.0",
-        lastUpdated: new Date().toISOString(),
-        notices
-      };
-      copyToClipboard(JSON.stringify(json, null, 2));
-      showToast('전체 공지 JSON이 복사되었습니다');
-    }
+            if (!title || !content) {
+                alert('Please fill in title and content');
+                return;
+            }
 
-    // Initialize
-    renderNotices();
-  </script>
+            if (selectedBranches.size === 0) {
+                alert('Please select at least one branch');
+                return;
+            }
+
+            const notice = {
+                id: 'notice-' + Date.now(),
+                title,
+                content,
+                type,
+                branches: Array.from(selectedBranches),
+                createdAt: new Date().toISOString(),
+                expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
+            };
+
+            notices.unshift(notice);
+            localStorage.setItem('dtslib_notices', JSON.stringify(notices));
+
+            logConsole('[BROADCAST] Notice published to ' + notice.branches.length + ' branches', 'success');
+
+            // Clear form
+            document.getElementById('notice-title').value = '';
+            document.getElementById('notice-content').value = '';
+            document.querySelectorAll('.branch-checkbox').forEach(cb => {
+                cb.querySelector('input').checked = false;
+                cb.classList.remove('selected');
+            });
+            selectedBranches.clear();
+
+            renderNotices();
+            renderStats();
+
+            alert('Notice published! Update notices.json and push to deploy.');
+        }
+
+        // ─────────────────────────────────────────────────────────
+        // Console
+        // ─────────────────────────────────────────────────────────
+
+        function logConsole(message, type = 'info') {
+            const output = document.getElementById('console-output');
+            const classes = {
+                info: 'console-info',
+                success: 'console-success',
+                error: 'console-error'
+            };
+            const prefixes = {
+                info: '[INFO]',
+                success: '[OK]',
+                error: '[ERROR]'
+            };
+
+            output.innerHTML += `<div class="console-line"><span class="${classes[type] || ''}">${prefixes[type] || '[LOG]'}</span> ${message}</div>`;
+            output.scrollTop = output.scrollHeight;
+        }
+
+        // ─────────────────────────────────────────────────────────
+        // Init
+        // ─────────────────────────────────────────────────────────
+
+        init();
+    </script>
 </body>
 </html>

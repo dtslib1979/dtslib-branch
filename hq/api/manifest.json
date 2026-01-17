@@ -1,0 +1,73 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2026-01-17T12:00:00Z",
+  "hq": {
+    "id": "dtslib-branch",
+    "name": "DTSLIB HQ",
+    "url": "https://dtslib1979.github.io/dtslib-branch/",
+    "repo": "dtslib1979/dtslib-branch",
+    "status": "operational"
+  },
+  "branches": [
+    {
+      "id": "koosy",
+      "name": "KOOSY",
+      "tagline": "Bluffing based editing broadcasting CELEB story",
+      "description": "셀럽 스토리 편집 방송 플랫폼",
+      "url": "https://dtslib1979.github.io/koosy/",
+      "repo": "dtslib1979/koosy",
+      "domain": "koosy.kr",
+      "status": "active",
+      "visibility": "public",
+      "tier": "production",
+      "owner": "KOOSY",
+      "avatar": "https://dtslib1979.github.io/koosy/assets/icons/profile.jpg",
+      "color": "#E8C547",
+      "established": "2026-01-13",
+      "features": ["notices", "analytics", "heartbeat"],
+      "tags": ["media", "entertainment", "celeb"]
+    },
+    {
+      "id": "gohsy",
+      "name": "GOHSY",
+      "tagline": "Voices for the Voiceless",
+      "description": "소원 실현 플랫폼",
+      "url": "https://dtslib1979.github.io/gohsy/",
+      "repo": "dtslib1979/gohsy",
+      "domain": "gohsy.kr",
+      "status": "active",
+      "visibility": "private",
+      "tier": "production",
+      "owner": "MH",
+      "avatar": "https://dtslib1979.github.io/gohsy/assets/mh.jpg",
+      "color": "#4ECDC4",
+      "established": "2026-01-13",
+      "features": ["notices", "analytics", "heartbeat"],
+      "tags": ["goals", "wishes", "personal"]
+    },
+    {
+      "id": "papafly",
+      "name": "PAPAFLY",
+      "tagline": "Incubation Lab",
+      "description": "인큐베이션 프로젝트",
+      "url": "https://dtslib1979.github.io/papafly/",
+      "repo": "dtslib1979/papafly",
+      "domain": "papafly.kr",
+      "status": "incubation",
+      "visibility": "private",
+      "tier": "canary",
+      "owner": "PAPAFLY",
+      "avatar": "https://dtslib1979.github.io/papafly/assets/Face.jpg",
+      "color": "#A78BFA",
+      "established": "2026-01-13",
+      "features": ["notices", "analytics", "heartbeat", "experimentalUI"],
+      "tags": ["experimental", "prototype", "lab"]
+    }
+  ],
+  "stats": {
+    "totalBranches": 3,
+    "activeBranches": 3,
+    "publicBranches": 1,
+    "privateBranches": 2
+  }
+}
