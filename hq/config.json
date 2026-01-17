@@ -1,0 +1,22 @@
+{
+  "hq": {
+    "name": "DTSLIB HQ",
+    "version": "1.0",
+    "owner": "dtslib1979",
+    "contact": "dimas@dtslib.com"
+  },
+  "defaults": {
+    "autoSync": false,
+    "autoDeploy": false,
+    "requireApproval": true
+  },
+  "paths": {
+    "home": "~/",
+    "repos": "~/",
+    "scripts": "~/dtslib-branch/tools"
+  },
+  "github": {
+    "org": "dtslib1979",
+    "defaultBranch": "main"
+  }
+}
