@@ -1,15 +1,15 @@
 {
   "version": "1.0",
-  "lastUpdated": "2026-01-17T12:00:00Z",
+  "lastUpdated": "2026-01-17T14:00:00Z",
   "notices": [
     {
-      "id": "notice-001",
-      "title": "HQ 시스템 연동 완료",
-      "content": "본사 공지 시스템이 정상적으로 연동되었습니다.",
-      "type": "success",
+      "id": "notice-test-001",
+      "title": "[전산 테스트]",
+      "content": "본사 HQ 공지 시스템 연동 테스트입니다. 정상 수신 확인 바랍니다.",
+      "type": "info",
       "branches": ["koosy", "gohsy", "papafly"],
-      "createdAt": "2026-01-17T12:00:00Z",
-      "expiresAt": "2026-01-20T00:00:00Z"
+      "createdAt": "2026-01-17T14:00:00Z",
+      "expiresAt": "2026-01-24T00:00:00Z"
     }
   ]
 }
