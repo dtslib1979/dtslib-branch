@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotline</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0d1117;
+      color: #e6edf3;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .header {
+      background: #161b22;
+      padding: 16px 20px;
+      border-bottom: 1px solid #30363d;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .header h1 { font-size: 18px; font-weight: 600; }
+    .hotline-badge {
+      background: #da3633;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+    }
+    .partner-badge {
+      background: #1f6feb;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+    }
+    .sync-btn {
+      margin-left: auto;
+      background: #30363d;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      color: #e6edf3;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .chat-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .message {
+      max-width: 80%;
+      padding: 12px 16px;
+      border-radius: 16px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .message.mine {
+      align-self: flex-end;
+      background: #da3633;
+      border-bottom-right-radius: 4px;
+    }
+    .message.other {
+      align-self: flex-start;
+      background: #30363d;
+      border-bottom-left-radius: 4px;
+    }
+    .message .sender { font-size: 11px; opacity: 0.7; margin-bottom: 4px; }
+    .message .time { font-size: 10px; opacity: 0.5; margin-top: 4px; text-align: right; }
+    .input-area {
+      background: #161b22;
+      padding: 16px 20px;
+      border-top: 1px solid #30363d;
+      display: flex;
+      gap: 12px;
+    }
+    .input-area input {
+      flex: 1;
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 20px;
+      padding: 12px 20px;
+      color: #e6edf3;
+      font-size: 14px;
+      outline: none;
+    }
+    .input-area button {
+      background: #da3633;
+      border: none;
+      border-radius: 20px;
+      padding: 12px 24px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .status { font-size: 12px; color: #8b949e; text-align: center; padding: 8px; }
+    .setup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+    .setup-overlay.hidden { display: none; }
+    .setup-box {
+      background: #161b22;
+      padding: 32px;
+      border-radius: 16px;
+      border: 1px solid #30363d;
+      width: 90%;
+      max-width: 400px;
+    }
+    .setup-box h2 { margin-bottom: 20px; text-align: center; }
+    .setup-box label { display: block; margin-bottom: 8px; font-size: 14px; color: #8b949e; }
+    .setup-box input, .setup-box select {
+      width: 100%;
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: #e6edf3;
+      font-size: 14px;
+      margin-bottom: 16px;
+      outline: none;
+    }
+    .setup-box button {
+      width: 100%;
+      background: #da3633;
+      border: none;
+      border-radius: 8px;
+      padding: 14px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="setup-overlay" id="setupOverlay">
+    <div class="setup-box">
+      <h2>Hotline Setup</h2>
+      <label>Your Name</label>
+      <input type="text" id="inputUser" placeholder="Name">
+      <label>Your Role</label>
+      <select id="inputRole">
+        <option value="hq">HQ (본사)</option>
+        <option value="branch">Branch (계열사)</option>
+      </select>
+      <label>Partner Branch</label>
+      <select id="inputPartner">
+        <option value="koosy">Koosy</option>
+        <option value="gohsy">Gohsy</option>
+        <option value="papafly">Papafly</option>
+      </select>
+      <label>GitHub Token</label>
+      <input type="password" id="inputToken" placeholder="ghp_xxxx...">
+      <button onclick="saveSetup()">Connect Hotline</button>
+    </div>
+  </div>
+
+  <div class="header">
+    <h1>Hotline</h1>
+    <span class="hotline-badge">1:1</span>
+    <span class="partner-badge" id="partnerBadge">-</span>
+    <button class="sync-btn" onclick="syncFromGitHub()">Sync</button>
+  </div>
+
+  <div class="chat-container" id="chatContainer"></div>
+  <div class="status" id="status">Ready</div>
+
+  <div class="input-area">
+    <input type="text" id="messageInput" placeholder="Type a message..." onkeypress="if(event.key==='Enter')sendMessage()">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <script>
+    const REPO_OWNER = 'dtslib1979';
+    const REPO_NAME = 'dtslib-branch';
+
+    let currentUser = localStorage.getItem('hotlineUser');
+    let currentRole = localStorage.getItem('hotlineRole');
+    let partner = localStorage.getItem('hotlinePartner');
+    let ghToken = localStorage.getItem('ghToken');
+    let messages = [];
+    let fileSha = null;
+
+    function getFilePath() {
+      return `meeting-minutes/hotline/${partner}.json`;
+    }
+
+    function init() {
+      if (!currentUser || !ghToken || !partner) {
+        document.getElementById('setupOverlay').classList.remove('hidden');
+      } else {
+        document.getElementById('setupOverlay').classList.add('hidden');
+        document.getElementById('partnerBadge').textContent = partner.toUpperCase();
+        syncFromGitHub();
+      }
+    }
+
+    function saveSetup() {
+      const user = document.getElementById('inputUser').value.trim();
+      const role = document.getElementById('inputRole').value;
+      const part = document.getElementById('inputPartner').value;
+      const token = document.getElementById('inputToken').value.trim();
+      if (user && token && part) {
+        currentUser = user;
+        currentRole = role;
+        partner = part;
+        ghToken = token;
+        localStorage.setItem('hotlineUser', user);
+        localStorage.setItem('hotlineRole', role);
+        localStorage.setItem('hotlinePartner', part);
+        localStorage.setItem('ghToken', token);
+        document.getElementById('setupOverlay').classList.add('hidden');
+        document.getElementById('partnerBadge').textContent = partner.toUpperCase();
+        syncFromGitHub();
+      }
+    }
+
+    function setStatus(msg) {
+      document.getElementById('status').textContent = msg;
+    }
+
+    async function syncFromGitHub() {
+      setStatus('Syncing...');
+      try {
+        const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${getFilePath()}`, {
+          headers: { 'Authorization': `token ${ghToken}` }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          fileSha = data.sha;
+          messages = JSON.parse(atob(data.content));
+          renderMessages();
+          setStatus('Synced: ' + new Date().toLocaleTimeString());
+        } else {
+          setStatus('Sync failed: ' + res.status);
+        }
+      } catch (e) {
+        setStatus('Error: ' + e.message);
+      }
+    }
+
+    function renderMessages() {
+      const container = document.getElementById('chatContainer');
+      container.innerHTML = '';
+      messages.forEach(msg => {
+        const div = document.createElement('div');
+        div.className = 'message ' + (msg.user === currentUser ? 'mine' : 'other');
+        div.innerHTML = `
+          <div class="sender">${msg.user} (${msg.role})</div>
+          <div class="text">${msg.text}</div>
+          <div class="time">${msg.time}</div>
+        `;
+        container.appendChild(div);
+      });
+      container.scrollTop = container.scrollHeight;
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById('messageInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const msg = {
+        user: currentUser,
+        role: currentRole === 'hq' ? 'HQ' : partner,
+        text: text,
+        time: new Date().toLocaleString('ko-KR')
+      };
+
+      messages.push(msg);
+      renderMessages();
+      input.value = '';
+
+      setStatus('Saving...');
+      try {
+        const content = btoa(unescape(encodeURIComponent(JSON.stringify(messages, null, 2))));
+        const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${getFilePath()}`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `token ${ghToken}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: `hotline: ${currentUser} → ${partner}`,
+            content: content,
+            sha: fileSha
+          })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          fileSha = data.content.sha;
+          setStatus('Saved');
+        } else {
+          setStatus('Save failed');
+        }
+      } catch (e) {
+        setStatus('Error: ' + e.message);
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
