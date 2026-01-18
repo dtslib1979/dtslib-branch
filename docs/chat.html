@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Global Chat</title>
+  <title>Chat Hub</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -11,6 +11,49 @@
       background: #0d1117;
       color: #e6edf3;
       height: 100vh;
+      display: flex;
+    }
+    .sidebar {
+      width: 200px;
+      background: #161b22;
+      border-right: 1px solid #30363d;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar h2 {
+      padding: 16px;
+      font-size: 14px;
+      color: #8b949e;
+      border-bottom: 1px solid #30363d;
+    }
+    .channel {
+      padding: 12px 16px;
+      cursor: pointer;
+      border-left: 3px solid transparent;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .channel:hover { background: #21262d; }
+    .channel.active {
+      background: #21262d;
+      border-left-color: #238636;
+    }
+    .channel.hotline.active { border-left-color: #da3633; }
+    .channel-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+    .channel-icon.global { background: #238636; }
+    .channel-icon.hotline { background: #da3633; }
+    .channel-name { font-size: 14px; }
+    .main {
+      flex: 1;
       display: flex;
       flex-direction: column;
     }
@@ -22,13 +65,14 @@
       align-items: center;
       gap: 12px;
     }
-    .header h1 { font-size: 18px; font-weight: 600; }
-    .repo-badge {
-      background: #238636;
+    .header h1 { font-size: 18px; }
+    .badge {
       padding: 4px 10px;
       border-radius: 12px;
       font-size: 12px;
     }
+    .badge.global { background: #238636; }
+    .badge.hotline { background: #da3633; }
     .sync-btn {
       margin-left: auto;
       background: #30363d;
@@ -37,9 +81,7 @@
       border-radius: 8px;
       color: #e6edf3;
       cursor: pointer;
-      font-size: 12px;
     }
-    .sync-btn:hover { background: #484f58; }
     .chat-container {
       flex: 1;
       overflow-y: auto;
@@ -49,11 +91,10 @@
       gap: 12px;
     }
     .message {
-      max-width: 80%;
+      max-width: 75%;
       padding: 12px 16px;
       border-radius: 16px;
       font-size: 14px;
-      line-height: 1.5;
     }
     .message.mine {
       align-self: flex-end;
@@ -65,20 +106,8 @@
       background: #30363d;
       border-bottom-left-radius: 4px;
     }
-    .message .sender {
-      font-size: 11px;
-      opacity: 0.7;
-      margin-bottom: 4px;
-      display: flex;
-      gap: 8px;
-    }
-    .message .sender .repo { color: #58a6ff; }
-    .message .time {
-      font-size: 10px;
-      opacity: 0.5;
-      margin-top: 4px;
-      text-align: right;
-    }
+    .message .sender { font-size: 11px; opacity: 0.7; margin-bottom: 4px; }
+    .message .time { font-size: 10px; opacity: 0.5; margin-top: 4px; text-align: right; }
     .input-area {
       background: #161b22;
       padding: 16px 20px;
@@ -96,7 +125,6 @@
       font-size: 14px;
       outline: none;
     }
-    .input-area input:focus { border-color: #238636; }
     .input-area button {
       background: #238636;
       border: none;
@@ -106,7 +134,7 @@
       font-weight: 600;
       cursor: pointer;
     }
-    .input-area button:hover { background: #2ea043; }
+    .status { font-size: 12px; color: #8b949e; text-align: center; padding: 8px; }
     .setup-overlay {
       position: fixed;
       inset: 0;
@@ -127,7 +155,7 @@
     }
     .setup-box h2 { margin-bottom: 20px; text-align: center; }
     .setup-box label { display: block; margin-bottom: 8px; font-size: 14px; color: #8b949e; }
-    .setup-box input {
+    .setup-box input, .setup-box select {
       width: 100%;
       background: #0d1117;
       border: 1px solid #30363d;
@@ -136,7 +164,6 @@
       color: #e6edf3;
       font-size: 14px;
       margin-bottom: 16px;
-      outline: none;
     }
     .setup-box button {
       width: 100%;
@@ -147,68 +174,123 @@
       color: white;
       font-weight: 600;
       cursor: pointer;
-      font-size: 16px;
     }
-    .status { font-size: 12px; color: #8b949e; text-align: center; padding: 8px; }
+    @media (max-width: 600px) {
+      .sidebar { width: 60px; }
+      .channel-name { display: none; }
+      .sidebar h2 { display: none; }
+    }
   </style>
 </head>
 <body>
   <div class="setup-overlay" id="setupOverlay">
     <div class="setup-box">
-      <h2>Global Chat Setup</h2>
+      <h2>Chat Setup</h2>
       <label>Username</label>
       <input type="text" id="inputUser" placeholder="Your name">
-      <label>GitHub Token (for sync)</label>
+      <label>Your Branch</label>
+      <select id="inputBranch">
+        <option value="hq">HQ (본사)</option>
+        <option value="koosy">Koosy</option>
+        <option value="gohsy">Gohsy</option>
+        <option value="papafly">Papafly</option>
+      </select>
+      <label>GitHub Token</label>
       <input type="password" id="inputToken" placeholder="ghp_xxxx...">
-      <button onclick="saveSetup()">Enter Chat</button>
+      <button onclick="saveSetup()">Enter</button>
     </div>
   </div>
 
-  <div class="header">
-    <h1>Global Chat</h1>
-    <span class="repo-badge" id="repoBadge">-</span>
-    <button class="sync-btn" onclick="syncFromGitHub()">Sync</button>
+  <div class="sidebar">
+    <h2>Channels</h2>
+    <div class="channel active" data-channel="global" onclick="switchChannel('global')">
+      <div class="channel-icon global">G</div>
+      <span class="channel-name">전체</span>
+    </div>
+    <div class="channel hotline" data-channel="koosy" onclick="switchChannel('koosy')">
+      <div class="channel-icon hotline">K</div>
+      <span class="channel-name">Koosy</span>
+    </div>
+    <div class="channel hotline" data-channel="gohsy" onclick="switchChannel('gohsy')">
+      <div class="channel-icon hotline">G</div>
+      <span class="channel-name">Gohsy</span>
+    </div>
+    <div class="channel hotline" data-channel="papafly" onclick="switchChannel('papafly')">
+      <div class="channel-icon hotline">P</div>
+      <span class="channel-name">Papafly</span>
+    </div>
   </div>
 
-  <div class="chat-container" id="chatContainer"></div>
-  <div class="status" id="status">Ready</div>
-
-  <div class="input-area">
-    <input type="text" id="messageInput" placeholder="Type a message..." onkeypress="if(event.key==='Enter')sendMessage()">
-    <button onclick="sendMessage()">Send</button>
+  <div class="main">
+    <div class="header">
+      <h1 id="channelTitle">전체</h1>
+      <span class="badge global" id="channelBadge">Global</span>
+      <button class="sync-btn" onclick="syncChannel()">Sync</button>
+    </div>
+    <div class="chat-container" id="chatContainer"></div>
+    <div class="status" id="status">Ready</div>
+    <div class="input-area">
+      <input type="text" id="messageInput" placeholder="Type..." onkeypress="if(event.key==='Enter')sendMessage()">
+      <button onclick="sendMessage()">Send</button>
+    </div>
   </div>
 
   <script>
     const REPO_OWNER = 'dtslib1979';
     const REPO_NAME = 'dtslib-branch';
-    const FILE_PATH = 'meeting-minutes/chat-log.json';
-    const CURRENT_REPO = location.pathname.split('/')[1] || 'branch';
+    const PATHS = {
+      global: 'meeting-minutes/chat-log.json',
+      koosy: 'meeting-minutes/hotline/koosy.json',
+      gohsy: 'meeting-minutes/hotline/gohsy.json',
+      papafly: 'meeting-minutes/hotline/papafly.json'
+    };
 
     let currentUser = localStorage.getItem('chatUser');
+    let currentBranch = localStorage.getItem('chatBranch');
     let ghToken = localStorage.getItem('ghToken');
-    let messages = [];
-    let fileSha = null;
+    let currentChannel = 'global';
+    let channelData = {};
+    let channelSha = {};
 
     function init() {
-      document.getElementById('repoBadge').textContent = CURRENT_REPO;
-      if (!currentUser || !ghToken) {
+      if (!currentUser || !ghToken || !currentBranch) {
         document.getElementById('setupOverlay').classList.remove('hidden');
       } else {
         document.getElementById('setupOverlay').classList.add('hidden');
-        syncFromGitHub();
+        syncChannel();
       }
     }
 
     function saveSetup() {
       const user = document.getElementById('inputUser').value.trim();
+      const branch = document.getElementById('inputBranch').value;
       const token = document.getElementById('inputToken').value.trim();
       if (user && token) {
         currentUser = user;
+        currentBranch = branch;
         ghToken = token;
         localStorage.setItem('chatUser', user);
+        localStorage.setItem('chatBranch', branch);
         localStorage.setItem('ghToken', token);
         document.getElementById('setupOverlay').classList.add('hidden');
-        syncFromGitHub();
+        syncChannel();
+      }
+    }
+
+    function switchChannel(ch) {
+      currentChannel = ch;
+      document.querySelectorAll('.channel').forEach(el => el.classList.remove('active'));
+      document.querySelector(`[data-channel="${ch}"]`).classList.add('active');
+
+      const isGlobal = ch === 'global';
+      document.getElementById('channelTitle').textContent = isGlobal ? '전체' : ch.toUpperCase() + ' Hotline';
+      document.getElementById('channelBadge').textContent = isGlobal ? 'Global' : '1:1';
+      document.getElementById('channelBadge').className = 'badge ' + (isGlobal ? 'global' : 'hotline');
+
+      if (channelData[ch]) {
+        renderMessages(channelData[ch]);
+      } else {
+        syncChannel();
       }
     }
 
@@ -216,34 +298,34 @@
       document.getElementById('status').textContent = msg;
     }
 
-    async function syncFromGitHub() {
+    async function syncChannel() {
       setStatus('Syncing...');
       try {
-        const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
+        const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${PATHS[currentChannel]}`, {
           headers: { 'Authorization': `token ${ghToken}` }
         });
         if (res.ok) {
           const data = await res.json();
-          fileSha = data.sha;
-          messages = JSON.parse(atob(data.content));
-          renderMessages();
-          setStatus('Synced: ' + new Date().toLocaleTimeString());
+          channelSha[currentChannel] = data.sha;
+          channelData[currentChannel] = JSON.parse(atob(data.content));
+          renderMessages(channelData[currentChannel]);
+          setStatus('Synced');
         } else {
-          setStatus('Sync failed: ' + res.status);
+          setStatus('Failed: ' + res.status);
         }
       } catch (e) {
         setStatus('Error: ' + e.message);
       }
     }
 
-    function renderMessages() {
+    function renderMessages(msgs) {
       const container = document.getElementById('chatContainer');
       container.innerHTML = '';
-      messages.forEach(msg => {
+      msgs.forEach(msg => {
         const div = document.createElement('div');
         div.className = 'message ' + (msg.user === currentUser ? 'mine' : 'other');
         div.innerHTML = `
-          <div class="sender"><span>${msg.user}</span><span class="repo">@${msg.repo}</span></div>
+          <div class="sender">${msg.user} ${msg.repo ? '@'+msg.repo : ''}</div>
           <div class="text">${msg.text}</div>
           <div class="time">${msg.time}</div>
         `;
@@ -259,33 +341,34 @@
 
       const msg = {
         user: currentUser,
-        repo: CURRENT_REPO,
+        repo: currentBranch,
         text: text,
         time: new Date().toLocaleString('ko-KR')
       };
 
-      messages.push(msg);
-      renderMessages();
+      if (!channelData[currentChannel]) channelData[currentChannel] = [];
+      channelData[currentChannel].push(msg);
+      renderMessages(channelData[currentChannel]);
       input.value = '';
 
       setStatus('Saving...');
       try {
-        const content = btoa(unescape(encodeURIComponent(JSON.stringify(messages, null, 2))));
-        const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
+        const content = btoa(unescape(encodeURIComponent(JSON.stringify(channelData[currentChannel], null, 2))));
+        const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${PATHS[currentChannel]}`, {
           method: 'PUT',
           headers: {
             'Authorization': `token ${ghToken}`,
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            message: `chat: ${currentUser} from ${CURRENT_REPO}`,
+            message: `chat: ${currentUser} in ${currentChannel}`,
             content: content,
-            sha: fileSha
+            sha: channelSha[currentChannel]
           })
         });
         if (res.ok) {
           const data = await res.json();
-          fileSha = data.content.sha;
+          channelSha[currentChannel] = data.content.sha;
           setStatus('Saved');
         } else {
           setStatus('Save failed');
