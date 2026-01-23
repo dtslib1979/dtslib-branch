@@ -1,15 +1,24 @@
 {
-  "version": "1.0",
-  "lastUpdated": "2026-01-17T14:00:00Z",
+  "version": "2.0",
+  "lastUpdated": "2026-01-23T00:00:00Z",
   "notices": [
     {
-      "id": "notice-test-001",
-      "title": "[전산 테스트]",
-      "content": "본사 HQ 공지 시스템 연동 테스트입니다. 정상 수신 확인 바랍니다.",
+      "id": "franchise-os-launch",
+      "title": "Franchise OS v1.0 Live",
+      "content": "Catalog + Feed subscription system is now active. All branches connected.",
+      "type": "success",
+      "branches": ["koosy", "gohsy", "artrew", "papafly", "buckley"],
+      "createdAt": "2026-01-23T00:00:00Z",
+      "expiresAt": "2026-02-23T00:00:00Z"
+    },
+    {
+      "id": "bridge-v3-upgrade",
+      "title": "Bridge SDK v3.0",
+      "content": "New features: catalog loading, feed subscriptions, branch.json auto-detection.",
       "type": "info",
-      "branches": ["koosy", "gohsy", "papafly"],
-      "createdAt": "2026-01-17T14:00:00Z",
-      "expiresAt": "2026-01-24T00:00:00Z"
+      "branches": ["koosy", "gohsy", "artrew", "papafly", "buckley"],
+      "createdAt": "2026-01-23T00:00:00Z",
+      "expiresAt": "2026-02-15T00:00:00Z"
     }
   ]
 }

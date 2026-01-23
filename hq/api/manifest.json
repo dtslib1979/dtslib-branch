@@ -1,18 +1,39 @@
 {
-  "version": "1.0.0",
-  "generatedAt": "2026-01-17T12:00:00Z",
+  "version": "2.0.0",
+  "generatedAt": "2026-01-23T00:00:00Z",
   "hq": {
     "id": "dtslib-branch",
     "name": "DTSLIB HQ",
     "url": "https://dtslib1979.github.io/dtslib-branch/",
     "repo": "dtslib1979/dtslib-branch",
-    "status": "operational"
+    "status": "operational",
+    "franchiseOS": "1.0",
+    "bridgeSDK": "3.0.0"
   },
   "branches": [
     {
+      "id": "artrew",
+      "name": "ARTREW",
+      "tagline": "Not Human. Not Machine. Art.",
+      "description": "AI-Native Creative Production",
+      "url": "https://dtslib1979.github.io/artrew/",
+      "repo": "dtslib1979/artrew",
+      "domain": "artrew.com",
+      "status": "active",
+      "visibility": "public",
+      "tier": "production",
+      "owner": "ARTREW",
+      "avatar": "https://dtslib1979.github.io/artrew/assets/icons/Artrew-logo.png",
+      "color": "#D4AF37",
+      "established": "2026-01-16",
+      "features": ["notices", "analytics", "heartbeat", "franchise-os", "feeds"],
+      "tags": ["creative", "ai", "art", "production"],
+      "subscriptions": ["parksy-gallery", "eae-courses", "alexandria-wisdom", "hq-notices", "hq-sdk"]
+    },
+    {
       "id": "koosy",
       "name": "KOOSY",
-      "tagline": "Bluffing based editing broadcasting CELEB story",
+      "tagline": "Celebrity Story Editing Broadcasting",
       "description": "셀럽 스토리 편집 방송 플랫폼",
       "url": "https://dtslib1979.github.io/koosy/",
       "repo": "dtslib1979/koosy",
@@ -22,15 +43,16 @@
       "tier": "production",
       "owner": "KOOSY",
       "avatar": "https://dtslib1979.github.io/koosy/assets/icons/profile.jpg",
-      "color": "#E8C547",
+      "color": "#FF6B6B",
       "established": "2026-01-13",
-      "features": ["notices", "analytics", "heartbeat"],
-      "tags": ["media", "entertainment", "celeb"]
+      "features": ["notices", "analytics", "heartbeat", "franchise-os", "feeds"],
+      "tags": ["media", "entertainment", "celeb"],
+      "subscriptions": ["parksy-gallery", "parksy-templates", "eae-courses", "hq-notices", "hq-sdk"]
     },
     {
       "id": "gohsy",
       "name": "GOHSY",
-      "tagline": "Voices for the Voiceless",
+      "tagline": "Wish Fulfillment Platform",
       "description": "소원 실현 플랫폼",
       "url": "https://dtslib1979.github.io/gohsy/",
       "repo": "dtslib1979/gohsy",
@@ -40,34 +62,81 @@
       "tier": "production",
       "owner": "MH",
       "avatar": "https://dtslib1979.github.io/gohsy/assets/mh.jpg",
-      "color": "#4ECDC4",
+      "color": "#6366F1",
       "established": "2026-01-13",
-      "features": ["notices", "analytics", "heartbeat"],
-      "tags": ["goals", "wishes", "personal"]
+      "features": ["notices", "analytics", "heartbeat", "franchise-os"],
+      "tags": ["goals", "wishes", "personal"],
+      "subscriptions": ["eae-courses", "hq-notices", "hq-sdk"]
     },
     {
       "id": "papafly",
       "name": "PAPAFLY",
-      "tagline": "Incubation Lab",
+      "tagline": "Incubation & Prototyping Lab",
       "description": "인큐베이션 프로젝트",
       "url": "https://dtslib1979.github.io/papafly/",
       "repo": "dtslib1979/papafly",
       "domain": "papafly.kr",
-      "status": "incubation",
+      "status": "active",
       "visibility": "private",
       "tier": "canary",
       "owner": "PAPAFLY",
       "avatar": "https://dtslib1979.github.io/papafly/assets/Face.jpg",
-      "color": "#A78BFA",
+      "color": "#10B981",
       "established": "2026-01-13",
-      "features": ["notices", "analytics", "heartbeat", "experimentalUI"],
-      "tags": ["experimental", "prototype", "lab"]
+      "features": ["notices", "analytics", "heartbeat", "franchise-os"],
+      "tags": ["experimental", "prototype", "lab"],
+      "subscriptions": ["parksy-templates", "hq-notices", "hq-sdk"]
+    },
+    {
+      "id": "buckley",
+      "name": "BUCKLEY",
+      "tagline": "Broadcasting Content Platform",
+      "description": "방송 콘텐츠 플랫폼",
+      "url": "https://dtslib1979.github.io/buckley/",
+      "repo": "dtslib1979/buckley",
+      "domain": "buckley.kr",
+      "status": "active",
+      "visibility": "public",
+      "tier": "production",
+      "owner": "BUCKLEY",
+      "avatar": "",
+      "color": "#EC4899",
+      "established": "2026-01-23",
+      "features": ["notices", "analytics", "heartbeat", "franchise-os", "feeds"],
+      "tags": ["broadcasting", "content", "media"],
+      "subscriptions": ["parksy-gallery", "eae-courses", "alexandria-wisdom", "hq-notices", "hq-sdk"]
+    }
+  ],
+  "publishers": [
+    {
+      "id": "parksy",
+      "name": "PARKSY Studio",
+      "repo": "dtslib1979/parksy-image",
+      "feeds": 2,
+      "type": "studio"
+    },
+    {
+      "id": "eae",
+      "name": "EAE University",
+      "repo": "dtslib1979/eae-univ",
+      "feeds": 2,
+      "type": "studio"
+    },
+    {
+      "id": "alexandria",
+      "name": "Alexandria Sanctuary",
+      "repo": "dtslib1979/alexandria-sanctuary",
+      "feeds": 1,
+      "type": "studio"
     }
   ],
   "stats": {
-    "totalBranches": 3,
-    "activeBranches": 3,
-    "publicBranches": 1,
-    "privateBranches": 2
+    "totalBranches": 5,
+    "activeBranches": 5,
+    "publicBranches": 3,
+    "privateBranches": 2,
+    "totalPublishers": 3,
+    "totalFeeds": 5,
+    "franchiseVersion": "1.0"
   }
 }
