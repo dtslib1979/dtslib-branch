@@ -444,7 +444,7 @@
             badge.innerHTML = `
                 <a href="${HQ_BASE}" target="_blank" style="
                     position: fixed;
-                    bottom: 16px; right: 16px;
+                    top: 16px; left: 16px;
                     background: rgba(15,15,25,0.9);
                     border: 1px solid rgba(212,175,55,0.3);
                     border-radius: 8px;
