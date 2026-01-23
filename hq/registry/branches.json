@@ -35,6 +35,21 @@
       "maintenanceMode": false
     },
     {
+      "id": "artrew",
+      "name": "ARTREW",
+      "repo": "dtslib1979/artrew",
+      "domain": "artrew.dtslib.com",
+      "area": "content",
+      "tier": "standard",
+      "visibility": "public",
+      "status": "active",
+      "owner": "dimas@dtslib.com",
+      "hqProtocolVersion": "2.1",
+      "features": ["celeb-story", "bluffing-edit", "franchise-os"],
+      "createdAt": "2026-01-22T00:00:00Z",
+      "maintenanceMode": false
+    },
+    {
       "id": "papafly",
       "name": "PAPAFLY",
       "repo": "dtslib1979/papafly",
@@ -47,6 +62,21 @@
       "hqProtocolVersion": "2.1",
       "features": ["experimental", "prototype"],
       "createdAt": "2026-01-16T00:00:00Z",
+      "maintenanceMode": false
+    },
+    {
+      "id": "buckley",
+      "name": "BUCKLEY",
+      "repo": "dtslib1979/buckley",
+      "domain": "buckley.dtslib.com",
+      "area": "content",
+      "tier": "standard",
+      "visibility": "public",
+      "status": "pending",
+      "owner": "dimas@dtslib.com",
+      "hqProtocolVersion": "2.1",
+      "features": ["broadcasting"],
+      "createdAt": "2026-01-23T00:00:00Z",
       "maintenanceMode": false
     }
   ],
@@ -78,7 +108,7 @@
     },
     "content": {
       "name": "Content",
-      "cells": ["koosy"]
+      "cells": ["koosy", "artrew", "buckley"]
     }
   }
 }

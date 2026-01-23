@@ -1,0 +1,99 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2026-01-23T00:00:00Z",
+  "baseUrl": "https://dtslib1979.github.io",
+  "publishers": [
+    {
+      "id": "parksy",
+      "name": "PARKSY Studio",
+      "repo": "dtslib1979/parksy-image",
+      "url": "/parksy-image",
+      "type": "studio",
+      "feeds": [
+        {
+          "id": "parksy-templates",
+          "type": "templates",
+          "description": "Image generation templates & presets",
+          "path": "/parksy-image/feeds/templates.json"
+        },
+        {
+          "id": "parksy-gallery",
+          "type": "media",
+          "description": "Generated artwork gallery",
+          "path": "/parksy-image/feeds/gallery.json"
+        }
+      ]
+    },
+    {
+      "id": "eae",
+      "name": "EAE University",
+      "repo": "dtslib1979/eae-univ",
+      "url": "/eae-univ",
+      "type": "studio",
+      "feeds": [
+        {
+          "id": "eae-courses",
+          "type": "education",
+          "description": "Course catalog with YouTube CDN",
+          "path": "/eae-univ/feeds/courses.json"
+        },
+        {
+          "id": "eae-announcements",
+          "type": "notices",
+          "description": "University announcements",
+          "path": "/eae-univ/feeds/announcements.json"
+        }
+      ]
+    },
+    {
+      "id": "alexandria",
+      "name": "Alexandria Sanctuary",
+      "repo": "dtslib1979/alexandria-sanctuary",
+      "url": "/alexandria-sanctuary",
+      "type": "studio",
+      "feeds": [
+        {
+          "id": "alexandria-wisdom",
+          "type": "content",
+          "description": "Wisdom articles and teachings",
+          "path": "/alexandria-sanctuary/feeds/wisdom.json"
+        }
+      ]
+    },
+    {
+      "id": "hq",
+      "name": "DTSLIB HQ",
+      "repo": "dtslib1979/dtslib-branch",
+      "url": "/dtslib-branch",
+      "type": "headquarters",
+      "feeds": [
+        {
+          "id": "hq-notices",
+          "type": "notices",
+          "description": "HQ announcements and alerts",
+          "path": "/dtslib-branch/hq/notices/notices.json"
+        },
+        {
+          "id": "hq-sdk",
+          "type": "sdk",
+          "description": "Bridge SDK and tools",
+          "path": "/dtslib-branch/hq/sdk/dtslib-bridge.js"
+        },
+        {
+          "id": "hq-templates",
+          "type": "templates",
+          "description": "Branch page templates",
+          "path": "/dtslib-branch/hq/sync/templates"
+        }
+      ]
+    }
+  ],
+  "feedTypes": {
+    "templates": "Reusable page/component templates",
+    "media": "Images, audio, video references",
+    "education": "Course content (YouTube CDN)",
+    "content": "Articles and text content",
+    "notices": "Announcements and notifications",
+    "sdk": "JavaScript libraries and tools"
+  }
+}

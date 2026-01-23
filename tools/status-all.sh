@@ -7,7 +7,7 @@ echo "  DTSLIB HQ - 전체 레포 상태"
 echo "========================================"
 echo ""
 
-repos=("dtslib-branch" "koosy" "gohsy" "papafly")
+repos=("dtslib-branch" "koosy" "gohsy" "artrew" "papafly" "buckley")
 
 for repo in "${repos[@]}"; do
   echo "📦 $repo"
