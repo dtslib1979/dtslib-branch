@@ -4,8 +4,8 @@
     "shortName": "dtslib",
     "domain": "dtslib.com",
     "url": "https://dtslib1979.github.io/dtslib-branch/",
-    "description": "AI 업무 자동화 세팅 서비스",
-    "tagline": "AI 업무 세팅",
+    "description": "비즈니스 스토리 아키텍트 — 업종을 세계관으로 재설계합니다",
+    "tagline": "업종을 세계관으로, 비즈니스를 이야기로",
     "themeColor": "#0F1F15"
   },
   "owner": {
@@ -14,8 +14,8 @@
     "location": "대한민국"
   },
   "service": {
-    "title": "AI 업무 자동화 세팅",
-    "subtitle": "ChatGPT를 진짜 업무에 쓰게 만들어드립니다",
+    "title": "비즈니스 스토리 설계",
+    "subtitle": "업종을 세계관으로 바꾸고, 돈이 도는 구조를 만듭니다",
     "price": "25만원 / 2시간",
     "ctaText": "문의하기",
     "features": [
@@ -34,10 +34,10 @@
   },
   "card": {
     "name": "DIMAS",
-    "title": "AI Automation Consultant",
+    "title": "Business Story Architect",
     "organization": "dtslib",
-    "tagline": "AI 업무 자동화 전문가",
-    "quote": "**AI**로 당신의 업무를 자동화합니다",
+    "tagline": "만화 같은 비즈니스를 설계하는 시스템 아키텍트",
+    "quote": "업종을 **세계관**으로, 비즈니스를 **이야기**로.",
     "email": "dimas@dtslib.com",
     "phone": "",
     "website": "https://dtslib.com",
