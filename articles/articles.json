@@ -1,0 +1,14 @@
+{
+  "articles": [
+    {
+      "title": "MANIFESTO — 만화 같은 비즈니스를 설계하는 시스템 아키텍트",
+      "file": "manifesto.html",
+      "date": "2026-01-23",
+      "category": "Philosophy",
+      "status": "published",
+      "emoji": "🏛️",
+      "excerpt": "업종을 세계관으로, 비즈니스를 이야기로, 코드를 서식으로.",
+      "readTime": "5"
+    }
+  ]
+}
