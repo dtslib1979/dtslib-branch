@@ -1,0 +1,25 @@
+{
+  "branch": "tango-magenta",
+  "name": "TANGO MAGENTA",
+  "status": "active",
+  "established": "2026-01-23",
+  "type": "studio-broadcast",
+  "language": "es-AR",
+  "features": ["broadcasting", "body-protocol", "5-layer", "tango-ui", "audio-layer"],
+  "tier": "premium",
+  "meetings": [
+    {
+      "date": "2026-01-23",
+      "topic": "Branch initialization — 5-Layer Studio & Broadcast System",
+      "decisions": [
+        "Architecture: 5-layer (Emisión, Cuerpo, Laboratorio, Control, Legado)",
+        "Language: Argentine Spanish (es-AR, porteño)",
+        "Protocol: Body Interaction Protocol v1.0",
+        "Audio: Spotify + YouTube embeds, no service worker",
+        "Timing: 70 BPM tango lento",
+        "Compatibility: Bing read-aloud + translation ready"
+      ],
+      "status": "completed"
+    }
+  ]
+}

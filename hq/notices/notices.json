@@ -7,7 +7,7 @@
       "title": "Franchise OS v1.0 Live",
       "content": "Catalog + Feed subscription system is now active. All branches connected.",
       "type": "success",
-      "branches": ["koosy", "gohsy", "artrew", "papafly", "lotus"],
+      "branches": ["koosy", "gohsy", "artrew", "papafly", "lotus", "tango-magenta"],
       "createdAt": "2026-01-23T00:00:00Z",
       "expiresAt": "2026-02-23T00:00:00Z"
     },
@@ -16,7 +16,7 @@
       "title": "Bridge SDK v3.0",
       "content": "New features: catalog loading, feed subscriptions, branch.json auto-detection.",
       "type": "info",
-      "branches": ["koosy", "gohsy", "artrew", "papafly", "lotus"],
+      "branches": ["koosy", "gohsy", "artrew", "papafly", "lotus", "tango-magenta"],
       "createdAt": "2026-01-23T00:00:00Z",
       "expiresAt": "2026-02-15T00:00:00Z"
     }
