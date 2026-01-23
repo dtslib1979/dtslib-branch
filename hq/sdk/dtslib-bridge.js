@@ -26,7 +26,7 @@
     const HQ_NOTICES = HQ_BASE + '/hq/notices';
     const HQ_CATALOG = HQ_BASE + '/hq/catalog.json';
 
-    const KNOWN_BRANCHES = ['koosy', 'gohsy', 'artrew', 'papafly', 'buckley'];
+    const KNOWN_BRANCHES = ['koosy', 'gohsy', 'artrew', 'papafly', 'lotus'];
 
     // ═══════════════════════════════════════════════════════════
     // CORE: Bridge Engine
