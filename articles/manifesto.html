@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#030303">
+  <title>MANIFESTO | DIMAS — Business Story Architect</title>
+  <meta name="description" content="만화 같은 비즈니스를 설계하는 시스템 아키텍트. 업종을 세계관으로, 비즈니스를 이야기로, 코드를 서식으로.">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="MANIFESTO — 만화 같은 비즈니스를 설계하는 시스템 아키텍트">
+  <meta property="og:description" content="업종을 세계관으로, 비즈니스를 이야기로, 코드를 서식으로.">
+  <meta property="og:image" content="https://dtslib1979.github.io/dtslib-branch/assets/icons/1768353694540.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&family=Cinzel:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #030303;
+      --gold: #D4AF37;
+      --gold-light: #E8C547;
+      --gold-pale: #F4E4A6;
+      --gold-dark: #8B7020;
+      --text: #F0EDE6;
+      --text-dim: rgba(240,237,230,.4);
+      --text-muted: rgba(240,237,230,.6);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: var(--gold-dark) var(--bg);
+    }
+
+    body {
+      font-family: 'Noto Serif KR', Georgia, serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ═══════════════════════════════════════
+       SCROLL PROGRESS BAR
+    ═══════════════════════════════════════ */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-pale));
+      z-index: 9999;
+      transition: width 0.1s linear;
+    }
+
+    /* ═══════════════════════════════════════
+       NAVIGATION
+    ═══════════════════════════════════════ */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 20px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      mix-blend-mode: difference;
+    }
+
+    .nav-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      color: white;
+      text-decoration: none;
+    }
+
+    .nav-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: white;
+      opacity: 0.6;
+    }
+
+    /* ═══════════════════════════════════════
+       HERO — FULL VIEWPORT OPENING
+    ═══════════════════════════════════════ */
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 50%, rgba(212,175,55,.04) 0%, transparent 70%),
+        radial-gradient(circle at 20% 80%, rgba(212,175,55,.02) 0%, transparent 40%),
+        radial-gradient(circle at 80% 20%, rgba(212,175,55,.02) 0%, transparent 40%);
+    }
+
+    .hero-particles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 50%;
+      opacity: 0;
+      animation: particleFloat 8s ease-in-out infinite;
+    }
+
+    @keyframes particleFloat {
+      0%, 100% { opacity: 0; transform: translateY(0) scale(0); }
+      10% { opacity: 0.6; transform: scale(1); }
+      90% { opacity: 0.3; }
+      100% { opacity: 0; transform: translateY(-100vh) scale(0); }
+    }
+
+    .hero-title-group {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-overline {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1s 0.5s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(32px, 7vw, 80px);
+      font-weight: 900;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    .hero-title .line {
+      display: block;
+      overflow: hidden;
+    }
+
+    .hero-title .line-inner {
+      display: block;
+      transform: translateY(120%);
+      animation: lineReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .hero-title .line:nth-child(1) .line-inner { animation-delay: 0.3s; }
+    .hero-title .line:nth-child(2) .line-inner { animation-delay: 0.5s; }
+    .hero-title .line:nth-child(3) .line-inner { animation-delay: 0.7s; }
+
+    .hero-title .gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-pale), var(--gold));
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: goldShimmer 4s ease-in-out infinite;
+    }
+
+    @keyframes goldShimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes lineReveal {
+      to { transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(14px, 2vw, 18px);
+      font-weight: 300;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      opacity: 0;
+      animation: fadeUp 1s 1.2s forwards;
+    }
+
+    .hero-scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeUp 1s 2s forwards;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+      50% { opacity: 1; transform: scaleY(1); }
+    }
+
+    .scroll-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    /* ═══════════════════════════════════════
+       REVEAL SECTIONS
+    ═══════════════════════════════════════ */
+    .section {
+      position: relative;
+      padding: 160px 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-wide {
+      max-width: 100%;
+      padding: 160px 0;
+    }
+
+    /* Reveal animation base */
+    .reveal {
+      opacity: 0;
+      transform: translateY(60px);
+      transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* ═══════════════════════════════════════
+       SECTION: IDENTITY STATEMENT
+    ═══════════════════════════════════════ */
+    .identity-section {
+      text-align: center;
+      padding: 200px 24px;
+      position: relative;
+    }
+
+    .identity-section::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(212,175,55,.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .identity-quote {
+      font-size: clamp(24px, 5vw, 56px);
+      font-weight: 700;
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+    }
+
+    .identity-quote .word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(40px) rotateX(40deg);
+      transition: opacity 0.8s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .identity-quote.visible .word {
+      opacity: 1;
+      transform: translateY(0) rotateX(0deg);
+    }
+
+    .identity-quote .word.gold {
+      color: var(--gold);
+      text-shadow: 0 0 40px rgba(212,175,55,.3);
+    }
+
+    /* ═══════════════════════════════════════
+       SECTION: PROCESS FLOW (HORIZONTAL)
+    ═══════════════════════════════════════ */
+    .process-section {
+      padding: 120px 0;
+      overflow: hidden;
+    }
+
+    .process-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .process-track {
+      display: flex;
+      gap: 0;
+      padding: 0 max(24px, calc((100vw - 1200px) / 2));
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .process-track::-webkit-scrollbar { display: none; }
+
+    .process-step {
+      flex: 0 0 280px;
+      scroll-snap-align: center;
+      padding: 48px 32px;
+      position: relative;
+      text-align: center;
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.8s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .process-step.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .process-step::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: -1px;
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold-dark), transparent);
+    }
+
+    .process-step:last-child::after { display: none; }
+
+    .step-number {
+      font-family: 'Cinzel', serif;
+      font-size: 48px;
+      font-weight: 300;
+      color: var(--gold);
+      opacity: 0.3;
+      margin-bottom: 16px;
+    }
+
+    .step-icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      background: rgba(212,175,55,.08);
+      border: 1px solid rgba(212,175,55,.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      transition: all 0.4s;
+    }
+
+    .process-step:hover .step-icon {
+      background: rgba(212,175,55,.15);
+      border-color: var(--gold);
+      transform: scale(1.1);
+      box-shadow: 0 0 40px rgba(212,175,55,.2);
+    }
+
+    .step-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .step-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    .step-arrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 24px;
+      color: var(--gold-dark);
+      flex: 0 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.4;
+    }
+
+    /* ═══════════════════════════════════════
+       SECTION: MANIFESTO PROSE
+    ═══════════════════════════════════════ */
+    .prose-section {
+      padding: 160px 24px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .prose-block {
+      margin-bottom: 80px;
+    }
+
+    .prose-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .prose-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+      padding-left: 24px;
+      position: relative;
+    }
+
+    .prose-label::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 12px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .prose-text {
+      font-size: clamp(18px, 3vw, 26px);
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--text);
+      letter-spacing: 0.01em;
+    }
+
+    .prose-text strong {
+      font-weight: 600;
+      color: var(--gold-light);
+    }
+
+    .prose-text em {
+      font-style: normal;
+      color: var(--text-muted);
+      font-size: 0.85em;
+    }
+
+    /* ═══════════════════════════════════════
+       SECTION: BIG STATEMENT (FULL BLEED)
+    ═══════════════════════════════════════ */
+    .statement-section {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 24px;
+      overflow: hidden;
+    }
+
+    .statement-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, var(--bg) 0%, transparent 20%),
+        linear-gradient(0deg, var(--bg) 0%, transparent 20%),
+        radial-gradient(ellipse 100% 60% at 50% 50%, rgba(212,175,55,.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .statement-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(212,175,55,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212,175,55,.03) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black, transparent);
+      -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black, transparent);
+    }
+
+    .statement-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 800px;
+    }
+
+    .statement-main {
+      font-size: clamp(28px, 6vw, 64px);
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 40px;
+    }
+
+    .statement-main .char {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(60px) scale(0.8);
+      transition: opacity 0.6s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .statement-main.visible .char {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .statement-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(14px, 2vw, 20px);
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    .statement-sub .line {
+      display: block;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s, transform 0.8s;
+    }
+
+    .statement-sub.visible .line {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .statement-sub .line:nth-child(1) { transition-delay: 0.6s; }
+    .statement-sub .line:nth-child(2) { transition-delay: 0.8s; }
+    .statement-sub .line:nth-child(3) { transition-delay: 1.0s; }
+
+    /* ═══════════════════════════════════════
+       SECTION: DOMAIN LIST (STAGGERED)
+    ═══════════════════════════════════════ */
+    .domains-section {
+      padding: 160px 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .domains-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .domain-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .domain-item {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 24px 32px;
+      background: rgba(255,255,255,.02);
+      border: 1px solid rgba(212,175,55,.08);
+      border-radius: 12px;
+      cursor: default;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+
+    .domain-item.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .domain-item:hover {
+      background: rgba(212,175,55,.04);
+      border-color: rgba(212,175,55,.3);
+      transform: translateX(8px);
+      box-shadow: 0 8px 40px rgba(0,0,0,.3);
+    }
+
+    .domain-icon {
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .domain-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .domain-arrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: var(--gold);
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: all 0.3s;
+    }
+
+    .domain-item:hover .domain-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* ═══════════════════════════════════════
+       SECTION: CLOSING (CODE = FORMAT)
+    ═══════════════════════════════════════ */
+    .closing-section {
+      padding: 200px 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .closing-section::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dark), transparent);
+    }
+
+    .closing-quote {
+      font-size: clamp(20px, 4vw, 40px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.6;
+      max-width: 700px;
+      margin: 0 auto 40px;
+      color: var(--text);
+    }
+
+    .closing-quote .highlight {
+      font-weight: 700;
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .closing-credit {
+      font-family: 'Cinzel', serif;
+      font-size: 14px;
+      letter-spacing: 0.3em;
+      color: var(--text-dim);
+    }
+
+    /* ═══════════════════════════════════════
+       FOOTER CTA
+    ═══════════════════════════════════════ */
+    .footer-cta {
+      padding: 120px 24px;
+      text-align: center;
+    }
+
+    .cta-badge {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 32px;
+    }
+
+    .cta-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--bg);
+      background: var(--gold);
+      padding: 16px 40px;
+      border-radius: 60px;
+      text-decoration: none;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 30px rgba(212,175,55,.3);
+    }
+
+    .cta-link:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 50px rgba(212,175,55,.4);
+      background: var(--gold-light);
+    }
+
+    .cta-link svg {
+      transition: transform 0.3s;
+    }
+
+    .cta-link:hover svg {
+      transform: translateX(4px);
+    }
+
+    /* ═══════════════════════════════════════
+       AMBIENT CURSOR GLOW
+    ═══════════════════════════════════════ */
+    .cursor-glow {
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,175,55,.03) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s;
+      opacity: 0;
+    }
+
+    .cursor-glow.active {
+      opacity: 1;
+    }
+
+    /* ═══════════════════════════════════════
+       COUNTER ANIMATION
+    ═══════════════════════════════════════ */
+    .counters-section {
+      padding: 120px 24px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .counters-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      text-align: center;
+    }
+
+    .counter-item {
+      padding: 32px 16px;
+      border: 1px solid rgba(212,175,55,.1);
+      border-radius: 16px;
+      background: rgba(212,175,55,.02);
+      transition: all 0.4s;
+    }
+
+    .counter-item:hover {
+      border-color: rgba(212,175,55,.3);
+      background: rgba(212,175,55,.05);
+      transform: translateY(-4px);
+    }
+
+    .counter-value {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .counter-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media (max-width: 768px) {
+      .section { padding: 100px 20px; }
+      .process-step { flex: 0 0 240px; padding: 32px 24px; }
+      .counters-grid { grid-template-columns: 1fr; gap: 16px; }
+      .domain-item { padding: 20px 24px; gap: 16px; }
+      .nav { padding: 16px 20px; }
+      .identity-section { padding: 120px 20px; }
+      .statement-section { padding: 80px 20px; min-height: auto; }
+      .prose-section { padding: 100px 20px; }
+      .closing-section { padding: 120px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Cursor Glow -->
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <!-- Scroll Progress -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <a href="../" class="nav-logo">DIMAS</a>
+    <span class="nav-label">Manifesto</span>
+  </nav>
+
+  <!-- ════════════════════════════════════════════
+       HERO
+  ════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-particles" id="heroParticles"></div>
+
+    <div class="hero-title-group">
+      <p class="hero-overline">Manifesto — 2026</p>
+      <h1 class="hero-title">
+        <span class="line"><span class="line-inner">만화 같은 비즈니스를</span></span>
+        <span class="line"><span class="line-inner">설계하는</span></span>
+        <span class="line"><span class="line-inner"><span class="gold">시스템 아키텍트</span></span></span>
+      </h1>
+      <p class="hero-subtitle">업종을 세계관으로, 비즈니스를 이야기로, 코드를 서식으로.</p>
+    </div>
+
+    <div class="hero-scroll-indicator">
+      <div class="scroll-line"></div>
+      <span class="scroll-text">Scroll</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       IDENTITY STATEMENT
+  ════════════════════════════════════════════ -->
+  <section class="identity-section">
+    <p class="identity-quote" id="identityQuote">
+      나는 <span class="word gold">컨설턴트</span>도 아니고,
+      <span class="word gold">기획자</span>도 아니고,
+      <span class="word gold">개발자</span>도 아니고,
+      <span class="word gold">마케터</span>도 아니고,
+      <span class="word gold">작가</span>도 아니다.
+    </p>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       PROSE: WHAT I DO
+  ════════════════════════════════════════════ -->
+  <section class="prose-section">
+    <div class="prose-block reveal">
+      <p class="prose-label">Definition</p>
+      <p class="prose-text">
+        나는 현실의 비즈니스를<br>
+        <strong>만화처럼 재설계하는 사람</strong>이다.
+      </p>
+    </div>
+
+    <div class="prose-block reveal">
+      <p class="prose-label">Method</p>
+      <p class="prose-text">
+        업종을 고르고, 며칠을 스터디하고,<br>
+        그 업종을 하나의 <strong>세계관</strong>으로 번역한다.<br>
+        <em>— 비즈니스를 만화처럼 재구성한다.</em>
+      </p>
+    </div>
+
+    <div class="prose-block reveal">
+      <p class="prose-label">Output</p>
+      <p class="prose-text">
+        스토리, 구조, 상품, 동선을<br>
+        한 번에 설계하고,<br>
+        <strong>"이렇게 하면 살아난다"</strong>는<br>
+        역제안을 던진다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       PROCESS FLOW
+  ════════════════════════════════════════════ -->
+  <section class="process-section section-wide">
+    <p class="process-title reveal">The Engine</p>
+    <div class="process-track" id="processTrack">
+      <div class="process-step" data-step="1">
+        <div class="step-number">01</div>
+        <div class="step-icon">🔍</div>
+        <p class="step-label">업종 선택</p>
+        <p class="step-desc">현실의 업종을 고른다</p>
+      </div>
+      <div class="process-step" data-step="2">
+        <div class="step-number">02</div>
+        <div class="step-icon">🎭</div>
+        <p class="step-label">캐릭터화</p>
+        <p class="step-desc">사람과 가게에 캐릭터를 부여한다</p>
+      </div>
+      <div class="process-step" data-step="3">
+        <div class="step-number">03</div>
+        <div class="step-icon">🌍</div>
+        <p class="step-label">세계관화</p>
+        <p class="step-desc">업종을 하나의 세계관으로 번역한다</p>
+      </div>
+      <div class="process-step" data-step="4">
+        <div class="step-number">04</div>
+        <div class="step-icon">⚙️</div>
+        <p class="step-label">프로그램화</p>
+        <p class="step-desc">구조와 동선을 시스템으로 설계한다</p>
+      </div>
+      <div class="process-step" data-step="5">
+        <div class="step-number">05</div>
+        <div class="step-icon">📖</div>
+        <p class="step-label">스토리화</p>
+        <p class="step-desc">비즈니스를 이야기로 풀어낸다</p>
+      </div>
+      <div class="process-step" data-step="6">
+        <div class="step-number">06</div>
+        <div class="step-icon">💰</div>
+        <p class="step-label">수익 구조</p>
+        <p class="step-desc">세계가 스스로 돈을 벌게 만든다</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       COUNTER STATS
+  ════════════════════════════════════════════ -->
+  <section class="counters-section">
+    <div class="counters-grid">
+      <div class="counter-item reveal">
+        <div class="counter-value" data-target="∞">∞</div>
+        <div class="counter-label">Applicable Industries</div>
+      </div>
+      <div class="counter-item reveal reveal-delay-2">
+        <div class="counter-value" data-target="1">1</div>
+        <div class="counter-label">Engine</div>
+      </div>
+      <div class="counter-item reveal reveal-delay-4">
+        <div class="counter-value" data-target="6">6</div>
+        <div class="counter-label">Step Process</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       BIG STATEMENT
+  ════════════════════════════════════════════ -->
+  <section class="statement-section">
+    <div class="statement-grid"></div>
+    <div class="statement-content">
+      <h2 class="statement-main" id="statementMain">
+        백종원이 식당을 살리듯, 나는 모든 업종을 살린다.
+      </h2>
+      <p class="statement-sub" id="statementSub">
+        <span class="line">식당이든, 탱고 학원이든, 보험이든,</span>
+        <span class="line">미대생이든, 유튜버든 — 전부.</span>
+        <span class="line">돈이 도는 구조로 변환한다.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       DOMAINS
+  ════════════════════════════════════════════ -->
+  <section class="domains-section">
+    <p class="domains-title reveal">Applicable Worlds</p>
+    <div class="domain-list" id="domainList">
+      <div class="domain-item">
+        <span class="domain-icon">🍽️</span>
+        <span class="domain-name">식당 · 요식업</span>
+        <span class="domain-arrow">→</span>
+      </div>
+      <div class="domain-item">
+        <span class="domain-icon">💃</span>
+        <span class="domain-name">탱고 학원 · 예체능</span>
+        <span class="domain-arrow">→</span>
+      </div>
+      <div class="domain-item">
+        <span class="domain-icon">🛡️</span>
+        <span class="domain-name">보험 · 금융</span>
+        <span class="domain-arrow">→</span>
+      </div>
+      <div class="domain-item">
+        <span class="domain-icon">🎨</span>
+        <span class="domain-name">미대생 · 크리에이터</span>
+        <span class="domain-arrow">→</span>
+      </div>
+      <div class="domain-item">
+        <span class="domain-icon">📹</span>
+        <span class="domain-name">유튜버 · 미디어</span>
+        <span class="domain-arrow">→</span>
+      </div>
+      <div class="domain-item">
+        <span class="domain-icon">∞</span>
+        <span class="domain-name">그 외 모든 업종</span>
+        <span class="domain-arrow">→</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       CLOSING: CODE = FORMAT
+  ════════════════════════════════════════════ -->
+  <section class="closing-section">
+    <div class="reveal">
+      <p class="closing-quote">
+        나에게 <span class="highlight">프로그래밍</span>은 서식이다.<br>
+        세계관을 담는 그릇.<br>
+        이야기가 흐르는 회로.
+      </p>
+      <p class="closing-credit">— DIMAS, 2026</p>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       FOOTER CTA
+  ════════════════════════════════════════════ -->
+  <section class="footer-cta">
+    <div class="reveal">
+      <p class="cta-badge">Contact</p>
+      <a href="mailto:dimas@dtslib.com?subject=Story%20Architect%20Inquiry" class="cta-link">
+        이야기를 시작하다
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       JAVASCRIPT
+  ════════════════════════════════════════════ -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ─── SCROLL PROGRESS ────────────────────
+      const scrollProgress = document.getElementById('scrollProgress');
+
+      function updateProgress() {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = (scrollTop / docHeight) * 100;
+        scrollProgress.style.width = progress + '%';
+      }
+
+      // ─── CURSOR GLOW ────────────────────────
+      const cursorGlow = document.getElementById('cursorGlow');
+      let mouseX = 0, mouseY = 0;
+      let glowX = 0, glowY = 0;
+
+      document.addEventListener('mousemove', function(e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursorGlow.classList.add('active');
+      });
+
+      document.addEventListener('mouseleave', function() {
+        cursorGlow.classList.remove('active');
+      });
+
+      function animateGlow() {
+        glowX += (mouseX - glowX) * 0.08;
+        glowY += (mouseY - glowY) * 0.08;
+        cursorGlow.style.left = glowX + 'px';
+        cursorGlow.style.top = glowY + 'px';
+        requestAnimationFrame(animateGlow);
+      }
+      animateGlow();
+
+      // ─── HERO PARTICLES ─────────────────────
+      const particlesContainer = document.getElementById('heroParticles');
+      for (var i = 0; i < 30; i++) {
+        var p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.top = Math.random() * 100 + '%';
+        p.style.animationDelay = Math.random() * 8 + 's';
+        p.style.animationDuration = (6 + Math.random() * 6) + 's';
+        p.style.width = (1 + Math.random() * 2) + 'px';
+        p.style.height = p.style.width;
+        particlesContainer.appendChild(p);
+      }
+
+      // ─── INTERSECTION OBSERVER: REVEAL ──────
+      var revealObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+      document.querySelectorAll('.reveal').forEach(function(el) {
+        revealObserver.observe(el);
+      });
+
+      // ─── IDENTITY QUOTE: WORD-BY-WORD REVEAL ──
+      var identityQuote = document.getElementById('identityQuote');
+      var identityText = identityQuote.innerHTML;
+
+      // Wrap each text node word in a span
+      function wrapWords(element) {
+        var nodes = element.childNodes;
+        var wrapped = '';
+        for (var n = 0; n < nodes.length; n++) {
+          var node = nodes[n];
+          if (node.nodeType === 3) { // text node
+            var words = node.textContent.split(/(\s+)/);
+            for (var w = 0; w < words.length; w++) {
+              if (words[w].trim()) {
+                wrapped += '<span class="word">' + words[w] + '</span> ';
+              } else {
+                wrapped += words[w];
+              }
+            }
+          } else if (node.nodeType === 1) { // element node
+            wrapped += node.outerHTML;
+          }
+        }
+        element.innerHTML = wrapped;
+      }
+
+      wrapWords(identityQuote);
+
+      var identityWords = identityQuote.querySelectorAll('.word');
+      var identityObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            // Stagger word reveal
+            var words = entry.target.querySelectorAll('.word');
+            words.forEach(function(word, i) {
+              word.style.transitionDelay = (i * 0.08) + 's';
+            });
+          }
+        });
+      }, { threshold: 0.3 });
+
+      identityObserver.observe(identityQuote);
+
+      // ─── PROCESS STEPS: STAGGER REVEAL ──────
+      var processSteps = document.querySelectorAll('.process-step');
+      var processObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var step = parseInt(entry.target.dataset.step) || 1;
+            entry.target.style.transitionDelay = ((step - 1) * 0.15) + 's';
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.2 });
+
+      processSteps.forEach(function(step) {
+        processObserver.observe(step);
+      });
+
+      // ─── STATEMENT: CHARACTER SPLIT ─────────
+      var statementMain = document.getElementById('statementMain');
+      var statementText = statementMain.textContent;
+      statementMain.innerHTML = '';
+
+      for (var c = 0; c < statementText.length; c++) {
+        var charSpan = document.createElement('span');
+        charSpan.className = 'char';
+        charSpan.textContent = statementText[c] === ' ' ? '\u00A0' : statementText[c];
+        charSpan.style.transitionDelay = (c * 0.03) + 's';
+        statementMain.appendChild(charSpan);
+      }
+
+      var statementSub = document.getElementById('statementSub');
+
+      var statementObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            statementMain.classList.add('visible');
+            statementSub.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.3 });
+
+      statementObserver.observe(statementMain);
+
+      // ─── DOMAIN LIST: STAGGER REVEAL ────────
+      var domainItems = document.querySelectorAll('.domain-item');
+      var domainObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var items = document.querySelectorAll('.domain-item');
+            items.forEach(function(item, i) {
+              setTimeout(function() {
+                item.classList.add('visible');
+              }, i * 120);
+            });
+            domainObserver.disconnect();
+          }
+        });
+      }, { threshold: 0.1 });
+
+      if (domainItems.length > 0) {
+        domainObserver.observe(domainItems[0]);
+      }
+
+      // ─── SCROLL LISTENER ────────────────────
+      var ticking = false;
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          requestAnimationFrame(function() {
+            updateProgress();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+
+      // ─── PARALLAX ON HERO ───────────────────
+      var heroTitle = document.querySelector('.hero-title-group');
+
+      window.addEventListener('scroll', function() {
+        var scrollY = window.scrollY;
+        if (scrollY < window.innerHeight) {
+          var parallax = scrollY * 0.4;
+          var opacity = 1 - (scrollY / (window.innerHeight * 0.8));
+          heroTitle.style.transform = 'translateY(' + parallax + 'px)';
+          heroTitle.style.opacity = Math.max(0, opacity);
+        }
+      });
+
+      // ─── SMOOTH SCROLL FOR INTERNAL LINKS ───
+      document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          var target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+
+    })();
+  </script>
+</body>
+</html>
