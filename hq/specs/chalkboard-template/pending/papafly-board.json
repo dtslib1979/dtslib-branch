@@ -1,0 +1,47 @@
+{
+  "$schema": "chalkboard-pack-v1",
+  "version": "1.0",
+  "branch": {
+    "id": "papafly",
+    "name": "PAPAFLY",
+    "accent": "#8B4513"
+  },
+  "board": {
+    "day": 1,
+    "title": "Today's Chalkboard",
+    "date": "2026-01-26"
+  },
+  "topic": "물성 스튜디오 — 오늘의 촬영",
+  "cards": [
+    {
+      "icon": "📷",
+      "title": "Photo Studio",
+      "subtitle": "사진 촬영",
+      "link": "#"
+    },
+    {
+      "icon": "🖼️",
+      "title": "Gallery",
+      "subtitle": "갤러리 업로드",
+      "link": "#"
+    },
+    {
+      "icon": "📝",
+      "title": "Caption",
+      "subtitle": "캡션 작성",
+      "link": "#"
+    },
+    {
+      "icon": "📦",
+      "title": "Product",
+      "subtitle": "실물 프로덕트",
+      "link": "#"
+    }
+  ],
+  "quickAccess": {
+    "archive": "https://github.com/dtslib1979/papafly",
+    "engine": "https://dtslib1979.github.io/dtslib-branch/staff/",
+    "github": "https://github.com/dtslib1979/papafly",
+    "guide": "#"
+  }
+}

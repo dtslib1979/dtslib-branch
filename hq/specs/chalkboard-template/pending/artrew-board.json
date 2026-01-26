@@ -1,0 +1,59 @@
+{
+  "$schema": "chalkboard-pack-v1",
+  "version": "1.0",
+  "branch": {
+    "id": "artrew",
+    "name": "ARTREW",
+    "accent": "#D4AF37"
+  },
+  "board": {
+    "day": 1,
+    "title": "Today's Chalkboard",
+    "date": "2026-01-26"
+  },
+  "topic": "AI 네이티브 아티스트 — 오늘의 빌드",
+  "cards": [
+    {
+      "icon": "🎬",
+      "title": "YouTube Studio",
+      "subtitle": "영상 업로드",
+      "link": "https://studio.youtube.com"
+    },
+    {
+      "icon": "🤖",
+      "title": "Claude Code",
+      "subtitle": "자동화 구축",
+      "link": "#"
+    },
+    {
+      "icon": "🛠️",
+      "title": "Tools Lab",
+      "subtitle": "도구 실험",
+      "link": "#"
+    },
+    {
+      "icon": "📝",
+      "title": "Script",
+      "subtitle": "스크립트 작성",
+      "link": "#"
+    },
+    {
+      "icon": "📊",
+      "title": "Analytics",
+      "subtitle": "성과 분석",
+      "link": "#"
+    },
+    {
+      "icon": "🔗",
+      "title": "SDK",
+      "subtitle": "HQ SDK 연동",
+      "link": "https://github.com/dtslib1979/dtslib-branch/tree/main/hq/sdk"
+    }
+  ],
+  "quickAccess": {
+    "archive": "https://github.com/dtslib1979/artrew",
+    "engine": "https://dtslib1979.github.io/dtslib-branch/staff/",
+    "github": "https://github.com/dtslib1979/artrew",
+    "guide": "#"
+  }
+}

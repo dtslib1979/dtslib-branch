@@ -1,0 +1,47 @@
+{
+  "$schema": "chalkboard-pack-v1",
+  "version": "1.0",
+  "branch": {
+    "id": "gohsy",
+    "name": "GOHSY",
+    "accent": "#D4AF37"
+  },
+  "board": {
+    "day": 1,
+    "title": "Today's Chalkboard",
+    "date": "2026-01-26"
+  },
+  "topic": "소원 실현 — 오늘의 목표",
+  "cards": [
+    {
+      "icon": "🎬",
+      "title": "YouTube Studio",
+      "subtitle": "영상 업로드",
+      "link": "https://studio.youtube.com"
+    },
+    {
+      "icon": "✨",
+      "title": "Wish List",
+      "subtitle": "목표 점검",
+      "link": "#"
+    },
+    {
+      "icon": "📝",
+      "title": "Script",
+      "subtitle": "스크립트 작성",
+      "link": "#"
+    },
+    {
+      "icon": "🎙️",
+      "title": "Voice Memo",
+      "subtitle": "음성 메모",
+      "link": "#"
+    }
+  ],
+  "quickAccess": {
+    "archive": "https://github.com/dtslib1979/gohsy",
+    "engine": "https://dtslib1979.github.io/dtslib-branch/staff/",
+    "github": "https://github.com/dtslib1979/gohsy",
+    "guide": "#"
+  }
+}

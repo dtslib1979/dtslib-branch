@@ -1,0 +1,59 @@
+{
+  "$schema": "chalkboard-pack-v1",
+  "version": "1.0",
+  "branch": {
+    "id": "buckley",
+    "name": "BUCKLEY",
+    "accent": "#2E8B57"
+  },
+  "board": {
+    "day": 1,
+    "title": "Today's Chalkboard",
+    "date": "2026-01-26"
+  },
+  "topic": "Reality Interface — 오늘의 리뷰",
+  "cards": [
+    {
+      "icon": "📋",
+      "title": "Zone Check",
+      "subtitle": "GREEN/YELLOW/RED 판단",
+      "link": "#"
+    },
+    {
+      "icon": "💼",
+      "title": "Entity Review",
+      "subtitle": "개인/사업자/법인",
+      "link": "#"
+    },
+    {
+      "icon": "📊",
+      "title": "Tax Report",
+      "subtitle": "세무 리포트",
+      "link": "#"
+    },
+    {
+      "icon": "⚖️",
+      "title": "Legal Check",
+      "subtitle": "법무 리스크",
+      "link": "#"
+    },
+    {
+      "icon": "🤝",
+      "title": "Partners",
+      "subtitle": "파트너 네트워크",
+      "link": "#"
+    },
+    {
+      "icon": "🤖",
+      "title": "Automation",
+      "subtitle": "자동화 파이프라인",
+      "link": "#"
+    }
+  ],
+  "quickAccess": {
+    "archive": "https://github.com/dtslib1979/buckleychang.com",
+    "engine": "https://dtslib1979.github.io/dtslib-branch/staff/",
+    "github": "https://github.com/dtslib1979/buckleychang.com",
+    "guide": "#"
+  }
+}
