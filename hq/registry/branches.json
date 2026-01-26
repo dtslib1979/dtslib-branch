@@ -1,114 +1,112 @@
 {
   "$schema": "./schemas/branch.schema.json",
-  "version": "2.1",
-  "hqProtocolVersion": "2.1",
-  "lastUpdated": "2026-01-16T00:00:00Z",
-  "cells": [
+  "version": "3.0",
+  "hqProtocolVersion": "3.0",
+  "lastUpdated": "2026-01-26T00:00:00Z",
+  "description": "2-Axis Branch Registry: Governance + Cognitive",
+
+  "axes": {
+    "governance": {
+      "collaborator": "HQ와 강하게 연동. 구조/룰/업데이트 HQ 주도",
+      "independent": "자체 OS 보유. HQ는 레지스트리/게이트만 담당"
+    },
+    "cognitive": {
+      "creator": "콘텐츠 중심. AI는 도우미. 출력=콘텐츠",
+      "builder": "시스템 중심. AI는 동료. 출력=도구/OS/파이프라인",
+      "hybrid": "Creator 기반 + Builder 성향 공존"
+    }
+  },
+
+  "branches": [
     {
       "id": "koosy",
       "name": "KOOSY",
       "repo": "dtslib1979/koosy",
       "domain": "koosy.dtslib.com",
-      "area": "content",
-      "tier": "standard",
-      "visibility": "public",
+      "governance": "collaborator",
+      "cognitive": "hybrid",
+      "focus": "방송/셀럽 콘텐츠, 매크로 금융, 금속 투자",
+      "description": "글 욕망 + Claude Code 호기심. 시간 적음. HQ 주도 필요",
       "status": "active",
-      "owner": "dimas@dtslib.com",
-      "hqProtocolVersion": "2.1",
-      "features": ["celeb-story", "bluffing-edit"],
-      "createdAt": "2026-01-01T00:00:00Z",
-      "maintenanceMode": false
+      "visibility": "public",
+      "owner": "koosy",
+      "hqAccess": ["templates", "sync", "claude-code", "broadcast"],
+      "createdAt": "2026-01-01T00:00:00Z"
     },
     {
       "id": "gohsy",
       "name": "GOHSY",
       "repo": "dtslib1979/gohsy",
       "domain": "gohsy.dtslib.com",
-      "area": "business",
-      "tier": "standard",
+      "governance": "collaborator",
+      "cognitive": "creator",
+      "focus": "유튜브, 프로덕션, 꿈 실현",
+      "description": "유튜브/프로덕션만 관심. 시스템은 HQ가 대신",
+      "status": "active",
       "visibility": "private",
-      "status": "pending",
-      "owner": "dimas@dtslib.com",
-      "hqProtocolVersion": "2.1",
-      "features": ["wish-tracking", "goal-setting"],
-      "createdAt": "2026-01-16T00:00:00Z",
-      "maintenanceMode": false
+      "owner": "gohsy",
+      "hqAccess": ["templates", "sync", "broadcast"],
+      "createdAt": "2026-01-16T00:00:00Z"
     },
     {
       "id": "artrew",
       "name": "ARTREW",
       "repo": "dtslib1979/artrew",
       "domain": "artrew.dtslib.com",
-      "area": "content",
-      "tier": "standard",
-      "visibility": "public",
+      "governance": "collaborator",
+      "cognitive": "builder",
+      "focus": "AI 네이티브, 시스템 구축, 자동화",
+      "description": "Builder 잠재력 최대. 가장 큰 성장 기대",
       "status": "active",
-      "owner": "dimas@dtslib.com",
-      "hqProtocolVersion": "2.1",
-      "features": ["celeb-story", "bluffing-edit", "franchise-os"],
-      "createdAt": "2026-01-22T00:00:00Z",
-      "maintenanceMode": false
+      "visibility": "public",
+      "owner": "artrew",
+      "hqAccess": ["templates", "sync", "claude-code", "sdk", "broadcast"],
+      "createdAt": "2026-01-22T00:00:00Z"
     },
     {
       "id": "papafly",
       "name": "PAPAFLY",
       "repo": "dtslib1979/papafly",
       "domain": "papafly.dtslib.com",
-      "area": "product",
-      "tier": "canary",
+      "governance": "collaborator",
+      "cognitive": "creator",
+      "focus": "물성 스튜디오, 사진, 콘텐츠",
+      "description": "물성 중심 크리에이터. 사진/콘텐츠형",
+      "status": "incubation",
       "visibility": "private",
-      "status": "pending",
-      "owner": "dimas@dtslib.com",
-      "hqProtocolVersion": "2.1",
-      "features": ["experimental", "prototype"],
-      "createdAt": "2026-01-16T00:00:00Z",
-      "maintenanceMode": false
+      "owner": "papafly",
+      "hqAccess": ["templates", "sync", "broadcast"],
+      "createdAt": "2026-01-16T00:00:00Z"
     },
     {
       "id": "buckley",
       "name": "BUCKLEY",
-      "repo": "dtslib1979/buckley",
-      "domain": "buckley.dtslib.com",
-      "area": "content",
-      "tier": "standard",
+      "repo": "dtslib1979/buckleychang.com",
+      "domain": "buckleychang.com",
+      "governance": "collaborator",
+      "cognitive": "builder",
+      "focus": "자동화, 사무 OS, 시스템 파트너",
+      "description": "유튜브 X. 자동화/사무 OS 파트너. 독립 후보",
+      "status": "active",
       "visibility": "public",
-      "status": "pending",
-      "owner": "dimas@dtslib.com",
-      "hqProtocolVersion": "2.1",
-      "features": ["broadcasting"],
-      "createdAt": "2026-01-23T00:00:00Z",
-      "maintenanceMode": false
+      "owner": "buckley",
+      "hqAccess": ["templates", "sync", "claude-code", "sdk"],
+      "createdAt": "2026-01-23T00:00:00Z"
     }
   ],
-  "tiers": {
-    "canary": {
-      "description": "Test deployments first",
-      "deployOrder": 1,
-      "autoMerge": false
-    },
-    "standard": {
-      "description": "Main production cells",
-      "deployOrder": 2,
-      "autoMerge": false
-    },
-    "incubation": {
-      "description": "New experimental cells",
-      "deployOrder": 3,
-      "autoMerge": false
-    }
+
+  "hqAccessTypes": {
+    "templates": "페이지/컴포넌트 템플릿",
+    "sync": "HQ 동기화 시스템",
+    "claude-code": "Claude Code 에이전트 접근",
+    "sdk": "dtslib-bridge SDK",
+    "broadcast": "방송/강의 시스템"
   },
-  "areas": {
-    "product": {
-      "name": "Product & Platform",
-      "cells": ["papafly"]
-    },
-    "business": {
-      "name": "Business & Service",
-      "cells": ["gohsy"]
-    },
-    "content": {
-      "name": "Content",
-      "cells": ["koosy", "artrew", "buckley"]
-    }
+
+  "statusTypes": {
+    "active": "정상 운영 중",
+    "incubation": "인큐베이션 단계",
+    "pending": "대기/준비 중",
+    "independent": "독립 완료"
   }
 }
