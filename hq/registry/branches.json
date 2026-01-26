@@ -92,6 +92,21 @@
       "owner": "buckley",
       "hqAccess": ["templates", "sync", "claude-code", "sdk"],
       "createdAt": "2026-01-23T00:00:00Z"
+    },
+    {
+      "id": "lotus",
+      "name": "LOTUS",
+      "repo": "dtslib1979/lotus",
+      "domain": "lotus.kr",
+      "governance": "collaborator",
+      "cognitive": "creator",
+      "focus": "크리에이티브 스튜디오, 비주얼 콘텐츠, 프로덕션",
+      "description": "프리미엄 비주얼 경험. 콘텐츠 제작 중심",
+      "status": "active",
+      "visibility": "public",
+      "owner": "lotus",
+      "hqAccess": ["templates", "sync", "broadcast"],
+      "createdAt": "2026-01-23T00:00:00Z"
     }
   ],
 
