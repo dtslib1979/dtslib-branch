@@ -1,0 +1,12 @@
+{
+  "repo": "dtslib-branch",
+  "level": 1,
+  "parent": "dtslib-papyrus",
+  "type": "Protocol HQ",
+  "inherit": {
+    "immutable": "strict",
+    "defaults": "override-allowed"
+  },
+  "created": "2026-01-26",
+  "overrides": []
+}
