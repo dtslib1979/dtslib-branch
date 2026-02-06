@@ -1,0 +1,9 @@
+{
+  "id": "evt-20260206-w5dscr",
+  "ts": "2026-02-06T14:46:24.782Z",
+  "title": "Repo-OS v6.0 안정화 완료 — 듀얼 레인 아키텍처 검증 기록",
+  "body": "오늘 Repo-OS v6.0 안정화 테스트 완료. 8개 시나리오 × 3회 = 24회 연속 성공. 핵심 수정: jq compact output, HTTPS token auth, 브랜치 유니크화. 이 기록은 university lane으로 라우팅되어 지식 아톰으로 저장될 예정.",
+  "tags": [],
+  "owner": "parksy",
+  "source_event": "evt-20260206-w5dscr"
+}
