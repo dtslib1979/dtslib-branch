@@ -2,7 +2,7 @@
   "$schema": "./schemas/branch.schema.json",
   "version": "3.0",
   "hqProtocolVersion": "3.0",
-  "lastUpdated": "2026-01-26T00:00:00Z",
+  "lastUpdated": "2026-03-05T00:00:00Z",
   "description": "2-Axis Branch Registry: Governance + Cognitive",
 
   "axes": {
@@ -25,12 +25,21 @@
       "domain": "koosy.dtslib.com",
       "governance": "collaborator",
       "cognitive": "hybrid",
-      "focus": "방송/셀럽 콘텐츠, 매크로 금융, 금속 투자",
-      "description": "글 욕망 + Claude Code 호기심. 시간 적음. HQ 주도 필요",
+      "focus": "교육 키트 커머스 + AI 강의 번들 (허생.exe 3축 소싱 모델)",
+      "description": "ZONE D PRODUCTION 승급. gohsy-fashion 보일러플레이트 4채널 루프백 커머스 전환. KS-001 ESP32 IoT 스타터 키트 첫 상품.",
       "status": "active",
       "visibility": "public",
       "owner": "koosy",
       "hqAccess": ["templates", "sync", "claude-code", "broadcast"],
+      "commerce": {
+        "status": "planned",
+        "boilerplate": "gohsy-fashion",
+        "channels": ["coupang", "naver", "youtube", "showroom"],
+        "firstProduct": "KS-001",
+        "planDoc": "docs/KOOSY-COMMERCE-REFACTORING-PLAN.md",
+        "implDoc": "docs/IMPLEMENTATION-GUIDE.md",
+        "transitionDate": "2026-03-05"
+      },
       "createdAt": "2026-01-01T00:00:00Z"
     },
     {
@@ -52,15 +61,24 @@
       "id": "artrew",
       "name": "ARTREW",
       "repo": "dtslib1979/artrew",
-      "domain": "artrew.dtslib.com",
+      "domain": "artrew.com",
       "governance": "collaborator",
       "cognitive": "builder",
-      "focus": "AI 네이티브, 시스템 구축, 자동화",
-      "description": "Builder 잠재력 최대. 가장 큰 성장 기대",
+      "focus": "AI 아트 커머스 쇼핑몰 + 갤러리 쇼룸",
+      "description": "ZONE D PRODUCTION 승급. gohsy-fashion 보일러플레이트 4채널 루프백 커머스 전환. AR-001 AI 아트 포스터 시리즈 첫 상품. Gold 팔레트 브랜드 유지.",
       "status": "active",
       "visibility": "public",
       "owner": "artrew",
       "hqAccess": ["templates", "sync", "claude-code", "sdk", "broadcast"],
+      "commerce": {
+        "status": "planned",
+        "boilerplate": "gohsy-fashion",
+        "channels": ["coupang", "naver", "youtube", "showroom"],
+        "firstProduct": "AR-001",
+        "planDoc": "docs/ARTREW-COMMERCE-REFACTORING-PLAN.md",
+        "implDoc": "docs/IMPLEMENTATION-GUIDE.md",
+        "transitionDate": "2026-03-05"
+      },
       "createdAt": "2026-01-22T00:00:00Z"
     },
     {
