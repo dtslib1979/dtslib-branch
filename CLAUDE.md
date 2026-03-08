@@ -213,3 +213,15 @@ CNAME \ub808\ucf54\ub4dc: `dtslib1979.github.io`
 ---
 
 *\ub9c8\uc9c0\ub9c9 \uc5c5\ub370\uc774\ud2b8: 2026-01-12*
+---
+
+## Browser Runtime
+
+> Parksy OS 2+2 매트릭스 — 이 레포 전담 브라우저
+
+| 항목 | 값 |
+|------|-----|
+| **브라우저** | Google Chrome |
+| **이유** | 프랜차이즈 OS 보일러플레이트 — 코드 시연 |
+| **URL** | https://dtslib.com |
+
