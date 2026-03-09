@@ -41,7 +41,7 @@ jobs:
               echo "✗ $CELL: $STATUS (expected $EXPECTED)"
             fi
 
-            RESULTS=$(echo "$RESULTS" | jq ". + [{\"cell\":\"$CELL\",\"status\":\"$STATUS\",\"result\":\"$RESULT\"}]")
+            RESULTS=$(echo "$RESULTS" | jq -c ". + [{\"cell\":\"$CELL\",\"status\":\"$STATUS\",\"result\":\"$RESULT\"}]")
           done
 
           echo "results=$RESULTS" >> $GITHUB_OUTPUT
