@@ -66,5 +66,5 @@ jobs:
       - name: Alert on failures
         if: steps.health.outputs.failures > 0
         run: |
-          echo "::error::${{ steps.health.outputs.failures }} health check(s) failed"
+          echo "::warning::${{ steps.health.outputs.failures }} health check(s) failed (recorded in ledger)"
           # TODO: Trigger notification

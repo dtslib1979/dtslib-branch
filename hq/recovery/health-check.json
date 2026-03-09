@@ -5,21 +5,21 @@
   "endpoints": [
     {
       "cell": "koosy",
-      "url": "https://dtslib1979.github.io/koosy/",
+      "url": "https://koosy.kr/",
       "method": "GET",
       "expectedStatus": 200,
       "timeout": 10000
     },
     {
       "cell": "gohsy",
-      "url": "https://dtslib1979.github.io/gohsy/",
+      "url": "https://gohsy.com/",
       "method": "GET",
       "expectedStatus": 200,
       "timeout": 10000
     },
     {
       "cell": "papafly",
-      "url": "https://dtslib1979.github.io/papafly/",
+      "url": "https://papafly.kr/",
       "method": "GET",
       "expectedStatus": 200,
       "timeout": 10000
