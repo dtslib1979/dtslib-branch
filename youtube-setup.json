@@ -1,0 +1,106 @@
+{
+  "_comment": "DTSLIB Branch YouTube 채널 설정",
+  "_account": "b",
+  "_channel_id_ref": "UCxz800sMD27pk6X6HvxNS1g",
+  "channel": {
+    "title": "DTSLIB Branch",
+    "description": "🏢 DTSLIB 프랜차이즈 허브.\n브랜치 5명의 비즈니스 성장 과정을 공개합니다.\n\n✅ 브랜치 사업 성장 기록\n✅ 프랜차이즈 운영 노하우\n✅ 지인 경제 실험\n✅ AI 도구 활용 비즈니스",
+    "keywords": [
+      "DTSLIB",
+      "프랜차이즈",
+      "브랜치",
+      "1인사업",
+      "AI비즈니스",
+      "지인경제"
+    ],
+    "language": "ko",
+    "country": "KR",
+    "trailer_video_id": null,
+    "banner_image_path": "assets/youtube-banner.jpg",
+    "profile_image_path": "assets/youtube-profile.jpg"
+  },
+  "upload_defaults": {
+    "categoryId": "28",
+    "language": "ko",
+    "license": "youtube",
+    "privacyStatus": "public",
+    "selfDeclaredMadeForKids": false
+  },
+  "playlists": [
+    {
+      "id_key": "branches",
+      "title": "브랜치 성장 기록",
+      "description": "브랜치 5명의 사업 시작과 성장.",
+      "privacyStatus": "public",
+      "tags": [
+        "브랜치",
+        "사업",
+        "성장"
+      ]
+    },
+    {
+      "id_key": "franchise",
+      "title": "프랜차이즈 OS",
+      "description": "DTSLIB 프랜차이즈 운영 시스템.",
+      "privacyStatus": "public",
+      "tags": [
+        "프랜차이즈",
+        "OS",
+        "시스템"
+      ]
+    },
+    {
+      "id_key": "ai_biz",
+      "title": "AI 비즈니스 활용",
+      "description": "AI로 사업 효율 높이기.",
+      "privacyStatus": "public",
+      "tags": [
+        "AI",
+        "비즈니스",
+        "효율"
+      ]
+    },
+    {
+      "id_key": "network",
+      "title": "지인 경제 네트워크",
+      "description": "사람 사이에서 만들어지는 가치.",
+      "privacyStatus": "public",
+      "tags": [
+        "네트워크",
+        "지인경제",
+        "커뮤니티"
+      ]
+    }
+  ],
+  "channelSections": [
+    {
+      "type": "singlePlaylist",
+      "title": "브랜치 성장 기록",
+      "playlist_key": "branches",
+      "position": 0
+    },
+    {
+      "type": "singlePlaylist",
+      "title": "프랜차이즈 OS",
+      "playlist_key": "franchise",
+      "position": 1
+    },
+    {
+      "type": "singlePlaylist",
+      "title": "AI 비즈니스 활용",
+      "playlist_key": "ai_biz",
+      "position": 2
+    },
+    {
+      "type": "singlePlaylist",
+      "title": "지인 경제 네트워크",
+      "playlist_key": "network",
+      "position": 3
+    }
+  ],
+  "_playlist_ids": {
+    "branches": "PLadnA-OuFIxBBKRF20fFZpr8yxxV51x6i",
+    "franchise": "PLadnA-OuFIxAUWqlY3NBs74tOA4fXdSy7",
+    "ai_biz": "PLadnA-OuFIxDP2a9RrtHXdBkC58Yw5qjt"
+  }
+}
