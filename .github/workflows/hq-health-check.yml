@@ -2,7 +2,7 @@ name: HQ Health Check
 
 on:
   schedule:
-    - cron: '*/15 * * * *'  # Every 15 minutes
+    - cron: '0 */12 * * *'  # 12시간 (반일) — 박씨 1인 운영 페이스
   workflow_dispatch:
 
 jobs:

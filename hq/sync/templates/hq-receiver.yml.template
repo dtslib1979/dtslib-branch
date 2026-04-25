@@ -1,0 +1,43 @@
+name: HQ Sync Receiver
+
+on:
+  repository_dispatch:
+    types: [hq-sync, hq-command, hq-notice]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  receive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Save HQ payload
+        run: |
+          mkdir -p .hq
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            echo '${{ toJSON(github.event.client_payload) }}' > .hq/last-payload.json
+            cat .hq/last-payload.json
+          else
+            echo '{"manual_test": true, "timestamp": "'"$(date -u +%Y-%m-%dT%H:%M:%SZ)"'"}' > .hq/last-payload.json
+          fi
+
+      - name: Update manifest timestamp
+        run: |
+          if [ -f .hq/manifest.json ]; then
+            jq --arg ts "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+              '.lastReceived = $ts' .hq/manifest.json > .hq/manifest.tmp \
+              && mv .hq/manifest.tmp .hq/manifest.json
+          fi
+
+      - name: Commit
+        run: |
+          git config user.name "hq-receiver-bot"
+          git config user.email "hq-receiver@dtslib.com"
+          git add .hq/
+          git diff --cached --quiet || git commit -m "hq: receive ${{ github.event.action || 'manual' }} payload"
+          git push

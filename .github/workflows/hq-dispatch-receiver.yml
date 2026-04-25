@@ -8,11 +8,16 @@ on:
       - health-report
       - cost-report
 
+permissions:
+  contents: write
+
 jobs:
   receive:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Validate event
         run: |
@@ -39,6 +44,7 @@ jobs:
           EOF
           )
 
+          mkdir -p hq/ledger
           echo "$ENTRY" >> hq/ledger/ledger.jsonl
           echo "Recorded: $ENTRY"
 
@@ -57,5 +63,5 @@ jobs:
           git config user.name "HQ Bot"
           git config user.email "hq@dtslib.com"
           git add hq/ledger/ledger.jsonl
-          git commit -m "ledger: received ${{ github.event.action }} from cell"
+          git diff --cached --quiet || git commit -m "ledger: received ${{ github.event.action }} from cell"
           git push

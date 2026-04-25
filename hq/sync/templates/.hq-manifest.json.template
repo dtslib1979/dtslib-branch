@@ -1,0 +1,15 @@
+{
+  "_template_version": "1.0",
+  "_replace": ["__CELL_ID__", "__CELL_REPO__"],
+  "cellId": "__CELL_ID__",
+  "cellRepo": "__CELL_REPO__",
+  "hqRepo": "dtslib1979/dtslib-branch",
+  "hqProtocolVersion": "3.0",
+  "syncedAt": "__BOOTSTRAP_TIMESTAMP__",
+  "reportInterval": "biweekly_48h",
+  "channels": {
+    "downstream": "github_pr",
+    "upstream": "repository_dispatch",
+    "feeds": "https_fetch"
+  }
+}
