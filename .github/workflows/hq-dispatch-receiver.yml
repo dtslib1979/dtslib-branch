@@ -28,11 +28,13 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
-      - name: Append to ledger
+      - name: Append + commit + push (atomic retry)
         run: |
           set -e
-          CELL=$(printf '%s' "$PAYLOAD_JSON" | jq -r '.cell // .branch // "unknown"')
+          git config user.name  "HQ Receiver Bot"
+          git config user.email "hq-receiver@dtslib.com"
 
+          CELL=$(printf '%s' "$PAYLOAD_JSON" | jq -r '.cell // .branch // "unknown"')
           case "$EVENT_TYPE" in
             "cell-report")    LEDGER_TYPE="sync_upstream" ;;
             "deploy-result")  LEDGER_TYPE="deploy_succeeded" ;;
@@ -41,10 +43,8 @@ jobs:
             *)                LEDGER_TYPE="$EVENT_TYPE" ;;
           esac
 
-          mkdir -p hq/ledger
-          TXN_ID="TXN-$(date -u +%Y%m%d-%H%M%S)-$RANDOM"
           TS="$(date -u -Iseconds)"
-
+          TXN_ID="TXN-$(date -u +%Y%m%d-%H%M%S)-$RANDOM-$$"
           ENTRY=$(jq -nc \
             --arg id "$TXN_ID" \
             --arg ts "$TS" \
@@ -53,27 +53,21 @@ jobs:
             --argjson data "$PAYLOAD_JSON" \
             '{id:$id,timestamp:$ts,eventType:$type,actor:"worker",cell:$cell,data:$data,status:"success"}')
 
-          echo "$ENTRY" >> hq/ledger/ledger.jsonl
-          echo "✅ Recorded: $TXN_ID  cell=$CELL  type=$LEDGER_TYPE"
-
-      - name: Commit ledger (with rebase retry)
-        run: |
-          set -e
-          git config user.name  "HQ Receiver Bot"
-          git config user.email "hq-receiver@dtslib.com"
-          git add hq/ledger/ledger.jsonl
-          git diff --cached --quiet && { echo "no change"; exit 0; }
-          git commit -m "ledger: ${EVENT_TYPE} from $(printf '%s' "$PAYLOAD_JSON" | jq -r '.cell // .branch // "unknown"')"
-
-          # 동시 6 dispatch 충돌 방지 — rebase 재시도 5회
-          for i in 1 2 3 4 5; do
-            if git push origin main; then
-              echo "✅ pushed (attempt $i)"
+          # 동시 6 dispatch 안전 처리: fetch → reset → append → commit → push 루프
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git fetch origin main
+            git reset --hard origin/main
+            mkdir -p hq/ledger
+            echo "$ENTRY" >> hq/ledger/ledger.jsonl
+            git add hq/ledger/ledger.jsonl
+            git commit -m "ledger: ${EVENT_TYPE} from ${CELL} (${TXN_ID})" >/dev/null
+            if git push origin main 2>/dev/null; then
+              echo "✅ pushed attempt=$attempt cell=$CELL txn=$TXN_ID"
               exit 0
             fi
-            echo "push 충돌 attempt $i — pull rebase 후 재시도"
-            git pull --rebase origin main
-            sleep $((RANDOM % 5 + 1))
+            BACKOFF=$((attempt * 2 + RANDOM % 3))
+            echo "⚠️ push 충돌 attempt=$attempt — ${BACKOFF}s 후 재시도"
+            sleep $BACKOFF
           done
-          echo "❌ 5회 재시도 실패"
+          echo "❌ 8회 재시도 실패"
           exit 1
