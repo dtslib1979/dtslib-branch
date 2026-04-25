@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>DIMAS · HQ Control Panel</title>
+<link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Inter:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --bg: #040806;
+    --bg-card: #0d1612;
+    --bg-elevated: #0a120e;
+    --text: #f8fafc;
+    --text-dim: rgba(248,250,252,.55);
+    --text-muted: rgba(248,250,252,.35);
+    --gold: #d4af37;
+    --green: #10b981;
+    --yellow: #f59e0b;
+    --red: #ef4444;
+    --border: rgba(212,175,55,.15);
+  }
+  body { font-family:'Inter','Noto Sans KR',sans-serif; background: var(--bg); color: var(--text); min-height:100vh; padding: 24px; background-image: radial-gradient(ellipse at top, rgba(212,175,55,.06) 0%, transparent 60%); }
+  .wrap { max-width: 1280px; margin: 0 auto; }
+
+  .top {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 24px; border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .brand { font-family: 'Cinzel', serif; font-weight: 700; color: var(--gold); letter-spacing: .3em; font-size: 1.1rem; }
+  .lane { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--text-dim); font-size: .9rem; margin-left: 14px; }
+  .nav a { font-family: 'Cinzel', serif; font-size: .7rem; letter-spacing: .2em; color: var(--text-dim); text-decoration: none; margin-left: 22px; }
+  .nav a:hover { color: var(--gold); }
+
+  .gate { max-width: 460px; margin: 80px auto; padding: 48px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,.6); }
+  .gate h1 { font-family:'Cinzel',serif; font-size:.95rem; letter-spacing:.4em; color:var(--gold); margin-bottom:6px; }
+  .gate h2 { font-family:'Cormorant Garamond',serif; font-style:italic; margin-bottom:24px; font-size:1.7rem; color:var(--text); }
+  .gate input { width: 100%; padding: 14px; margin: 8px 0; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: inherit; font-size:.95rem; outline: none; text-align: center; letter-spacing: .3em; }
+  .gate button { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--gold), #e8c547); color: var(--bg); border: none; border-radius: 10px; font-family: 'Cinzel', serif; font-weight: 700; letter-spacing: .2em; cursor: pointer; margin-top: 14px; font-size: .85rem; }
+  .hidden { display: none !important; }
+
+  .eyebrow { font-family:'Cinzel',serif; font-size:.72rem; letter-spacing:.35em; color: var(--gold); margin-bottom:8px; }
+  h1.title { font-family:'Cormorant Garamond',serif; font-style: italic; font-size: 2.6rem; font-weight: 500; margin-bottom: 32px; line-height: 1.1; }
+  h1.title strong { color: var(--gold); font-weight: 700; font-style: normal; }
+  h1.title em { color: var(--gold); font-style: italic; }
+
+  .cells {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .cell-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 22px;
+    cursor: pointer;
+    transition: all .25s;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+  }
+  .cell-card::before { content: ''; position: absolute; top:0; left:0; right:0; height: 3px; background: var(--cell-color, var(--gold)); }
+  .cell-card:hover { transform: translateY(-3px); border-color: var(--cell-color, var(--gold)); box-shadow: 0 12px 40px rgba(212,175,55,.18); }
+  .cell-card .cell-name { font-family:'Cinzel',serif; font-weight:700; font-size:1.05rem; letter-spacing:.18em; color: var(--cell-color, var(--gold)); margin-bottom: 4px; }
+  .cell-card .cell-tier { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:.78rem; color:var(--text-muted); margin-bottom: 16px; }
+  .cell-card .cell-status { display: flex; align-items: center; gap: 8px; font-size:.85rem; margin-bottom: 12px; }
+  .cell-card .dot { width: 8px; height: 8px; border-radius: 50%; box-shadow: 0 0 10px currentColor; }
+  .dot.green { background: var(--green); color: var(--green); }
+  .dot.yellow { background: var(--yellow); color: var(--yellow); }
+  .dot.red { background: var(--red); color: var(--red); }
+  .cell-card .cell-foot { padding-top: 12px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.18em; color:var(--text-muted); }
+  .cell-card .cell-last { color: var(--text-dim); }
+
+  .section { background: var(--bg-card); border: 1px solid var(--border); border-radius: 18px; padding: 28px; margin-bottom: 20px; }
+  .section h2 { font-family:'Cinzel',serif; font-size:.82rem; letter-spacing:.3em; color: var(--gold); margin-bottom: 22px; display: flex; justify-content: space-between; align-items: baseline; }
+  .section h2 .meta { font-family:'Cormorant Garamond',serif; font-style:italic; font-size: .75rem; color: var(--text-muted); letter-spacing: .05em; }
+
+  .ledger-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 1.2fr 70px 90px;
+    gap: 14px;
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(212,175,55,.06);
+    font-size: .82rem;
+    align-items: center;
+  }
+  .ledger-row:last-child { border-bottom: none; }
+  .ledger-row .ts { font-family:'Cinzel',serif; font-size:.66rem; letter-spacing:.1em; color:var(--text-muted); }
+  .ledger-row .cell { font-weight: 600; color: var(--gold); font-family:'Cinzel',serif; letter-spacing:.12em; font-size:.74rem; }
+  .ledger-row .type { font-family: 'Courier New', monospace; font-size: .76rem; color: var(--text-dim); }
+  .ledger-row .commit { font-family: 'Courier New', monospace; font-size:.7rem; color: var(--text-muted); }
+  .ledger-row .pill { font-family:'Cinzel',serif; font-size:.58rem; letter-spacing:.18em; padding:2px 8px; border-radius:999px; text-align:center; }
+  .pill.success { background: rgba(16,185,129,.12); color: var(--green); }
+  .pill.failed { background: rgba(239,68,68,.12); color: var(--red); }
+
+  .compose-form { display: flex; flex-direction: column; gap: 12px; }
+  .compose-form input, .compose-form textarea, .compose-form select {
+    width: 100%; padding: 12px 14px;
+    background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+    color: var(--text); font-family: inherit; font-size:.9rem; outline: none;
+  }
+  .compose-form textarea { min-height: 100px; resize: vertical; }
+  .compose-form .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .compose-form .targets { display: flex; flex-wrap: wrap; gap: 8px; }
+  .compose-form .target-chip { padding: 6px 14px; background: var(--bg); border: 1px solid var(--border); border-radius: 999px; font-size:.75rem; cursor: pointer; transition: all .15s; }
+  .compose-form .target-chip.active { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+  .compose-form button {
+    align-self: flex-start;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, var(--gold), #e8c547);
+    color: var(--bg); border: none; border-radius: 8px;
+    font-family: 'Cinzel', serif; font-weight: 700; letter-spacing: .15em;
+    cursor: pointer; font-size: .8rem;
+  }
+  .compose-form .hint { font-size:.72rem; color:var(--text-muted); font-family:'Cormorant Garamond',serif; font-style: italic; }
+  .compose-form pre { background: var(--bg); padding: 14px; border-radius: 8px; font-family:'Courier New',monospace; font-size:.75rem; color: var(--gold); border: 1px solid var(--border); white-space: pre-wrap; word-break: break-all; }
+
+  .empty { text-align: center; padding: 36px 20px; color: var(--text-muted); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size:.92rem; }
+
+  .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 32px; }
+  .stat { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+  .stat .label { font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.25em; color:var(--text-muted); margin-bottom: 6px; }
+  .stat .val { font-family:'Cormorant Garamond',serif; font-size: 1.9rem; font-weight: 500; }
+  .stat .val em { color: var(--gold); font-style: italic; }
+  .stat .foot { font-size:.7rem; color: var(--text-muted); margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div id="gate" class="gate">
+    <h1>DIMAS</h1>
+    <h2>HQ Control Panel</h2>
+    <p style="font-size:.85rem;color:var(--text-dim);margin-bottom:16px;">박씨 전용 관제 코드</p>
+    <input type="password" id="accessCode" placeholder="• • • •" autofocus>
+    <button onclick="enter()">ENTER</button>
+    <p style="font-size:.7rem;color:var(--text-muted);margin-top:14px;">
+      6 지사 ledger · 직접 디렉션 발사 · 격일 보고 모니터링
+    </p>
+  </div>
+
+  <div id="dashboard" class="hidden">
+    <div class="top">
+      <div>
+        <span class="brand">DIMAS</span>
+        <span class="lane">HQ Control · 6 Cells · 격일 보고</span>
+      </div>
+      <div class="nav">
+        <a href="/">HQ SITE</a>
+        <a href="https://github.com/dtslib1979/dtslib-branch" target="_blank">REPO</a>
+        <a href="https://github.com/dtslib1979/dtslib-branch/actions" target="_blank">ACTIONS</a>
+        <a href="#" onclick="logout();return false;">LOGOUT</a>
+      </div>
+    </div>
+
+    <div class="eyebrow">FRANCHISE OS · v1.0</div>
+    <h1 class="title"><strong>6 Cells</strong> in <em>orbit</em>.</h1>
+
+    <div class="stat-row">
+      <div class="stat">
+        <div class="label">ACTIVE CELLS</div>
+        <div class="val" id="statActive"><em>—</em></div>
+        <div class="foot">/ 6 등록</div>
+      </div>
+      <div class="stat">
+        <div class="label">LEDGER ENTRIES</div>
+        <div class="val" id="statLedger"><em>—</em></div>
+        <div class="foot">총 거래</div>
+      </div>
+      <div class="stat">
+        <div class="label">TODAY REPORTS</div>
+        <div class="val" id="statToday"><em>—</em></div>
+        <div class="foot">최근 24h</div>
+      </div>
+      <div class="stat">
+        <div class="label">NEXT BIWEEKLY</div>
+        <div class="val" id="statNext"><em>—</em></div>
+        <div class="foot">다음 자동 보고</div>
+      </div>
+    </div>
+
+    <div class="cells" id="cellGrid"></div>
+
+    <div class="section">
+      <h2>📜 LEDGER · 최근 30건 <span class="meta" id="ledgerMeta">로딩 중…</span></h2>
+      <div id="ledgerList"><div class="empty">ledger.jsonl 로딩 중…</div></div>
+    </div>
+
+    <div class="section">
+      <h2>📨 COMPOSE NOTICE · 6 지사 동시 디렉션</h2>
+      <div class="compose-form">
+        <div class="row-2">
+          <input type="text" id="ntId" placeholder="ID (예: directive-2026-04-25-01)">
+          <select id="ntType">
+            <option value="info">info — 일반 공지</option>
+            <option value="success">success — 좋은 소식</option>
+            <option value="warning">warning — 주의</option>
+            <option value="directive">directive — 지시</option>
+          </select>
+        </div>
+        <input type="text" id="ntTitle" placeholder="제목 (예: 다음 주 매물 SEO 키워드)">
+        <textarea id="ntContent" placeholder="내용 — 6 지사 backoffice/ inbox 에 표시됨"></textarea>
+        <div>
+          <div style="font-size:.72rem;color:var(--text-muted);margin-bottom:8px;font-family:'Cinzel',serif;letter-spacing:.15em;">대상 지사 (다중 선택)</div>
+          <div class="targets" id="ntTargets"></div>
+        </div>
+        <button onclick="generateNotice()">JSON 생성 → 클립보드 복사</button>
+        <p class="hint">생성된 JSON 을 hq/notices/notices.json 에 추가 → git push 하면 6 지사 backoffice 에 즉시 표시.</p>
+        <pre id="ntPreview" style="display:none;"></pre>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>🛠 QUICK ACTIONS</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
+        <a href="https://github.com/dtslib1979/dtslib-branch/edit/main/hq/notices/notices.json" target="_blank" style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);text-decoration:none;text-align:center;font-size:.85rem;">📝 notices.json 편집</a>
+        <a href="https://github.com/dtslib1979/dtslib-branch/blob/main/hq/ledger/ledger.jsonl" target="_blank" style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);text-decoration:none;text-align:center;font-size:.85rem;">📜 ledger.jsonl 원본</a>
+        <a href="https://github.com/dtslib1979/dtslib-branch/blob/main/hq/registry/branches.json" target="_blank" style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);text-decoration:none;text-align:center;font-size:.85rem;">🌐 branches.json</a>
+        <a href="https://github.com/dtslib1979/dtslib-branch/actions" target="_blank" style="padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);text-decoration:none;text-align:center;font-size:.85rem;">⚙️ Actions</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const CELLS = [
+    { id: 'koosy',       name: 'KOOSY',       tier: '교육 키트 커머스',     color: '#E8C547', domain: 'dtslib1979.github.io/koosy/' },
+    { id: 'gohsy',       name: 'GOHSY',       tier: '소망 성취 플랫폼',     color: '#4ECDC4', domain: 'dtslib1979.github.io/gohsy/' },
+    { id: 'artrew',      name: 'ARTREW',      tier: 'AI 아트 커머스',       color: '#FF6B9D', domain: 'artrew.com' },
+    { id: 'papafly',     name: 'PAPAFLY',     tier: '일본 빈티지 큐레이션', color: '#A78BFA', domain: 'dtslib1979.github.io/papafly/' },
+    { id: 'namoneygoal', name: 'NAMONEYGOAL', tier: '시흥 부동산 12슬롯',   color: '#7C3AED', domain: 'namoneygoal.kr' },
+    { id: 'buckley',     name: 'BUCKLEY',     tier: 'CPA Reality Interface', color: '#c9a227', domain: 'buckleychang.com' },
+  ];
+
+  const LEDGER_URL = 'https://raw.githubusercontent.com/dtslib1979/dtslib-branch/main/hq/ledger/ledger.jsonl';
+
+  function enter() {
+    const code = document.getElementById('accessCode').value.trim();
+    if (code !== '1126' && code !== 'dimas') { alert('access code invalid.'); return; }
+    sessionStorage.setItem('dimas_panel', JSON.stringify({ ts: Date.now() }));
+    show();
+  }
+  function logout() { sessionStorage.removeItem('dimas_panel'); location.reload(); }
+
+  async function loadLedger() {
+    try {
+      const r = await fetch(LEDGER_URL + '?_=' + Date.now(), { cache: 'no-store' });
+      const text = await r.text();
+      const lines = text.trim().split('\n').filter(Boolean);
+      const entries = lines.map(l => { try { return JSON.parse(l); } catch (e) { return null; } }).filter(Boolean);
+      return entries;
+    } catch (e) {
+      console.error(e);
+      return [];
+    }
+  }
+
+  function formatRelative(iso) {
+    try {
+      const d = new Date(iso);
+      const diff = (Date.now() - d.getTime()) / 1000;
+      if (diff < 60) return Math.floor(diff) + 's ago';
+      if (diff < 3600) return Math.floor(diff/60) + 'm ago';
+      if (diff < 86400) return Math.floor(diff/3600) + 'h ago';
+      return Math.floor(diff/86400) + 'd ago';
+    } catch (e) { return iso; }
+  }
+
+  function renderCells(entries) {
+    const grid = document.getElementById('cellGrid');
+    const lastByCell = {};
+    entries.forEach(e => {
+      const c = e.cell;
+      if (!c) return;
+      if (!lastByCell[c] || lastByCell[c].timestamp < e.timestamp) lastByCell[c] = e;
+    });
+
+    grid.innerHTML = CELLS.map(c => {
+      const last = lastByCell[c.id];
+      const status = last ? 'green' : 'yellow';
+      const lastStr = last ? formatRelative(last.timestamp) : '보고 없음';
+      const lastCommit = last && last.data && last.data.last_commit ? last.data.last_commit.slice(0,8) : '—';
+      return `
+        <a class="cell-card" style="--cell-color:${c.color};" href="https://${c.domain}/backoffice/" target="_blank">
+          <div class="cell-name">${c.name}</div>
+          <div class="cell-tier">${c.tier}</div>
+          <div class="cell-status">
+            <span class="dot ${status}"></span>
+            <span>${last ? 'online' : 'awaiting first report'}</span>
+          </div>
+          <div class="cell-foot">
+            <span>${lastCommit}</span>
+            <span class="cell-last">${lastStr}</span>
+          </div>
+        </a>
+      `;
+    }).join('');
+
+    document.getElementById('statActive').innerHTML = `<em>${Object.keys(lastByCell).length}</em>`;
+  }
+
+  function renderLedger(entries) {
+    const list = document.getElementById('ledgerList');
+    document.getElementById('statLedger').innerHTML = `<em>${entries.length}</em>`;
+
+    const today = entries.filter(e => {
+      try { return (Date.now() - new Date(e.timestamp).getTime()) < 86400000; } catch { return false; }
+    });
+    document.getElementById('statToday').innerHTML = `<em>${today.length}</em>`;
+
+    document.getElementById('ledgerMeta').textContent = `최근 ${entries.length} entries`;
+
+    if (entries.length === 0) {
+      list.innerHTML = '<div class="empty">아직 거래 없음</div>';
+      return;
+    }
+    const recent = entries.slice(-30).reverse();
+    list.innerHTML = recent.map(e => {
+      const ts = (e.timestamp || '').replace('T', ' ').slice(0,19);
+      const cell = (e.cell || '?').toUpperCase();
+      const type = e.eventType || '?';
+      const status = e.status || 'unknown';
+      const commit = (e.data && e.data.last_commit) ? e.data.last_commit.slice(0,8) : '—';
+      return `
+        <div class="ledger-row">
+          <span class="ts">${ts}</span>
+          <span class="cell">${cell}</span>
+          <span class="type">${type}</span>
+          <span class="commit">${commit}</span>
+          <span class="pill ${status === 'success' ? 'success' : 'failed'}">${status}</span>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function renderTargets() {
+    const box = document.getElementById('ntTargets');
+    box.innerHTML = CELLS.map(c => `<span class="target-chip" data-id="${c.id}" onclick="this.classList.toggle('active')">${c.name}</span>`).join('');
+    const all = document.createElement('span');
+    all.className = 'target-chip';
+    all.textContent = 'ALL (*)';
+    all.dataset.id = '*';
+    all.onclick = () => all.classList.toggle('active');
+    box.appendChild(all);
+  }
+
+  function generateNotice() {
+    const id = document.getElementById('ntId').value.trim() || ('directive-' + new Date().toISOString().slice(0,10));
+    const type = document.getElementById('ntType').value;
+    const title = document.getElementById('ntTitle').value.trim();
+    const content = document.getElementById('ntContent').value.trim();
+    if (!title || !content) { alert('제목/내용 필수'); return; }
+    const targets = [...document.querySelectorAll('.target-chip.active')].map(el => el.dataset.id);
+    if (targets.length === 0) { alert('대상 지사 1개 이상 선택'); return; }
+
+    const now = new Date().toISOString().slice(0,10);
+    const expires = new Date(Date.now() + 30*86400000).toISOString().slice(0,10);
+    const obj = {
+      id, title, content, type,
+      branches: targets.includes('*') ? ['*'] : targets,
+      createdAt: now,
+      expiresAt: expires
+    };
+    const json = JSON.stringify(obj, null, 2);
+    document.getElementById('ntPreview').style.display = 'block';
+    document.getElementById('ntPreview').textContent = json;
+    if (navigator.clipboard) navigator.clipboard.writeText(json).catch(()=>{});
+    setTimeout(() => alert('JSON 클립보드 복사 완료. notices.json 에 추가 → git push.'), 100);
+  }
+
+  function nextBiweekly() {
+    const now = new Date();
+    const days = now.getUTCDate();
+    const next = new Date(now);
+    next.setUTCDate(days % 2 === 0 ? days + 2 : days + 1);
+    next.setUTCHours(0, 0, 0, 0);
+    return formatRelative(next.toISOString()).replace(' ago', ' 후');
+  }
+
+  async function show() {
+    document.getElementById('gate').classList.add('hidden');
+    document.getElementById('dashboard').classList.remove('hidden');
+    document.getElementById('statNext').innerHTML = `<em>${nextBiweekly()}</em>`;
+    renderTargets();
+    const entries = await loadLedger();
+    renderCells(entries);
+    renderLedger(entries);
+  }
+
+  (function resume() {
+    const raw = sessionStorage.getItem('dimas_panel');
+    if (!raw) return;
+    try {
+      const { ts } = JSON.parse(raw);
+      if (Date.now() - ts > 4*3600*1000) { sessionStorage.removeItem('dimas_panel'); return; }
+      show();
+    } catch (e) {}
+  })();
+</script>
+</body>
+</html>
