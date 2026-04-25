@@ -6,3 +6,4 @@
   "status": "online",
   "timestamp": "2026-04-25T01:18:00Z"
 },"status":"success"}
+{"id":"TXN-20260425-013931-1704","timestamp":"2026-04-25T01:39:31+00:00","eventType":"sync_upstream","actor":"worker","cell":"koosy","data":{"cell":"koosy","commits":"1","last_commit":"dc24519c4f01f90ca8e3304b576942c9a0cbe196","last_msg":"feat(hq): 본사 통신 인프라 부트스트랩","repo":"dtslib1979/koosy","status":"online","timestamp":"2026-04-25T01:39:23Z","trigger":"workflow_dispatch"},"status":"success"}
