@@ -339,7 +339,9 @@
   async function loadNotices() {
     try {
       const r = await fetch(HQ_NOTICES_URL, { cache: 'no-store' });
-      const all = await r.json();
+      const data = await r.json();
+      // backward compat: array 또는 {notices:[...]}
+      const all = Array.isArray(data) ? data : (data.notices || []);
       const mine = all.filter(n =>
         !n.branches || n.branches.includes(CELL_ID) || n.branches.includes('*')
       );
