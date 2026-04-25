@@ -11,57 +11,68 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: hq-receiver
+  cancel-in-progress: false
+
 jobs:
   receive:
     runs-on: ubuntu-latest
+    env:
+      EVENT_TYPE: ${{ github.event.action }}
+      PAYLOAD_JSON: ${{ toJson(github.event.client_payload) }}
     steps:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Validate event
-        run: |
-          echo "Received event: ${{ github.event.action }}"
-          echo "Payload: ${{ toJson(github.event.client_payload) }}"
+          fetch-depth: 0
 
       - name: Append to ledger
         run: |
-          PAYLOAD='${{ toJson(github.event.client_payload) }}'
-          CELL=$(echo "$PAYLOAD" | jq -r '.cell // .branch // "unknown"')
-          EVENT_TYPE="${{ github.event.action }}"
+          set -e
+          CELL=$(printf '%s' "$PAYLOAD_JSON" | jq -r '.cell // .branch // "unknown"')
 
-          # Map dispatch type to ledger eventType
           case "$EVENT_TYPE" in
-            "cell-report") LEDGER_TYPE="sync_upstream" ;;
-            "deploy-result") LEDGER_TYPE="deploy_succeeded" ;;
-            "health-report") LEDGER_TYPE="health_check" ;;
-            "cost-report") LEDGER_TYPE="cost_recorded" ;;
-            *) LEDGER_TYPE="$EVENT_TYPE" ;;
+            "cell-report")    LEDGER_TYPE="sync_upstream" ;;
+            "deploy-result")  LEDGER_TYPE="deploy_succeeded" ;;
+            "health-report")  LEDGER_TYPE="health_check" ;;
+            "cost-report")    LEDGER_TYPE="cost_recorded" ;;
+            *)                LEDGER_TYPE="$EVENT_TYPE" ;;
           esac
 
-          ENTRY=$(cat <<EOF
-          {"id":"TXN-$(date +%Y%m%d)-$(date +%H%M%S)","timestamp":"$(date -Iseconds)","eventType":"$LEDGER_TYPE","actor":"worker","cell":"$CELL","data":$PAYLOAD,"status":"success"}
-          EOF
-          )
-
           mkdir -p hq/ledger
+          TXN_ID="TXN-$(date -u +%Y%m%d-%H%M%S)-$RANDOM"
+          TS="$(date -u -Iseconds)"
+
+          ENTRY=$(jq -nc \
+            --arg id "$TXN_ID" \
+            --arg ts "$TS" \
+            --arg type "$LEDGER_TYPE" \
+            --arg cell "$CELL" \
+            --argjson data "$PAYLOAD_JSON" \
+            '{id:$id,timestamp:$ts,eventType:$type,actor:"worker",cell:$cell,data:$data,status:"success"}')
+
           echo "$ENTRY" >> hq/ledger/ledger.jsonl
-          echo "Recorded: $ENTRY"
+          echo "✅ Recorded: $TXN_ID  cell=$CELL  type=$LEDGER_TYPE"
 
-      - name: Check for alerts
+      - name: Commit ledger (with rebase retry)
         run: |
-          PAYLOAD='${{ toJson(github.event.client_payload) }}'
-          STATUS=$(echo "$PAYLOAD" | jq -r '.status // "unknown"')
-
-          if [ "$STATUS" = "failed" ]; then
-            echo "::warning::Failure reported from cell"
-            # TODO: Trigger notification workflow
-          fi
-
-      - name: Commit ledger
-        run: |
-          git config user.name "HQ Bot"
-          git config user.email "hq@dtslib.com"
+          set -e
+          git config user.name  "HQ Receiver Bot"
+          git config user.email "hq-receiver@dtslib.com"
           git add hq/ledger/ledger.jsonl
-          git diff --cached --quiet || git commit -m "ledger: received ${{ github.event.action }} from cell"
-          git push
+          git diff --cached --quiet && { echo "no change"; exit 0; }
+          git commit -m "ledger: ${EVENT_TYPE} from $(printf '%s' "$PAYLOAD_JSON" | jq -r '.cell // .branch // "unknown"')"
+
+          # 동시 6 dispatch 충돌 방지 — rebase 재시도 5회
+          for i in 1 2 3 4 5; do
+            if git push origin main; then
+              echo "✅ pushed (attempt $i)"
+              exit 0
+            fi
+            echo "push 충돌 attempt $i — pull rebase 후 재시도"
+            git pull --rebase origin main
+            sleep $((RANDOM % 5 + 1))
+          done
+          echo "❌ 5회 재시도 실패"
+          exit 1
