@@ -1,13 +1,26 @@
 {
   "version": "3.0",
-  "lastUpdated": "2026-04-25T01:50:00Z",
+  "lastUpdated": "2026-04-25T01:53:32Z",
   "notices": [
+    {
+      "id": "live-test-1777082012",
+      "title": "🧪 LIVE TEST · 2026-04-25T01:53:32Z",
+      "content": "Claude 자율 통신 검증. 이 메시지가 6 지사 backoffice 에 표시되면 본사→지사 통신 작동.",
+      "type": "info",
+      "branches": [
+        "*"
+      ],
+      "createdAt": "2026-04-25T01:53:32Z",
+      "expiresAt": "2026-04-26T00:00:00Z"
+    },
     {
       "id": "hq-comm-bootstrap-complete-2026-04-25",
       "title": "🚀 본사 ↔ 6 지사 양방향 통신 라이브",
       "content": "Franchise OS v1.0 통신 채널 완전 가동. 격일 09:00 KST 자동 보고 + push 시 즉시 보고 + 12시간 헬스체크. 6 지사 backoffice/ 페이지 활성. /dimas/ 본사 관제 패널 신설.",
       "type": "success",
-      "branches": ["*"],
+      "branches": [
+        "*"
+      ],
       "createdAt": "2026-04-25T01:50:00Z",
       "expiresAt": "2026-05-25T00:00:00Z"
     },
@@ -16,7 +29,9 @@
       "title": "📅 격일 보고 주기 활성",
       "content": "hq-upstream.yml 이 격일 자정 UTC (한국 09:00) 에 자동 보고. 박씨가 git push 시 즉시 추가 보고.",
       "type": "info",
-      "branches": ["*"],
+      "branches": [
+        "*"
+      ],
       "createdAt": "2026-04-25T01:50:00Z",
       "expiresAt": "2026-05-25T00:00:00Z"
     },
@@ -25,7 +40,14 @@
       "title": "Franchise OS v1.0 Live",
       "content": "Catalog + Feed subscription system is now active. All branches connected.",
       "type": "success",
-      "branches": ["koosy", "gohsy", "artrew", "papafly", "lotus", "tango-magenta"],
+      "branches": [
+        "koosy",
+        "gohsy",
+        "artrew",
+        "papafly",
+        "lotus",
+        "tango-magenta"
+      ],
       "createdAt": "2026-01-23T00:00:00Z",
       "expiresAt": "2026-02-23T00:00:00Z"
     }
