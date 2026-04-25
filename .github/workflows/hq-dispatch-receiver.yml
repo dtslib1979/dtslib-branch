@@ -12,7 +12,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: hq-receiver
+  # 셀별 group → 6 dispatch 동시 들어와도 모두 실행. push 충돌은 rebase 5회로 해결
+  group: hq-receiver-${{ github.event.client_payload.cell || github.run_id }}
   cancel-in-progress: false
 
 jobs:
