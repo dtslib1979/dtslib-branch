@@ -1,0 +1,163 @@
+#!/usr/bin/env bash
+# FLD OS — Fiction Ledger Design Operating System
+# CLI: fld <command> [options]
+set -e
+
+FLD_OS_DIR="$(cd "$(dirname "$0")" && pwd)"
+export FLD_OS_DIR
+export PYTHONPATH="$FLD_OS_DIR/core:$PYTHONPATH"
+
+CMD="${1:-help}"
+shift 2>/dev/null || true
+
+case "$CMD" in
+    # ─── Core ───
+    seed)
+        python3 -c "
+import sys; sys.path.insert(0, '$FLD_OS_DIR/core')
+from ledger import get_ledger
+l = get_ledger()
+item = l.add(title='$1', motive='$2', account='${3:-uncategorized}')
+print(f'✅ Seed: {item.id} [{item.account}]')
+" ;;
+    list)
+        python3 -c "
+import sys; sys.path.insert(0, '$FLD_OS_DIR/core')
+from ledger import get_ledger
+l = get_ledger()
+state = '$1'
+if state:
+    items = l.list_by_state(state)
+else:
+    items = l.list_active()
+for i in items:
+    print(f'{i.state:10s} {i.score:2d}/50 [{i.account:12s}] {i.title[:60]}')
+print(f'--- 총 {len(items)}개 ---')
+" ;;
+    state)
+        ID="$1"; TO="$2"; BY="${3:-user}"
+        python3 -c "
+import sys; sys.path.insert(0, '$FLD_OS_DIR/core')
+from ledger import get_ledger
+l = get_ledger()
+try:
+    item = l.transition('$ID', '$TO', '$BY')
+    if item:
+        print(f'✅ {item.id} → {item.state}')
+        # HQ sync
+        from integration.hq_sync import sync_transition_to_hq
+        sync_transition_to_hq('$ID', 'seed', '$TO', '$BY')
+except Exception as e:
+    print(f'❌ {e}')
+" ;;
+    score)
+        ID="$1"
+        python3 -c "
+import sys; sys.path.insert(0, '$FLD_OS_DIR/core')
+from ledger import get_ledger
+l = get_ledger()
+item = l.score_item('$ID')
+if item:
+    print(f'✅ {item.id} 점수: {item.score}/50')
+    for k, v in item.score_detail.items():
+        print(f'  {k:20s}: {v[\"score\"]}/5 — {v[\"desc\"]}')
+else:
+    print('❌ Item not found')
+" ;;
+    stats)
+        python3 -c "
+import sys; sys.path.insert(0, '$FLD_OS_DIR/core')
+from ledger import get_ledger
+l = get_ledger()
+s = l.stats()
+print(f'FLD OS Ledger Stats')
+print(f'  Total:  {s[\"total\"]}')
+print(f'  Active: {s[\"active\"]}')
+print(f'  Dropped:{s[\"dropped\"]}')
+print(f'  By State:')
+for st, c in s['by_state'].items():
+    print(f'    {st:10s}: {c}')
+print(f'  By Account:')
+for a, c in s['by_account'].items():
+    print(f'    {a:10s}: {c}')
+" ;;
+
+    # ─── Integration ───
+    ingest)
+        python3 "$FLD_OS_DIR/integration/parksy_watcher.py" scan "$@"
+        ;;
+    watch)
+        python3 "$FLD_OS_DIR/integration/parksy_watcher.py" watch "$@"
+        ;;
+    hq-sync)
+        python3 "$FLD_OS_DIR/integration/hq_sync.py" "$@"
+        ;;
+    phone)
+        python3 "$FLD_OS_DIR/integration/phone_mcp_bridge.py" "$@"
+        ;;
+    distribute)
+        ID="$1"; MP4="$2"; TYPE="${3:-telegram}"
+        python3 "$FLD_OS_DIR/integration/phone_mcp_bridge.py" distribute "$ID" "$MP4" "$TYPE"
+        ;;
+
+    # ─── Serve ───
+    serve)
+        PORT="${1:-8090}"
+        echo "🌐 FLD MCP SSE Server → port $PORT"
+        echo "   Dashboard: http://localhost:$PORT/dashboard/index.html"
+        cd "$FLD_OS_DIR" && python3 mcp/fld_mcp_sse.py --port "$PORT"
+        ;;
+    dashboard)
+        echo "📊 FLD Dashboard (port 8091)"
+        cd "$FLD_OS_DIR" && python3 dashboard/api/stats.py
+        ;;
+
+    # ─── System ───
+    install)
+        echo "🚀 FLD OS Bootstrap Install"
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━"
+        echo "  Core:    $FLD_OS_DIR/core/ledger.py"
+        echo "  MCP:     $FLD_OS_DIR/mcp/fld_mcp_sse.py"
+        echo "  CLI:     $FLD_OS_DIR/fld"
+        echo "  Widgets: $FLD_OS_DIR/widgets/"
+        echo "  Data:    $FLD_OS_DIR/data/ledger.jsonl"
+        echo ""
+        echo "📱 Termux Widget 설치:"
+        echo "  cp $FLD_OS_DIR/widgets/*.sh ~/.shortcuts/"
+        echo "  chmod +x ~/.shortcuts/*.sh"
+        echo ""
+        echo "🔗 심볼릭 링크:"
+        echo "  sudo ln -sf $FLD_OS_DIR/fld /usr/local/bin/fld"
+        echo ""
+        echo "✅ 설치 완료 — 'fld help'로 시작"
+        ;;
+    help|*)
+        echo "FLD OS — Fiction Ledger Design Operating System"
+        echo ""
+        echo "사용법: fld <command> [args]"
+        echo ""
+        echo "Core:"
+        echo "  seed <title> [motive] [account]  새 Seed 등록"
+        echo "  list [state]                      아이템 목록"
+        echo "  state <id> <to_state> [by]        상태 전이"
+        echo "  score <id>                        10항목 점수 평가"
+        echo "  stats                             통계"
+        echo ""
+        echo "Integration:"
+        echo "  ingest                            로그→Seed 자동 등록"
+        echo "  watch [interval]                  로그 실시간 감시"
+        echo "  hq-sync [status|sync|push|pull]   HQ 장부 동기화"
+        echo "  phone [status|channels|call|distribute]  폰 MCP 연결"
+        echo "  distribute <id> [mp4] [type]      프로토콜 배포"
+        echo ""
+        echo "Serve:"
+        echo "  serve [port]                      MCP SSE 서버 시작"
+        echo "  dashboard                         대시보드 API"
+        echo ""
+        echo "System:"
+        echo "  install                           부트스트랩"
+        echo ""
+        echo "States: seed → scenario → candidate → pilot → protocol"
+        echo "Accounts: person, space, revenue, channel, content, tool, risk, asset"
+        ;;
+esac
