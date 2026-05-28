@@ -8,5 +8,8 @@
     "defaults": "override-allowed"
   },
   "created": "2026-01-26",
-  "overrides": []
+  "overrides": [],
+  "narrative": "프랜차이즈 OS HQ (Tier 1) — AI 업무 자동화 컨설팅 랜딩페이지. koosy·gohsy·artrew·papafly·namoneygoal 등 하위 브랜치 registry 관리. 브랜치 인큐베이터 시스템",
+  "fab_route": "RT-θ",
+  "pipeline_position": "branch-hq / franchise-os"
 }
