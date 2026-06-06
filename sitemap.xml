@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://dtslib.com/</loc>
-    <lastmod>2026-01-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://dtslib.com/staff/</loc>
-    <lastmod>2026-01-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-</urlset>
+<?xml version='1.0' encoding='utf-8'?>
+<ns0:urlset xmlns:ns0="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <ns0:url>
+    <ns0:loc>https://dtslib.com/</ns0:loc>
+    <ns0:lastmod>2026-01-12</ns0:lastmod>
+    <ns0:changefreq>weekly</ns0:changefreq>
+    <ns0:priority>1.0</ns0:priority>
+  </ns0:url>
+  <ns0:url>
+    <ns0:loc>https://dtslib.com/staff/</ns0:loc>
+    <ns0:lastmod>2026-01-12</ns0:lastmod>
+    <ns0:changefreq>monthly</ns0:changefreq>
+    <ns0:priority>0.5</ns0:priority>
+  </ns0:url>
+<ns0:url><ns0:loc>https://dtslib1979.github.io/dtslib-branch/%EB%B9%84%EC%A6%88%EB%8B%88%EC%8A%A4-%EC%86%8C%EC%84%A4/</ns0:loc></ns0:url></ns0:urlset>
