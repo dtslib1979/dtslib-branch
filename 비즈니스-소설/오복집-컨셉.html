@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>오복집 — FLD Pilot Case 001</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;600;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d0b08;--bg2:#141210;--bg3:#1c1916;--surface:#211e1a;--border:rgba(255,255,255,0.06);--gold:#c8973a;--gold2:#e8b84b;--gold-dim:rgba(200,151,58,0.15);--cream:#f0e8d8;--cream-dim:rgba(240,232,216,0.6);--muted:rgba(240,232,216,0.35);--rust:#a04a2a;--olive:#6b7a3a}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--cream);font-family:'Noto Serif KR',serif;font-weight:300;line-height:1.8;overflow-x:hidden}
+#nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 48px;height:64px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(13,11,8,.98),transparent);backdrop-filter:blur(12px)}
+.nav-logo{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.15em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .3s}
+.nav-links a:hover{color:var(--gold)}
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;padding:120px 72px 60px}
+#hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 15% 60%,rgba(200,151,58,.08) 0%,transparent 55%),radial-gradient(ellipse 50% 70% at 85% 25%,rgba(107,122,58,.07) 0%,transparent 50%)}
+.hero-label{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;margin-bottom:28px;position:relative;z-index:1}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(72px,14vw,160px);line-height:.88;letter-spacing:-.03em;font-weight:900;color:var(--cream);position:relative;z-index:1}
+.hero-title em{color:var(--gold);font-style:italic}
+.hero-sub{font-size:17px;color:var(--cream-dim);max-width:520px;margin-top:32px;line-height:1.75;position:relative;z-index:1}
+.section{max-width:1200px;margin:0 auto;padding:100px 72px}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,48px);font-weight:700;color:var(--cream);margin-bottom:48px;letter-spacing:-.02em}
+.section-title em{color:var(--gold);font-style:italic}
+.sec-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;margin-bottom:16px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-bottom:48px}
+.card{background:var(--bg2);padding:40px 32px;position:relative;overflow:hidden;transition:background .3s}
+.card:hover{background:var(--bg3)}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.card:hover::before{transform:scaleX(1)}
+.card .num{position:absolute;top:-8px;right:16px;font-family:'Playfair Display',serif;font-size:72px;font-weight:900;color:var(--cream);opacity:.04}
+.card .tag{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:12px}
+.card h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--cream);margin-bottom:12px}
+.card p{font-size:14px;color:var(--cream-dim);line-height:1.8}
+.quote{padding:40px 48px;background:var(--surface);border-left:2px solid var(--gold);margin-bottom:48px;font-family:'Playfair Display',serif;font-size:clamp(18px,2.5vw,24px);font-style:italic;color:var(--cream);line-height:1.6}
+.quote .src{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:.15em;margin-top:16px;text-transform:uppercase;font-style:normal}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:48px}
+.two-col p{font-size:15px;line-height:1.9;color:var(--cream-dim);margin-bottom:16px}
+.two-col strong{color:var(--cream);font-weight:600}
+.zone-grid{display:grid;grid-template-columns:1.8fr 1.2fr;grid-template-rows:1fr 1fr;gap:1px;background:var(--border);margin-bottom:48px;min-height:320px}
+.zone{padding:32px 28px;background:var(--bg2);position:relative;overflow:hidden;transition:background .3s}
+.zone:hover{background:var(--bg3)}
+.zone.z-d{grid-row:1/3;background:var(--surface)}
+.zone .zl{font-family:'Playfair Display',serif;font-size:80px;font-weight:900;position:absolute;bottom:-16px;right:10px;opacity:.04;line-height:1;color:var(--cream)}
+.zone .zt{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px}
+.zone .zn{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--cream);margin-bottom:8px}
+.zone .zd{font-size:13px;color:var(--muted);line-height:1.7}
+.t-a .zt{color:var(--gold)}.t-b .zt{color:var(--olive)}.t-c .zt{color:var(--rust)}.z-d .zt{color:var(--cream-dim)}
+.tbl{background:var(--border);margin-bottom:48px}
+.tbl-row{display:grid;grid-template-columns:48px 200px 1fr 1fr;gap:1px;background:var(--border)}
+.tbl-hd{background:var(--surface);font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);padding:14px 20px}
+.tbl-cell{background:var(--bg2);padding:20px;font-size:13px;line-height:1.6;color:var(--cream-dim);transition:background .3s}
+.tbl-row:not(.tbl-header):hover .tbl-cell{background:var(--bg3)}
+.tbl-num{font-family:'Playfair Display',serif;font-size:20px;color:var(--gold);font-weight:700;text-align:center}
+.tbl-name{font-weight:600;color:var(--cream)}
+.rm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-bottom:48px}
+.rm-card{background:var(--bg2);padding:36px 28px;transition:background .3s}
+.rm-card:hover{background:var(--bg3)}
+.rm-card.cur{background:var(--surface)}
+.rm-phase{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
+.rm-per{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:16px}
+.rm-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--cream);margin-bottom:20px}
+.rm-item{display:flex;gap:10px;font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:10px}
+.rm-item::before{content:'\2192';color:var(--gold)}
+.rm-milestone{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--olive);letter-spacing:.1em;margin-top:20px;padding-top:16px;border-top:1px solid var(--border2)}
+.loop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-bottom:48px}
+.loop-card{background:var(--bg2);padding:36px 28px}
+.loop-tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;padding:4px 12px;border-radius:2px;margin-bottom:16px}
+.loop-tag.s{background:rgba(107,122,58,.2);color:var(--olive)}
+.loop-tag.p{background:rgba(200,151,58,.15);color:var(--gold)}
+.loop-tag.f{background:rgba(160,74,42,.2);color:var(--rust)}
+.loop-card h4{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--cream);margin-bottom:12px}
+.loop-card p{font-size:13px;color:var(--text-dim);line-height:1.7;margin-bottom:12px;color:var(--cream-dim)}
+.loop-next{font-size:12px;color:var(--gold);line-height:1.5}
+#final{background:var(--surface);padding:100px 72px;text-align:center}
+.final-t{font-family:'Playfair Display',serif;font-size:clamp(24px,3.5vw,44px);font-style:italic;line-height:1.4;color:var(--cream);max-width:700px;margin:0 auto 20px}
+.final-t strong{color:var(--gold);font-style:normal}
+.final-s{font-size:14px;color:var(--muted);margin-bottom:40px}
+.final-btn{display:inline-block;padding:16px 36px;background:var(--gold);color:var(--bg);font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.15em;text-transform:uppercase;text-decoration:none;transition:background .3s}
+.final-btn:hover{background:var(--gold2)}
+footer{padding:32px 72px;display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.1em;border-top:1px solid var(--border)}
+.ft-logo{color:var(--gold);font-size:13px;letter-spacing:.2em}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+@media(max-width:900px){
+  .section{padding:60px 28px}.grid-3,.two-col,.rm-grid,.loop-grid{grid-template-columns:1fr}
+  .zone-grid{grid-template-columns:1fr;grid-template-rows:auto}.zone.z-d{grid-row:auto}
+  .tbl-row{grid-template-columns:40px 1fr}
+  .tbl-cell:nth-child(3),.tbl-cell:nth-child(4){display:none}
+  #hero{padding:80px 28px 40px}.hero-title{font-size:clamp(48px,14vw,80px)}
+  #nav{padding:0 24px}.nav-links{display:none}
+  footer{padding:24px 28px;flex-direction:column;gap:8px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-logo">DTSLIB · FLD</div>
+  <ul class="nav-links">
+    <li><a href="#concept">컨셉</a></li>
+    <li><a href="#host">호스트</a></li>
+    <li><a href="#space">공간</a></li>
+    <li><a href="#content">콘텐츠</a></li>
+    <li><a href="#roadmap">로드맵</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-label">Fiction Ledger Design · Pilot Case 001</div>
+  <h1 class="hero-title">오복<em>집</em></h1>
+  <p class="hero-sub">남동구 만수역 생활권의 어른 동아리방형 로컬 베이스. 식당에서 공간형 비즈니스로 — 설계도.</p>
+</section>
+
+<div class="section" id="concept">
+  <div class="sec-label">01 — Core Concept</div>
+  <h2 class="section-title">오복집은 <em>무엇인가</em></h2>
+  <div class="quote">"어른이 되었을 때, 학교 앞 문방구 대신 찾는 곳."<div class="src">오복집 코어 컨셉 · 만수역 생활권</div></div>
+  <div class="grid-3">
+    <div class="card"><div class="num">01</div><div class="tag">Identity 01</div><h3>어른 동아리방</h3><p>20대 중반~40대가 찾는 제3의 공간. 카페처럼 쫓겨나지 않고, 술집처럼 시끄럽지 않다.</p></div>
+    <div class="card"><div class="num">02</div><div class="tag">Identity 02</div><h3>로컬 미디어 베이스</h3><p>공간 자체가 콘텐츠 공장. 손님=출연자, 사장=호스트, 메뉴=소품. 진짜 배경이 만드는 authentic context.</p></div>
+    <div class="card"><div class="num">03</div><div class="tag">Identity 03</div><h3>호스트 중심 운영체</h3><p>사장의 말투·취향·경험이 공간의 분위기를 결정한다. 프랜차이즈 불가능. 오직 이 사람만의 유일함.</p></div>
+  </div>
+  <div class="two-col">
+    <div><p>오복집의 경쟁 상대는 주변 식당이 아니다. <strong>카페는 오래 있으면 눈치 보이고, 회의실은 딱딱하고, 술집은 시끄럽다.</strong> 그 사이 어딘가에 있어야 할 공간이 오복집이다.</p></div>
+    <div><p>타깃은 반복 방문과 관계 누적. 손님은 "뭘 먹었는지"가 아니라 <strong>"누구랑 여기 있었는지"가 기억나는 공간</strong>. 첫 방문자는 신기함, 재방문자는 친숙함, 단골은 소속감.</p></div>
+  </div>
+</div>
+
+<div class="section" id="host">
+  <div class="sec-label">02 — Host Character</div>
+  <h2 class="section-title">에브럼 — <em>아무도 못 만드는 스토리</em></h2>
+  <div class="quote">"NYU 영문과 2년 드랍 + 인천 족발집 사장"을 가진 사람이 몇 명이나 있겠냐. 이게 약점이 아니라 <strong>재현 불가능한 서사 자산</strong>이다.<div class="src">오복집은 밥 먹으러 가는 곳에서 그 사람 보러 가는 곳으로</div></div>
+  <div class="two-col">
+    <div><p><strong>어학 축:</strong> B급 실전 영어. NYU 영문과 2학년 체험. 완벽하지 않은 실전 영어. 칠판 방송 적합한 딕션·악센트·워딩.</p></div>
+    <div><p><strong>문학 축:</strong> 텍스트 → 코드 전환. 영미문학 텍스트 구조 분해 → 코딩 언어 전환 가능. NYU 2학년 커리큘럼이 실제로 쓰이는 장면.</p></div>
+    <div><p><strong>자영업 축:</strong> 실패의 현재진행형. 인천 족발집 -300만원. 실패와 피벗의 현재진행형 스토리. -300이 약점이 아니라 서사 자산이다.</p></div>
+    <div><p><strong>시스템 접점:</strong> ChatGPT 사용 가능 = 박씨 시스템 접점 확보. IT 리터러시 없음 = 저항 없는 의존 구조. 반쯤 아는 놈이 제일 다루기 힘들다.</p></div>
+  </div>
+</div>
+
+<div class="section" id="space">
+  <div class="sec-label">03 — Space Design</div>
+  <h2 class="section-title">공간 설계 — <em>성격 전환</em></h2>
+  <div class="quote">화려한 리모델링이 아니다. 현재 공간 그대로 성격만 전환한다. 초기 투자 50만원 이내. Phase 1.<div class="src">Zone 분할 + 촬영존 세팅</div></div>
+  <div class="zone-grid">
+    <div class="zone t-a"><div class="zl">A</div><div class="zt">Zone A</div><div class="zn">오픈 다이닝</div><div class="zd">긴 테이블 + 바의자. 혼밥·혼술 전용. 사장과 자연스럽게 대화 가능한 구조. 새 손님이 단골로 전환되는 게이트.</div></div>
+    <div class="zone z-d"><div class="zl">D</div><div class="zt">Zone D — 핵심</div><div class="zn">호스트 스테이션</div><div class="zd">오픈 키친 + 바. 사장의 작업 공간이자 퍼포먼스 무대. 에브럼이 보여야 오복집이 산다. 호스트가 안 보이면 컨셉 전체가 무너진다.</div></div>
+    <div class="zone t-b"><div class="zl">B</div><div class="zt">Zone B</div><div class="zn">소모임 존</div><div class="zd">파티션으로 분리. 2~4인 소모임 전용. 로컬 자영업자 비공식 회의, 직장인 팀 회동 수요 흡수.</div></div>
+    <div class="zone t-c"><div class="zl">C</div><div class="zt">Zone C — 콘텐츠 엔진</div><div class="zn">촬영 · 동아리 존</div><div class="zd">칠판 1개 + 카메라 1대. 낮엔 공간 일부, 밤엔 콘텐츠 촬영 구역. 대관 수익 + 유튜브 생산 기지 동시 역할.</div></div>
+  </div>
+</div>
+
+<div class="section" id="content">
+  <div class="sec-label">04 — Content Pipeline</div>
+  <h2 class="section-title">콘텐츠 <em>3포맷</em></h2>
+  <div class="tbl">
+    <div class="tbl-row tbl-header"><div class="tbl-cell tbl-hd">#</div><div class="tbl-cell tbl-hd">포맷명</div><div class="tbl-cell tbl-hd">구성</div><div class="tbl-cell tbl-hd">전략적 효과</div></div>
+    <div class="tbl-row"><div class="tbl-cell tbl-num">A</div><div class="tbl-cell tbl-name">NYU 드랍 셰프의 메뉴판 영어</div><div class="tbl-cell">낮 시간 매장. 메뉴 1개 → 에브럼 NYU 에피소드 → 패턴 구조화 → 칠판 코딩 데모.</div><div class="tbl-cell">실전 어학 + 자영업 + 코딩 3개가 한 편에. 어학 관심층 + 자영업자 + 코딩 입문자 동시 유입.</div></div>
+    <div class="tbl-row"><div class="tbl-cell tbl-num">B</div><div class="tbl-cell tbl-name">한 문장 문학 × 한 함수 코딩</div><div class="tbl-cell">마감 후 매장 한 구석. 영문 문장 1개 → 에브럼 썰 → 함수/조건/루프 해체 판서. 심야 토크.</div><div class="tbl-cell">NYU 커리큘럼이 실제로 쓰이는 장면. 텍스트→코드 전환 시연. DTSLIB 핵심 철학 시각화.</div></div>
+    <div class="tbl-row"><div class="tbl-cell tbl-num">C</div><div class="tbl-cell tbl-name">유학 망해도 인생 안 망한다</div><div class="tbl-cell">매장 어디서든. NYU 등록금 먹고 돌아와서 느낀 3가지 류 자조 브이로그. 쇼츠 포맷.</div><div class="tbl-cell">인생 스토리 라인. DTSLIB 사람 케이스 스터디 시리즈 1호. 20~30대 공감층 바이럴.</div></div>
+  </div>
+</div>
+
+<div class="section" id="roadmap">
+  <div class="sec-label">05 — Roadmap</div>
+  <h2 class="section-title">실행 <em>로드맵</em></h2>
+  <div class="rm-grid">
+    <div class="rm-card cur">
+      <div class="rm-phase">Phase 1</div><div class="rm-per">0 — 3개월</div>
+      <div class="rm-title">생존 구조 확보</div>
+      <div class="rm-item">Zone 분할 + 촬영존 세팅 (50만원 이내)</div>
+      <div class="rm-item">Zone C 대관 예약 운영 시작</div>
+      <div class="rm-item">단골 멤버십 15명 확보</div>
+      <div class="rm-item">에브럼 인스타 첫 업로드</div>
+      <div class="rm-milestone">목표 → 흑자 전환</div>
+    </div>
+    <div class="rm-card">
+      <div class="rm-phase">Phase 2</div><div class="rm-per">3 — 6개월</div>
+      <div class="rm-title">콘텐츠 파이프라인</div>
+      <div class="rm-item">유튜브 첫 영상 (포맷 A or C)</div>
+      <div class="rm-item">주 3건 쇼츠 생산 루틴 확립</div>
+      <div class="rm-item">단체 예약 비중 확대</div>
+      <div class="rm-item">FLD Protocol 1호 초안 도출</div>
+      <div class="rm-milestone">목표 → 에브럼 채널 개설</div>
+    </div>
+    <div class="rm-card">
+      <div class="rm-phase">Phase 3</div><div class="rm-per">6 — 12개월</div>
+      <div class="rm-title">IP 확장</div>
+      <div class="rm-item">에브럼 콘텐츠 IP 독립 설계</div>
+      <div class="rm-item">FLD 케이스 2호 스카우트 기준 확정</div>
+      <div class="rm-item">복층 리모델링 검토</div>
+      <div class="rm-item">자영업자 네트워크 플랫폼 검토</div>
+      <div class="rm-milestone">목표 → Protocol 완성 · 이식 시작</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-label">06 — FLD Feedback Loop</div>
+  <h2 class="section-title">오복집이 <em>남기는 것</em></h2>
+  <div class="two-col" style="margin-bottom:32px">
+    <p style="font-size:15px;line-height:1.9;color:var(--cream-dim)">오복집은 단순한 식당 재활 프로젝트가 아니다. <strong>FLD가 공상 개념에 그치지 않고 현실에서 작동하는지 시험하는 첫 번째 파일럿.</strong> 성공해도 실패해도 남는 것이 있다.</p>
+  </div>
+  <div class="loop-grid">
+    <div class="loop-card"><div class="loop-tag s">성공</div><h4>Protocol 도출</h4><p>공간 전환 체크리스트 + 호스트 트레이닝 규칙 + 콘텐츠 파이프라인 표준화.</p><div class="loop-next">→ 호야당 v2 · GOHSY · 3호 파일럿 이식</div></div>
+    <div class="loop-card"><div class="loop-tag p">부분 성공</div><h4>계정군 보정</h4><p>어떤 축이 과대평가됐는지 명시. 선발 필터 정밀도 향상.</p><div class="loop-next">→ FLD 선발 매트릭스 v2 업데이트</div></div>
+    <div class="loop-card"><div class="loop-tag f">실패</div><h4>Archive 기록</h4><p>보류 사유 + 재검토 조건 + 잔존 자산 명시. 실패도 자산으로 남는다.</p><div class="loop-next">→ 킬 조건 업데이트 · 다음 시즌 강화</div></div>
+  </div>
+</div>
+
+<section id="final">
+  <p class="final-t">"그냥 <strong>오복집</strong> 가지."<br>이 말이 나오게 만드는 게 최종 목표다.</p>
+  <p class="final-s">만수역 근처에서 가장 먼저 떠오르는 이름.</p>
+  <a href="https://dtslib1979.github.io/dtslib-branch/%EB%B9%84%EC%A6%88%EB%8B%88%EC%8A%A4-%EC%86%8C%EC%84%A4/%EC%98%A4%EB%B3%B5%EC%A7%91-%EC%82%AC%EB%A1%80.html" class="final-btn" target="_blank">Episode 01 전체 보기 →</a>
+</section>
+
+<footer>
+  <div class="ft-logo">DTSLIB</div>
+  <div>Fiction Ledger Design · Pilot Case 001<br>오복집 · 인천 남동구 만수역</div>
+</footer>
+
+</body>
+</html>
