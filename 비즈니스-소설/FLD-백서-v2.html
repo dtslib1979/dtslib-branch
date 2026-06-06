@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLD 백서 v2 | 비즈니스 소설</title>
+<meta name="description" content="Fiction Ledger Design — SF형 비즈니스 소설을 회계 장부처럼 적립하고 선발하는 메타 사업 운영체제">
+<style>
+  :root { --bg: #040806; --bg-elevated: #0a110d; --bg-card: #0e1812; --accent: #2D8B57; --gold: #D4AF37; --gold-dim: rgba(212,175,55,.06); --text: #FAFAF8; --text-secondary: rgba(250,250,248,.7); --text-muted: rgba(250,250,248,.45); --border: rgba(250,250,248,.06); --border-gold: rgba(212,175,55,.2); }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Noto Serif KR', Georgia, serif; line-height: 1.9; }
+  .container { max-width: 780px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .back { display: inline-block; margin-bottom: 2rem; color: var(--text-muted); text-decoration: none; font-family: sans-serif; font-size: 0.85rem; }
+  .back:hover { color: var(--gold); }
+  .header { padding: 2rem 0; border-bottom: 1px solid var(--border-gold); margin-bottom: 2rem; }
+  .header .tag { font-size: 0.7rem; color: var(--accent); font-family: sans-serif; letter-spacing: 0.1em; text-transform: uppercase; }
+  .header h1 { font-size: 1.8rem; color: var(--gold); margin: 0.5rem 0; }
+  .header .sub { color: var(--text-muted); font-size: 0.95rem; }
+  .section { margin-bottom: 2.5rem; }
+  .section h2 { font-size: 1.2rem; color: var(--accent); margin-bottom: 1rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border); }
+  .section h3 { font-size: 1rem; color: var(--gold); margin-bottom: 0.7rem; }
+  .section p { color: var(--text-secondary); margin-bottom: 0.8rem; font-size: 0.95rem; }
+  .section blockquote { border-left: 2px solid var(--border-gold); padding: 1rem 1.5rem; margin: 1rem 0; background: var(--bg-card); border-radius: 0 8px 8px 0; color: var(--text-secondary); font-style: italic; }
+  .highlight { background: var(--gold-dim); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-gold); margin: 1.5rem 0; }
+  .highlight .big { font-size: 1rem; color: var(--gold); font-weight: 600; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+  th, td { border: 1px solid var(--border); padding: 0.6rem 0.8rem; text-align: left; }
+  th { background: var(--bg-card); color: var(--gold); font-weight: 600; }
+  td { color: var(--text-secondary); }
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="./" class="back">← 비즈니스 소설</a>
+  <div class="header">
+    <div class="tag">Fiction Ledger Design · v2</div>
+    <h1>FLD 백서</h1>
+    <div class="sub">SF형 비즈니스 소설을 회계 장부처럼 적립하고 선발하는 메타 사업 운영체제</div>
+  </div>
+
+  <div class="section">
+    <h2>개요</h2>
+    <p>Fiction Ledger Design(이하 FLD)은 사업 아이디어를 즉시 실행 대상으로만 보지 않고, 먼저 서사화된 후보군으로 생성한 뒤 이를 회계 장부처럼 기록·분류·평가·선발하여 실제 파일럿으로 내리는 방법론이다.</p>
+    <p>핵심은 "좋은 아이디어를 찾는 것"이 아니라, 사람·공간·기술·수익 구조·서사 가치를 계정과목처럼 분개하여 장기적으로 운용하는 데 있다.</p>
+    <blockquote>Fiction Ledger Design은 SF형 비즈니스 소설을 회계 장부처럼 적립하여, 실패까지 포함한 모든 사업 상상을 자산으로 굴리는 메타 사업 운영체제다.</blockquote>
+  </div>
+
+  <div class="section">
+    <h2>문제의식</h2>
+    <p>기존 사업 기획 도구는 실행 직전의 아이디어를 다듬는 데 강하지만, 실행되지 않은 수많은 후보군을 체계적으로 적립하는 데는 약하다. 디자인 씽킹, 린 스타트업 모두 실험과 피벗에는 강하지만, 중단된 실험의 서사적 가치와 맥락 자산을 구조적으로 남기지는 않는다. 그 결과 많은 아이디어는 "한때 떠올랐던 발상"으로 증발한다. FLD는 휘발성 아이디어의 자산화 공백을 메우기 위해 등장한다.</p>
+  </div>
+
+  <div class="section">
+    <h2>핵심 정의</h2>
+    <h3>Fiction</h3>
+    <p>아직 현실 착수가 이루어지지 않았지만, 충분히 사업화 가능성이 있는 상황을 비즈니스 소설 형태로 먼저 구성하는 단계. 문학 작품이 아니라 사업 시뮬레이터다.</p>
+    <h3>Ledger</h3>
+    <p>각 사업 소설은 하나의 "감성적 아이디어"가 아니라, 장부에 분개되는 자산 단위로 간주된다.</p>
+    <table>
+      <tr><th>계정군</th><th>기록 항목</th><th>설명</th></tr>
+      <tr><td>인적 자산</td><td>Host, Crew, 관계 구조, 신뢰도</td><td>누가 중심 인물이고 누가 운영에 들어오는가</td></tr>
+      <tr><td>공간 자산</td><td>위치, 점포 성격, 시간대, 좌석/동선</td><td>물리적 장소가 가진 운영 가능성</td></tr>
+      <tr><td>기술 자산</td><td>웹, AI, 자동화, 예약, 미디어 스택</td><td>구축 가능한 도구와 시스템 구조</td></tr>
+      <tr><td>재무 구조</td><td>예상 매출, 고정비, 변동비, 손익 시점</td><td>사업성 판단의 기본 계정</td></tr>
+      <tr><td>서사 자산</td><td>캐릭터성, 팬덤성, 에피소드성</td><td>콘텐츠 및 브랜드 확장 가능성</td></tr>
+      <tr><td>운영 리스크</td><td>갈등, 피로도, 의존도, 규제 요소</td><td>실행 시 손상 가능성 및 제약</td></tr>
+    </table>
+    <h3>Design</h3>
+    <p>서사와 사업 설계를 분리하지 않는다. 서사는 평가의 입력값이고, 설계는 장부화와 실행으로 이어지는 출력값이다.</p>
+  </div>
+
+  <div class="section">
+    <h2>5단계 작동 원리</h2>
+    <p><strong>1. 변수 추출</strong> — 사람·공간·사건을 고정 실체가 아니라 재조합 가능한 입력값으로 본다.</p>
+    <p><strong>2. 비즈니스 소설화</strong> — 1장 내외의 소설로 재구성. 인물·갈등·수익화·미디어 장면 포함.</p>
+    <p><strong>3. 장부 적립</strong> — Ledger에 계정군별로 분개. 서사를 냉정하게 비교 가능하게 만든다.</p>
+    <p><strong>4. 선발 필터</strong> — 7축 매트릭스(실행가능성/인적자산/자동화/재무/콘텐츠/이식성/리스크)로 Pilot 선발.</p>
+    <p><strong>5. 현실 환류</strong> — 파일럿 결과를 다시 Ledger에 반영하여 다음 선발 정확도 향상.</p>
+  </div>
+
+  <div class="section">
+    <h2>상태 프로토콜</h2>
+    <table>
+      <tr><th>상태</th><th>의미</th><th>승격 트리거</th></tr>
+      <tr><td>Seed</td><td>한 줄 영감 또는 변수 메모</td><td>인물·공간·업종 중 하나 포착</td></tr>
+      <tr><td>Scenario</td><td>비즈니스 소설화 완료</td><td>인물-공간-수익 구조가 1개 서사로 결합</td></tr>
+      <tr><td>Candidate</td><td>검토 가능한 사업 후보</td><td>연결 가능한 사람/시간/장소 확인</td></tr>
+      <tr><td>Pilot</td><td>현실 파일럿 진행</td><td>자원 투입 결정 및 최소 운영 개시</td></tr>
+      <tr><td>Protocol</td><td>재사용 구조 확보</td><td>다른 업종/지역 이식 가능 판정</td></tr>
+      <tr><td>Archive</td><td>보류 또는 종료</td><td>전략적 유예, 재검토 조건 기록</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>4층 저장 구조</h2>
+    <p><strong>Universe Log:</strong> 인물, 공간, 사건의 원재료 원장</p>
+    <p><strong>Fiction Drafts:</strong> 비즈니스 소설 초안 시나리오 보관층</p>
+    <p><strong>Ledger Core:</strong> 계정군과 상태값의 회계형 중심 장부</p>
+    <p><strong>Pilot Desk:</strong> 현실 실험 로그와 프로토콜 라이브러리</p>
+  </div>
+
+  <div class="section">
+    <h2>오복집 — FLD Episode 01</h2>
+    <p>오복집은 하나의 점포가 아니라, "어른 동아리방", "로컬 미디어 베이스", "호스트 중심 체험형 운영체"라는 복수의 서사를 가진다. FLD 관점에서 매우 우수한 후보로, 인적 자산과 서사 자산이 강하고 기술 자산을 덧붙여 운영 부담을 낮출 여지가 있다.</p>
+  </div>
+</div>
+</body>
+</html>
