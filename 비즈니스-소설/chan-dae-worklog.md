@@ -42,6 +42,41 @@
 
 ---
 
+## 삽질 로그 (2026-06-08)
+
+### 삽질 #1 — 텔레그램 parse_mode=Markdown 파싱 에러
+
+**상황:** POLITICAL-MCP-PLAN-v2.md 텔레그램 전송 시도
+**오류:** `byte offset 1198` — Markdown 특수문자 파싱 실패
+**시도한 것:**
+- `parse_mode=Markdown` → 실패 (별표/언더바/대시 충돌)
+- `parse_mode=MarkdownV2` → 실패 (이스케이프 규칙 복잡)
+**해결:** `parse_mode` 파라미터 제거, `json={}` 방식으로 plain text 전송
+**교훈:** 마크다운 특수문자 포함된 긴 문서는 parse_mode 없이 텍스트로 보내거나 `sendDocument`(파일 첨부)로 보낸다.
+
+---
+
+### 삽질 #2 — git commit 한글 경로 오류
+
+**상황:** `비즈니스-소설/chan-dae-counter.md` 커밋 시도
+**오류:** `pathspec '비즈니스-소설/chan-dae-counter.md' did not match`
+**시도한 것:**
+- 상위 디렉토리에서 그냥 경로 입력 → 실패
+- git add 없이 commit → 실패
+**해결:** `cd /home/dtsli/dtslib-branch` 후 따옴표로 한글 경로 감싸서 `git add "비즈니스-소설/..."` 실행
+**교훈:** 한글 경로는 반드시 따옴표. 작업 디렉토리 확인 먼저.
+
+---
+
+### 삽질 #3 — 국회 API "지금 붙여" → 멈춤
+
+**상황:** v3 플랜에 "실데이터 연결"이 만점 조건으로 있어서 바로 착수
+**시도한 것:** WebSearch 에이전트 생성 → 박씨가 차단
+**이유 파악:** phone_aider(DeepSeek) 대화 확인했더니 이미 "지금 API 붙이는 건 2순위, 역방향 유통 대기가 맞다"는 판단이 나온 상태였다
+**교훈:** 착수 전에 phone_aider 대화 먼저 확인. 팀 판단이 이미 나와 있으면 거기서 출발.
+
+---
+
 ## 세션 로그
 
 ### 2026-06-08 — phone_aider(DeepSeek) + Claude(Sonnet) 병렬 세션
