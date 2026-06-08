@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Φ7 정치 MCP — Φ-I-C-K-P-7AXIS 정치 분석</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0806;--surface:#0f0d0a;--card:#14110e;--border:rgba(255,255,255,0.06);--text:#e8e4dc;--muted:rgba(232,228,220,0.5);--gold:#c8973a;--f-sans:'Inter',sans-serif;--f-mono:'JetBrains Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--f-sans);background:var(--bg);color:var(--text);line-height:1.8}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,8,6,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;height:52px;display:flex;align-items:center;gap:1.5rem}
+nav a{color:var(--muted);font-size:.8rem;text-decoration:none;transition:color .2s}
+nav a:hover{color:var(--text)}
+.container{max-width:860px;margin:0 auto;padding:90px 24px 80px}
+h1{font-size:clamp(1.5rem,3vw,2rem);font-weight:600;margin-bottom:8px}
+.hero-label{font-family:var(--f-mono);font-size:.6rem;color:var(--gold);letter-spacing:.15em;margin-bottom:16px}
+.sub{color:var(--muted);font-size:.9rem;margin-bottom:32px;line-height:1.7}
+.section{margin-top:48px}
+h2{font-size:1.1rem;font-weight:600;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px;margin-bottom:12px}
+.card-title{font-weight:600;color:#fff;margin-bottom:4px}
+.card-desc{font-size:.82rem;color:var(--muted);line-height:1.6}
+.code-block{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:16px;font-family:var(--f-mono);font-size:.78rem;color:var(--muted);overflow-x:auto;margin:12px 0}
+.tag{display:inline-block;padding:2px 8px;background:rgba(200,151,58,0.1);color:var(--gold);border-radius:3px;font-size:.7rem;margin:2px}
+.status{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;background:rgba(16,185,129,0.1);color:#10b981;border-radius:4px;font-size:.75rem;font-weight:500;margin:12px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:16px 0}
+.badge{display:inline-block;padding:2px 8px;border-radius:3px;font-size:.7rem;background:rgba(255,255,255,0.05);color:var(--muted)}
+</style>
+</head>
+<body>
+<nav>
+<a href="../index.html" style="color:var(--gold);">← dtslib-branch</a>
+<a href="../비즈니스-소설/박찬대-되기-프로젝트.html">박찬대 백서</a>
+<a href="../비즈니스-소설/chan-dae-worklog.md">작업 로그</a>
+</nav>
+<div class="container">
+<div class="hero-label">Φ-I-C-K-P-7AXIS · 정치 MCP · v0.2</div>
+<h1>Φ7 정치 MCP — 보좌관 B2B</h1>
+<div class="sub">정치인 7축 프로필 · 두 정치인 Φ7 비교 매트릭스 · 정책 영향 예측 · 전략 리포트<br>모든 출력이 Φ드라이버 7축의 함수입니다. 일반 LLM 래퍼 없음.</div>
+
+<div class="status">● v0.2 — dtslib-branch/mcp/</div>
+
+<div class="section">
+<h2>구조</h2>
+<div class="code-block">
+mcp/
+├── server.py              ★ MCP stdio 서버 (4+1 툴)
+├── phi7_political.py      7드라이버 정치 버전 (엔진)
+├── model.py               Φ7 단일 레이어
+├── db.py                  데이터 저장소
+├── .gitignore
+└── README.md              문서
+</div>
+</div>
+
+<div class="section">
+<h2>툴</h2>
+<div class="grid">
+<div class="card"><div class="card-title">🏛️ phi7_profile</div><div class="card-desc">정치인 7축 프로필 — 데이터 기반 자동 계산. 등급·강점·취약점.</div></div>
+<div class="card"><div class="card-title">⚖️ phi7_cross</div><div class="card-desc">두 정치인 Φ7 비교 매트릭스 — 보좌관 B2B 핵심 툴.</div></div>
+<div class="card"><div class="card-title">📋 phi7_policy</div><div class="card-desc">정책 텍스트 → Φ7 축별 영향 예측 + 권장.</div></div>
+<div class="card"><div class="card-title">🎯 phi7_strategy</div><div class="card-desc">7축 기반 전략 리포트 — 보좌관 최종 산출물.</div></div>
+</div>
+</div>
+
+<div class="section">
+<h2>사용법</h2>
+<div class="code-block">echo '{"tool":"phi7_profile","params":{"politician":"park_chan_dae"}}' | python3 server.py</div>
+<div class="code-block">echo '{"tool":"phi7_cross","params":{"politician_a":"park_chan_dae","politician_b":"opposition_sample"}}' | python3 server.py</div>
+</div>
+
+<div class="section">
+<h2>7드라이버 (정치 버전)</h2>
+<div class="grid">
+<div class="card"><span class="badge">Meta</span><div class="card-desc" style="margin-top:4px;">발언 일관성 — 과거 vs 현재 입장 정합성</div></div>
+<div class="card"><span class="badge">Reverse</span><div class="card-desc" style="margin-top:4px;">위기 대응 — 스캔들·역전 시나리오</div></div>
+<div class="card"><span class="badge">Modular</span><div class="card-desc" style="margin-top:4px;">정책 조합 — 공약·법안 패키지 설계</div></div>
+<div class="card"><span class="badge">Language</span><div class="card-desc" style="margin-top:4px;">프레이밍 — 메시지·수사 전략</div></div>
+<div class="card"><span class="badge">Zoom</span><div class="card-desc" style="margin-top:4px;">중앙↔지역 스케일링</div></div>
+<div class="card"><span class="badge">Spiral</span><div class="card-desc" style="margin-top:4px;">정치 사이클·모멘텀·타이밍</div></div>
+<div class="card"><span class="badge">Quantum</span><div class="card-desc" style="margin-top:4px;">변수 중첩·예측불가 해석</div></div>
+</div>
+</div>
+
+<div class="section">
+<h2>설계 철학</h2>
+<div class="card">
+<div class="card-desc" style="color:var(--text);line-height:1.7;">
+<strong style="color:var(--gold);">Φ7이 전부다</strong> — 일반 텍스트 생성/LLM 래퍼 전부 제거. 모든 출력이 7축 점수의 직간접 함수.<br><br>
+<strong style="color:var(--gold);">보좌관이 타겟</strong> — "시민이 정치인 접신"이 아니라 A의원실 보좌관이 B의원 분석용 B2B 도구.<br><br>
+<strong style="color:var(--gold);">데이터 기반</strong> — 정치인 데이터(발언·법안·경력·미디어)로 7축 점수 자동 계산.
+</div>
+</div>
+</div>
+
+<div class="section" style="margin-top:40px;padding:20px;background:var(--surface);border-radius:8px;border:1px solid var(--border);text-align:center;">
+<div style="font-size:.8rem;color:var(--muted);">Φ-I-C-K-P-7AXIS · OrbitPrompt 철학의 정치 포팅 · dtslib-branch</div>
+</div>
+</div>
+</body>
+</html>
