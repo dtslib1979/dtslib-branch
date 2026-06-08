@@ -47,3 +47,10 @@ caption: "박찬대 프로젝트 — Claude 카운터 로그 전체 (2026-06-08)
 내용: 정치 MCP v1.0 실행 완료 보고
 형식: sendMessage (텍스트)
 상태: ✅ 전송됨
+
+### 전송 5 — 텍스트 + 파일 (실패)
+시각: 세션 마무리
+내용: 박씨 자기 보고서 (SELF-REPORT-20260608.md)
+형식: sendMessage + sendDocument
+상태: ❌ 봇 토큰 404 (만료/변경)
+대안: OrbitPrompt/docs/SELF-REPORT-20260608.md 에 저장 완료
