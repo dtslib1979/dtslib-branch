@@ -2,92 +2,174 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>박찬대 되기 프로젝트 — 비즈니스 소설 Episode 02</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#040806;--bg2:#080C09;--bg-card:#0C140F;--surface:#0e1812;--border:rgba(255,255,255,.06);--gold:#D4AF37;--gold-dim:rgba(212,175,55,.07);--text:#FAFAF8;--text2:rgba(250,250,248,.7);--text3:rgba(250,250,248,.45);--accent:#2D8B57}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:'Noto Serif KR',Georgia,serif;line-height:1.9}
-.container{max-width:780px;margin:0 auto;padding:2rem 1.5rem}
-.back{color:var(--text3);text-decoration:none;font-size:.8rem;display:inline-block;margin-bottom:2rem}
+:root{--bg:#0d0b08;--bg2:#141210;--bg3:#1c1916;--surface:#211e1a;--border:rgba(255,255,255,.06);--gold:#c8973a;--gold-dim:rgba(200,151,58,0.15);--cream:#f0e8d8;--cream-dim:rgba(240,232,216,.6);--muted:rgba(240,232,216,.35);--rust:#a04a2a;--olive:#6b7a3a;--blue:#4a9eff}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--cream);font-family:'Noto Serif KR',serif;font-weight:300;line-height:1.9;overflow-x:hidden}
+header{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;display:flex;align-items:center;padding:0 28px;background:rgba(13,11,8,.98);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+header .logo{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
+.back{position:fixed;top:68px;left:20px;z-index:99;color:var(--muted);text-decoration:none;font-size:.65rem;font-family:'IBM Plex Mono',monospace;transition:color .2s}
 .back:hover{color:var(--gold)}
-.header{border-bottom:1px solid var(--gold-dim);padding-bottom:1.5rem;margin-bottom:2rem}
-.tag{font-size:.65rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase}
-h1{font-size:1.6rem;color:var(--gold);margin:.5rem 0;line-height:1.3}
-.sub{color:var(--text3);font-size:.9rem;font-style:italic}
-h2{font-size:1.1rem;color:var(--accent);margin:2rem 0 .8rem;padding-bottom:.3rem;border-bottom:1px solid var(--border)}
-h3{font-size:.95rem;color:var(--gold);margin:1.5rem 0 .5rem}
-p{color:var(--text2);font-size:.9rem;margin-bottom:.8rem;line-height:1.8}
-.highlight{background:var(--gold-dim);padding:1.2rem 1.5rem;border-radius:8px;border:1px solid var(--gold-dim);margin:1.2rem 0}
-.highlight .big{color:var(--gold);font-weight:600;font-size:.95rem}
-table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.82rem}
-th,td{border:1px solid var(--border);padding:.5rem .7rem;text-align:left}
-th{background:var(--bg-card);color:var(--gold);font-weight:500}
-td{color:var(--text2)}
+.hero{min-height:50vh;display:flex;flex-direction:column;justify-content:flex-end;padding:100px 48px 50px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 20% 50%,rgba(200,151,58,.06) 0%,transparent 55%),radial-gradient(ellipse 40% 40% at 75% 80%,rgba(74,158,255,.04) 0%,transparent 50%);pointer-events:none}
+.hero-label{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;margin-bottom:16px;position:relative;z-index:1}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.5rem);line-height:1.05;letter-spacing:-.03em;font-weight:900;color:var(--cream);position:relative;z-index:1}
+.hero h1 em{color:var(--gold);font-style:italic}
+.hero .sub{font-size:.85rem;color:var(--cream-dim);max-width:540px;margin-top:16px;line-height:1.7;position:relative;z-index:1}
+.section{max-width:800px;margin:0 auto;padding:64px 48px}
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:.55rem;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;margin-bottom:12px}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.3rem,2.5vw,1.8rem);font-weight:700;color:var(--cream);margin-bottom:28px;letter-spacing:-.02em}
+.section-title em{font-style:italic;color:var(--gold)}
+.prose p{font-size:.88rem;line-height:1.95;color:var(--cream-dim);margin-bottom:16px}
+.prose strong{color:var(--cream);font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--border);border-radius:6px;overflow:hidden;margin-bottom:32px}
+.card{background:var(--bg2);padding:28px 24px;transition:background .3s}
+.card:hover{background:var(--bg3)}
+.card .num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--gold);opacity:.3;line-height:1;margin-bottom:8px}
+.card h4{font-size:.85rem;font-weight:600;color:var(--cream);margin-bottom:8px}
+.card p{font-size:.75rem;color:var(--muted);line-height:1.7}
+.quote-block{border-left:2px solid var(--gold);padding:24px 28px;margin:24px 0;background:var(--surface);border-radius:0 6px 6px 0}
+.quote-text{font-family:'Playfair Display',serif;font-size:clamp(.95rem,1.5vw,1.1rem);font-style:italic;color:var(--cream);line-height:1.6}
+.quote-source{font-family:'IBM Plex Mono',monospace;font-size:.55rem;color:var(--gold);margin-top:8px;letter-spacing:.1em}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-radius:6px;overflow:hidden;margin:24px 0}
+.col{background:var(--bg2);padding:24px}
+.col-lbl{font-family:'IBM Plex Mono',monospace;font-size:.5rem;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
+.col p{font-size:.78rem;color:var(--cream-dim);line-height:1.7}
+.tbl{width:100%;border-collapse:collapse;font-size:.78rem;margin:20px 0}
+.tbl th{background:var(--surface);color:var(--muted);padding:10px 12px;text-align:left;font-weight:400;font-family:'IBM Plex Mono',monospace;font-size:.55rem;letter-spacing:.1em;text-transform:uppercase}
+.tbl td{padding:8px 12px;border-bottom:1px solid var(--border);color:var(--cream-dim)}
+.tbl tr:hover td{background:rgba(200,151,58,.03)}
+.status-bar{display:flex;gap:1px;background:var(--border);border-radius:6px;overflow:hidden;margin:24px 0}
+.st{flex:1;padding:14px 16px;text-align:center;font-family:'IBM Plex Mono',monospace}
+.st .icon{font-size:1.2rem}.st .lbl{font-size:.5rem;color:var(--muted);margin-top:4px;letter-spacing:.08em}
+.st.green{background:rgba(107,122,58,.15)}.st.green .icon{color:var(--olive)}
+.st.yellow{background:rgba(200,151,58,.1)}.st.yellow .icon{color:var(--gold)}
+.st.red{background:rgba(160,74,42,.12)}.st.red .icon{color:var(--rust)}
+.roadmap{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-radius:6px;overflow:hidden;margin:24px 0}
+.rm{background:var(--bg2);padding:20px 16px}
+.rm .qtr{font-family:'IBM Plex Mono',monospace;font-size:.5rem;color:var(--gold);letter-spacing:.15em;margin-bottom:8px}
+.rm h5{font-size:.78rem;font-weight:600;color:var(--cream);margin-bottom:6px}
+.rm p{font-size:.68rem;color:var(--muted);line-height:1.6}
+footer{border-top:1px solid var(--border);padding:24px 48px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:.55rem;color:var(--muted);letter-spacing:.08em}
+@media(max-width:768px){.hero{padding:80px 24px 40px}.section{padding:40px 24px}.two-col,.roadmap{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="container">
-<a href="../" class="back">← 비즈니스 소설</a>
-<div class="header">
-<div class="tag">Episode 02 · Policy Fiction · FLD Pilot</div>
-<h1>박찬대 되기 프로젝트</h1>
-<div class="sub">인천 · 인하대 · AI · B급 정서 — 정치인을 모델로 한 도시 실험 설계</div>
+<header><span class="logo">DTSLIB · FLD · Episode 02</span></header>
+<a href="../비즈니스-소설/" class="back">← 비즈니스 소설</a>
+
+<div class="hero">
+<div class="hero-label">Fiction Ledger Design · Pilot Case 002</div>
+<h1>박찬대<br><em>되기</em> 프로젝트</h1>
+<div class="sub">인천 · 인하대 · AI · B급 정서 — 정치인을 모델로 한 도시 실험 설계.<br>AI 시대에만 가능한 개인 단위 정치·도시 접신 시뮬레이션.</div>
 </div>
 
-<h2>프로젝트의 기본 명제</h2>
-<p>이 프로젝트는 정치인을 일방적으로 추종하는 팬덤 정치가 아니라, 공개적으로 알려진 한 인물의 삶의 궤도와 도시적 위치, 제도적 권한을 자기 사고 실험의 좌표축으로 삼아 "내가 저 위치였다면 무엇을 했을까"를 시뮬레이션하는 방식이다.</p>
-<p>박찬대는 이 프레임에서 네 가지 역할을 동시에 가진다:</p>
-<p><strong>① 인천이라는 도시와 지역 정치의 아바타</strong><br>
-<strong>② 내가 되고 싶었던 사회적·정치적 캐릭터의 모델</strong><br>
-<strong>③ 현실의 협업 대상이 될 수 있는 잠재적 파트너</strong><br>
-<strong>④ AI와 로컬 공익 프로젝트를 주입해 볼 수 있는 실행 플랫폼</strong></p>
-
-<div class="highlight">
-<p class="big">"Being John Malkovich"의 정치 버전</p>
-<p>타인의 시점과 몸을 통해 세계를 경험하는 포털의 이야기처럼, 이 프로젝트는 박찬대라는 정치적 궤도에 접속해 인천의 미래를 시뮬레이션한다.</p>
+<div class="section">
+<div class="section-label">01 · Core Concept</div>
+<h2 class="section-title">이 프로젝트는 <em>무엇인가</em></h2>
+<div class="prose">
+<p>이 프로젝트는 정치인을 일방적으로 추종하는 팬덤 정치가 아니다. 공개적으로 알려진 한 인물의 삶의 궤도와 도시적 위치, 제도적 권한을 자기 사고 실험의 좌표축으로 삼아 <strong>"내가 저 위치였다면 무엇을 했을까"</strong>를 시뮬레이션하는 방식이다.</p>
+</div>
+<div class="quote-block">
+<div class="quote-text">"Being John Malkovich의 정치 버전 — 타인의 시점과 몸을 통해 세계를 경험하는 포털의 이야기처럼, 이 프로젝트는 박찬대라는 정치적 궤도에 접속해 인천의 미래를 시뮬레이션한다."</div>
+</div>
+<div class="cards">
+<div class="card"><div class="num">01</div><h4>아바타</h4><p>인천이라는 도시와 지역 정치의 접속점. 인물을 통해 도시를 읽는다.</p></div>
+<div class="card"><div class="num">02</div><h4>모델</h4><p>내가 되고 싶었던 사회적·정치적 캐릭터의 좌표축.</p></div>
+<div class="card"><div class="num">03</div><h4>파트너</h4><p>현실의 협업 대상이 될 수 있는 잠재적 플랫폼.</p></div>
+<div class="card"><div class="num">04</div><h4>플랫폼</h4><p>AI와 공익 프로젝트를 주입해 볼 수 있는 실행 구조.</p></div>
+</div>
 </div>
 
-<h2>왜 박찬대인가</h2>
-<p>인천 출신 · 인하대 경영학과 · 회계사 · 민주당 원내대표 · AI 도시 인천 비전 — 중앙 정치권력과 지역 정치, 경영·행정 언어, AI·물류·돌봄 의제가 한 인물에 결합되어 있다.</p>
+<div class="section">
+<div class="section-label">02 · Why This Person</div>
+<h2 class="section-title">왜 <em>박찬대</em>인가</h2>
+<div class="prose">
+<p><strong>인천 출신 · 인하대 경영학과 · 회계사 · 민주당 원내대표 · AI 도시 인천 비전</strong> — 중앙 정치권력과 지역 정치, 경영·행정 언어, AI·물류·돌봄 의제가 한 인물에 결합되어 있다. 이 인물을 선택하는 것은 단순한 호감이 아니라, 중앙-지역-대학-산업-정치-공익을 동시에 연결할 수 있는 플랫폼 선택이다.</p>
+</div>
 
-<h2>왜 인하대 경영학과인가</h2>
-<p>AI 시대 경영학은 "AI를 이해하는 비기술 전공"으로 재활용 가능성이 높다. 생성형 AI의 작동 방식, 데이터 기반 의사결정, 프로세스 자동화, AI 도입이 조직에 미치는 영향 — 경영학과 학생들에게 이걸 가르친다는 아이디어 자체가 프로젝트의 핵심 교육 모델이다.</p>
+<div class="section-label" style="margin-top:32px">AI · 경영학 · 인천</div>
+<h2 class="section-title">왜 <em>인하대 경영학과</em>인가</h2>
+<div class="prose">
+<p>AI 시대 경영학은 <strong>"AI를 이해하는 비기술 전공"</strong>으로 재활용 가능성이 가장 높은 분야다. 생성형 AI의 작동 방식, 데이터 기반 의사결정, 프로세스 자동화, AI 도입이 조직에 미치는 영향 — 경영학과 학생들에게 이걸 가르친다는 아이디어 자체가 프로젝트의 핵심 교육 모델이다.</p>
+</div>
+</div>
 
-<h2>프로젝트 4대 의제</h2>
-<table>
-<tr><th>의제</th><th>내용</th></tr>
-<tr><td>AI 리터러시</td><td>노인·약자 대상 AI 교육 — 사기 예방, 생활 보조, 이야기 정리</td></tr>
-<tr><td>인하대 연계</td><td>경영학과 AI 비즈니스 실습 트랙 — 자영업·복지·로컬 문제 해결</td></tr>
-<tr><td>B급 로컬 콘텐츠</td><td>인천의 B급 감성을 AI 콘텐츠 생산과 결합한 스튜디오</td></tr>
-<tr><td>정책 스토리텔링</td><td>시정 비전을 시민이 이해할 수 있는 이야기/영상으로 번역</td></tr>
+<div class="section">
+<div class="section-label">03 · 4대 의제</div>
+<h2 class="section-title">공익 <em>프로젝트</em></h2>
+<div class="cards">
+<div class="card"><div class="num">1</div><h4>노인·약자 AI 리터러시</h4><p>사기예방, 생활보조, 이야기 정리, 공동체 학습 — 4회차 파일럿 커리큘럼. 인천시 디지털 배움터 + AI 이용권 사업과 자연스러운 연결.</p></div>
+<div class="card"><div class="num">2</div><h4>인하대 AI 실습 트랙</h4><p>경영학과 학생들이 인천의 자영업·복지·지역상생 현장을 LLM과 에이전트 도구로 해결하는 프로젝트형 교육 모듈.</p></div>
+<div class="card"><div class="num">3</div><h4>B급 로컬 콘텐츠</h4><p>인천의 B급 감성을 AI 콘텐츠 생산과 결합한 스튜디오. 밈, 병맛 영상, 짧은 다큐, 교육형 웹콘텐츠.</p></div>
+<div class="card"><div class="num">4</div><h4>정책 스토리텔링</h4><p>시정 비전을 시민이 이해할 수 있는 이야기/영상/강의로 번역. 비즈니스 소설 + 백서 + 시나리오.</p></div>
+</div>
+</div>
+
+<div class="section">
+<div class="section-label">04 · 실명 전략</div>
+<h2 class="section-title">내부 vs <em>외부</em></h2>
+<div class="two-col">
+<div class="col"><div class="col-lbl">🟢 내부 (레포/소설)</div><p>실명 사용 OK. "박찬대 되기", "접신", "아바타" 표현 자유. 창작·시뮬레이션·기획의 공간.</p></div>
+<div class="col"><div class="col-lbl">🔴 외부 (제안/홍보)</div><p>실명 사용 ❌. 프로젝트명은 「인천형 AI 리터러시」. 본문에서만 "박찬대 시장의 AI 공약과 연결" 수준으로만 언급.</p></div>
+</div>
+
+<table class="tbl">
+<tr><th>상황</th><th>실명</th><th>프로젝트명</th><th>위험</th></tr>
+<tr><td>내부 레포/소설</td><td>✅</td><td>박찬대 되기</td><td>🟢</td></tr>
+<tr><td>dtslib-branch 공개</td><td>✅</td><td>Episode 02 (FLD)</td><td>🟡</td></tr>
+<tr><td>PPT/제안서 1차</td><td>❌</td><td>인천 AI 리빙랩</td><td>🟢</td></tr>
+<tr><td>SNS/외부 홍보</td><td>❌</td><td>인천 AI 리터러시</td><td>🟢</td></tr>
+<tr><td>미팅/협업</td><td>⚠️</td><td>상황 따라</td><td>🟡→🔴</td></tr>
 </table>
-
-<h2>실행 전략</h2>
-<p>감정적 편지보다 PPT, repo, MCP, 커리큘럼 초안이 먼저다.</p>
-<div class="highlight">
-<p class="big">3종 결과물</p>
-<p><strong>PPT</strong> — 8~10장 발표 자료 (입구 만들기)<br>
-<strong>GitHub 레포</strong> — README + 커리큘럼 + 샘플 콘텐츠 (신뢰 쌓기)<br>
-<strong>MCP/워크플로우</strong> — 정책 스토리 생성 자동화 (깊이 증명)</p>
 </div>
 
-<h2>1년 로드맵</h2>
-<p><strong>1분기:</strong> 서사 정리 + PPT 1개 + GitHub repo 초기 구축<br>
-<strong>2분기:</strong> 4회차 노인 AI 리터러시 커리큘럼 + 인하대 연계 과제 설계<br>
-<strong>3분기:</strong> B급 로컬 AI 콘텐츠 파일럿 + 정책 스토리텔링 시리즈<br>
-<strong>4분기:</strong> 인하대/인천시 대상 1차 접촉 + 비공식 제안</p>
+<div class="section">
+<div class="section-label">05 · AI 시대 증명</div>
+<h2 class="section-title">왜 <em>지금</em>인가</h2>
+<div class="prose">
+<p>같은 발상은 예전에도 가능했지만, 지금처럼 실제 백서·PPT·커리큘럼·에피소드 시리즈를 이 속도와 볼륨으로 찍어낼 수 있는 건 <strong>AI 시대가 아니라면 불가능에 가깝다.</strong></p>
+</div>
+<div class="status-bar">
+<div class="st green"><div class="icon">📄</div><div class="lbl">백서 자동 생성</div></div>
+<div class="st green"><div class="icon">🎨</div><div class="lbl">PPT 10분 컷</div></div>
+<div class="st yellow"><div class="icon">📚</div><div class="lbl">커리큘럼 설계</div></div>
+<div class="st red"><div class="icon">🤖</div><div class="lbl">MCP 연동</div></div>
+</div>
+</div>
 
-<h2>언어 층위 이원화</h2>
-<table>
-<tr><th>내부 언어</th><th>외부 언어</th></tr>
-<tr><td>접신, 아바타, 바이러스</td><td>정책 시나리오, 도시 비전 설계</td></tr>
-<tr><td>대체 인생 시뮬레이션</td><td>AI 기반 정책 스토리텔링</td></tr>
-<tr><td>B급 정서, 병맛 실험</td><td>로컬 AI 리빙랩, 공익형 AI 리터러시</td></tr>
+<div class="section">
+<div class="section-label">06 · FLD Position</div>
+<h2 class="section-title">오복집 vs <em>박찬대</em></h2>
+<table class="tbl">
+<tr><th>항목</th><th>오복집 (Ep.01)</th><th>박찬대 (Ep.02)</th></tr>
+<tr><td>파일럿 유형</td><td>공간</td><td>인물</td></tr>
+<tr><td>FLD 계정</td><td>공간 자산 ↑</td><td>인적 자산 ↑</td></tr>
+<tr><td>정치적 중립</td><td>✅ 완전 중립</td><td>⚠️ 편향 가능성</td></tr>
+<tr><td>공개 가능</td><td>✅ 즉시 가능</td><td>❌ 조건부</td></tr>
+<tr><td>리스크</td><td>🟢 낮음</td><td>🔴 높음</td></tr>
 </table>
-
-<h2>FLD 관점</h2>
-<p>이 프로젝트는 오복집(Episode 01)에 이은 FLD Pilot Episode 02다. 오복집이 로컬 식당의 공간 전환이라면, 이 프로젝트는 정치인이라는 인적 자산의 서사 전환이다. FLD의 6개 계정군(인적/공간/기술/재무/서사/리스크)으로 평가할 때, 인적 자산과 서사 자산이 특히 높은 후보로 분류된다.</p>
 </div>
+
+<div class="section">
+<div class="section-label">07 · Roadmap</div>
+<h2 class="section-title">1년 <em>로드맵</em></h2>
+<div class="roadmap">
+<div class="rm"><div class="qtr">Q1</div><h5>서사 구축</h5><p>PPT 1개 + GitHub repo 초기화 + 외부용 프로필 정리</p></div>
+<div class="rm"><div class="qtr">Q2</div><h5>교육 설계</h5><p>4회차 AI 리터러시 커리큘럼 + 인하대 연계 과제</p></div>
+<div class="rm"><div class="qtr">Q3</div><h5>콘텐츠</h5><p>B급 로컬 AI 콘텐츠 파일럿 + 정책 스토리텔링</p></div>
+<div class="rm"><div class="qtr">Q4</div><h5>접촉</h5><p>인하대/인천시 대상 1차 제안 (비정치적 프레임)</p></div>
+</div>
+</div>
+
+<footer>
+Fiction Ledger Design · Pilot Case 002 · 박찬대 되기 프로젝트<br>
+Off-stage Founding — 각본가가 무대에 오르지 않는 창업 방법론
+</footer>
 </body>
 </html>
