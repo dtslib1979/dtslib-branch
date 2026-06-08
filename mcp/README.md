@@ -1,104 +1,67 @@
-# 박찬대 정치 MCP — Φ-I-C-K-P-7AXIS Political Analysis
+# Φ-I-C-K-P-7AXIS 정치 MCP (보좌관 B2B)
 
-> **사고방식이 도구가 되는 순간**
+> **Φ7 7축이 전부다 — 나머지는 없다.**
 
-## 개요
+## v0.1 → v0.2 변경사항
 
-이 MCP는 **Φ-I-C-K-P-7AXIS 12차원 철학 모델**을 정치인·정책 분석에 적용한 구현체다.
-OrbitPrompt(철학) → dtslib-branch(사례·백서) → 현실 실험(인천/인하대)으로 이어지는
-**「사고방식 → 도구화 → 배포」 루프의 2단계**에 해당한다.
+| 항목 | v0.1 (문제) | v0.2 (수정) |
+|------|------------|------------|
+| 툴 구성 | 6개 중 5개가 일반 LLM 래퍼 | **Φ7 7축 기반 4개 툴** |
+| Φ드라이버 | 1개 툴에만 사용 | **모든 툴이 Φ7 통과** |
+| 타겟 | 일반 시민 | **의원실 보좌관 (B2B)** |
+| 차별화 | 없음 (ChatGPT로 대체 가능) | **Φ7 데이터 분석 = 유일무이** |
 
 ## 구조
 
 ```
 mcp/
-├── server.py            ★ MCP 서버 (stdio protocol, 6+1 툴)
-├── model.py             Φ-I-C-K-P-7AXIS 정치 분석 모델
-├── phi7_political.py    7드라이버 정치 버전 (핵심 엔진)
-├── db.py                정치인 데이터 저장소
-├── political_data.json  DB 파일 (자동 생성)
+├── phi7_political.py    ★ Φ7 7축 엔진 (데이터 기반 점수 계산)
+├── server.py            MCP stdio 서버 (4개 툴 + 메타)
+├── model.py             Φ7 단일 레이어 (Φ5 제거)
+├── db.py                데이터 저장소 (향후 확장용)
 └── README.md            이 문서
 ```
 
-## 철학: Φ-I-C-K-P-7AXIS
+## 툴
 
-| Φ드라이버 | 축구 MCP (원본) | 정치 MCP (포팅) |
-|-----------|----------------|----------------|
-| Meta | 전술 일관성 | 발언 일관성 (과거 vs 현재 입장) |
-| Reverse | 회복력 | 위기 대응력 (스캔들·역전 시나리오) |
-| Modular | 선취점 후 승률 | 정책 모듈 조합력 (공약 패키지) |
-| Language | 정체성 | 프레이밍/수사 전략 (메시지 구조) |
-| Zoom | 빅매치 승률 | 중앙↔지역 스케일링 (국정↔지역구) |
-| Spiral | 후반 상승폭 | 정치 사이클/이슈 증폭 (모멘텀) |
-| Quantum | Upset rate | 변수 중첩/예측불가 (다중 이해관계) |
-
-## 툴 목록
-
-| 툴 | 설명 | 입력 |
-|----|------|------|
-| `policy_brief` | 정책 브리핑 + Φ드라이버 전략 | politician, topic |
-| `policy_analyze` | Φ7축 정책 분석 + 영향 시뮬레이션 | politician, policy_text |
-| `message_draft` | 대외 발언/논평 초안 | politician, topic, tone |
-| `decision_check` | 안건 검토 + 리스크 분석 | politician, agenda, details |
-| `local_agenda` | 지역구 의제 트래킹 (우선순위) | politician, region_focus |
-| `press_release` | 보도자료 자동 작성 | politician, topic, key_message |
-| `orchestrate` | ★ 메타: 방법론 전체 구조 | (없음) |
+| 툴 | 설명 | 보좌관 사용 시나리오 |
+|----|------|-------------------|
+| `phi7_profile` | 정치인 7축 프로필 | "이 의원 Φ7 등급이 어떻게 되나?" |
+| `phi7_cross` | 두 정치인 Φ7 비교 | "우리 의원 vs 상대방, 어디가 우세?" |
+| `phi7_policy` | 정책 Φ7 영향 예측 | "이 공약 내면 Φ7 점수 어떻게 바뀌나?" |
+| `phi7_strategy` | Φ7 전략 리포트 | "이 의제, 어떻게 전개하는 게 최적?" |
+| `orchestrate` | ★ 메타: 방법론 전체 | "이 MCP 자체가 뭔가?" |
 
 ## 사용법
 
 ```bash
-# 단일 툴 호출
-echo '{"tool":"policy_brief","params":{"politician":"park_chan_dae","topic":"AI 리터러시"}}' | python3 server.py
+# 정치인 프로필
+echo '{"tool":"phi7_profile","params":{"politician":"park_chan_dae"}}' | python3 server.py
 
-# 정책 분석
-echo '{"tool":"policy_analyze","params":{"politician":"park_chan_dae","policy_text":"..."}}' | python3 server.py
+# 두 정치인 비교 (보좌관 B2B 핵심)
+echo '{"tool":"phi7_cross","params":{"politician_a":"park_chan_dae","politician_b":"park_chan_dae"}}' | python3 server.py
 
-# 메시지 초안
-echo '{"tool":"message_draft","params":{"politician":"park_chan_dae","topic":"...","tone":"positive"}}' | python3 server.py
+# 정책 영향 예측
+echo '{"tool":"phi7_policy","params":{"politician":"park_chan_dae","policy_text":"인천 AI 리터러시 4회차 파일럿..."}}' | python3 server.py
 
-# 안건 검토
-echo '{"tool":"decision_check","params":{"politician":"park_chan_dae","agenda":"AI 리터러시","details":"예산 5억, 4회차 파일럿"}}' | python3 server.py
+# 전략 리포트
+echo '{"tool":"phi7_strategy","params":{"politician":"park_chan_dae","agenda":"AI 리터러시"}}' | python3 server.py
 
-# 지역 의제
-echo '{"tool":"local_agenda","params":{"politician":"park_chan_dae","region_focus":"인천"}}' | python3 server.py
-
-# 보도자료
-echo '{"tool":"press_release","params":{"politician":"park_chan_dae","topic":"AI 리터러시","key_message":"..."}}' | python3 server.py
-
-# 메타: 방법론 조회
+# 메타
 echo '{"tool":"orchestrate","params":{}}' | python3 server.py
 ```
 
-## 일인 오케스트레이션 방법론 (이 MCP의 메타 의미)
+## 설계 철학
 
-이 MCP는 단순한 코드가 아니다. 아래 방법론의 구현체다:
+형(Claude) 카운터 #003 기반 재설계:
+
+1. **Φ7이 전부다** — 일반 텍스트 생성/LLM 래퍼는 전부 제거. 모든 출력이 7축 점수의 직간접 함수.
+2. **보좌관이 타겟** — "시민이 정치인 접신"이 아니라 "A의원실 보좌관이 B의원 분석용 B2B 도구"
+3. **데이터 기반** — 정치인 데이터(발언/법안/경력/미디어)로 7축 점수 자동 계산. 수동 입력 없음.
+
+## 연결
 
 ```
-박씨 (정치인/판단자)
-  ↕
-Perplexity (정책 브리핑·구조화)
-  ↕
-DeepSeek (구현·MCP 코딩)   ← 이 MCP가 여기
-  ↕
-Claude (검증·카운터·레포)
-  ↕
-GitHub (배포·역방향 유통)
-  ↕
-정치인/시민 (사용자)
+OrbitPrompt (Φ드라이버) → 이 MCP (정치 분석) → 보좌관 (B2B 사용)
+                                        ↘ GitHub 공개 → 역방향 유통
 ```
-
-### 핵심 통찰
-
-1. **MCP = 자가실행 도구** — 박씨 없이 누구든 `server.py` 실행으로 정치인 업무 환경 체험
-2. **GitHub = 역방향 유통** — 시민→정치인이 아니라 정치인→시민 동선
-3. **Φ드라이버 = 재사용 가능한 프레임** — 축구→정치로 포팅 가능, 다음엔 패션/교육/물류로 확장
-
-## 참조
-
-| 문서 | 위치 |
-|------|------|
-| 연결맵 | `OrbitPrompt/boards/chan-dae-project.md` |
-| 작업 로그 | `dtslib-branch/비즈니스-소설/chan-dae-worklog.md` |
-| Claude 검증 | `dtslib-branch/비즈니스-소설/chan-dae-counter.md` |
-| 백서 | `dtslib-branch/비즈니스-소설/박찬대-되기-프로젝트.html` |
-| 원본 MCP | `OrbitPrompt/football-model/mcp/` |
